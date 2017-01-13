@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NepoGUI", "NepoGUI\NepoGUI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NepoMediator", "NepoMediator\NepoMediator.csproj", "{E84B714A-6792-4C33-AEA2-AA2B279B2F90}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90E8E083-D92D-4902-92A0-5328AA7229BE}"
+	ProjectSection(SolutionItems) = preProject
+		..\Doc\Structure.vsdx = ..\Doc\Structure.vsdx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
