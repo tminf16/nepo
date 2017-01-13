@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\Doc\Structure.vsdx = ..\Doc\Structure.vsdx
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{069BF646-68DC-4D95-B037-73962A6CC68B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{E84B714A-6792-4C33-AEA2-AA2B279B2F90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E84B714A-6792-4C33-AEA2-AA2B279B2F90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E84B714A-6792-4C33-AEA2-AA2B279B2F90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{069BF646-68DC-4D95-B037-73962A6CC68B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{069BF646-68DC-4D95-B037-73962A6CC68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{069BF646-68DC-4D95-B037-73962A6CC68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{069BF646-68DC-4D95-B037-73962A6CC68B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
