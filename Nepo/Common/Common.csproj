@@ -46,6 +46,8 @@
     <Compile Include="AgentConfig.cs" />
     <Compile Include="DataHandler.cs" />
     <Compile Include="Instance.cs" />
+    <Compile Include="Optimizer.cs" />
+    <Compile Include="PlanningObject.cs" />
     <Compile Include="XmlHelper.cs" />
     <Compile Include="ImmovableObject.cs" />
     <Compile Include="MapConfig.cs" />

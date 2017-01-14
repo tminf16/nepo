@@ -22,10 +22,15 @@ namespace Nepo.GUI
     public partial class MainWindow : Window
     {
         public List<Ellipse> Immovables { get; set; }
+        public List<Ellipse> Movables { get; set; }
         public MapConfig Map { get { return DataHandler.GetMapConfig(); } }
         public int MapWidth { get { return Map.MapSize.Width; } set { } }
         public int MapHeight { get { return Map.MapSize.Height; } set { } }
         private int ImmoSize = 5;
+        private int MovableSize = 5;
+
+        private Solution currentSolution;
+
         public MainWindow()
         {
             CreateSampleMap();
@@ -38,9 +43,24 @@ namespace Nepo.GUI
                     Height = ImmoSize,
                     Fill = Brushes.Red,
                 };
-                Canvas.SetTop(tmpItem, immo.Location.X);
-                Canvas.SetLeft(tmpItem, immo.Location.Y);
+                Canvas.SetTop(tmpItem, immo.Location.X - (ImmoSize / 2));
+                Canvas.SetLeft(tmpItem, immo.Location.Y - (ImmoSize / 2));
                 Immovables.Add(tmpItem);
+            }
+
+            Movables = new List<Ellipse>();
+            currentSolution = Optimizer.Instance.GenerateSolutions().Item1;
+            foreach (var po in currentSolution.PlanningObjects)
+            {
+                var tmpItem = new Ellipse()
+                {
+                    Width = MovableSize,
+                    Height = MovableSize,
+                    Fill = Brushes.Black,
+                };
+                Canvas.SetTop(tmpItem, po.Location.X - (MovableSize / 2));
+                Canvas.SetLeft(tmpItem, po.Location.Y - (MovableSize / 2));
+                Movables.Add(tmpItem);
             }
 
             InitializeComponent();
@@ -48,9 +68,11 @@ namespace Nepo.GUI
 
         private static void CreateSampleMap()
         {
-            var config = new MapConfig();
-            config.MapSize = new System.Drawing.Size(500, 500);
-            config.PlanningObjectCount = 5;
+            var config = new MapConfig()
+            {
+                MapSize = new System.Drawing.Size(500, 500),
+                PlanningObjectCount = 5
+            };
             Random rand = new Random((int)DateTime.Now.Ticks);
             config.ImmovableObjects = new List<ImmovableObject>();
             for (int i = 0; i < 20; i++)

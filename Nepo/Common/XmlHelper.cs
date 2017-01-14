@@ -14,8 +14,7 @@ namespace Nepo.Common
         
         private static XmlSerializer GetSerializer<T>()
         {
-            XmlSerializer serializer;
-            if (!_allSerializers.TryGetValue(typeof(T), out serializer))
+            if (!_allSerializers.TryGetValue(typeof(T), out var serializer))
             {
                 serializer = new XmlSerializer(typeof(T));
                 _allSerializers.Add(typeof(T), serializer);
