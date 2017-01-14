@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="Mediator.Mediator" CodeBehind="Mediator.svc.cs" %>

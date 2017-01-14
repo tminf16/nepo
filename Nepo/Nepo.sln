@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.25928.0
+VisualStudioVersion = 15.0.26020.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NepoGUI", "NepoGUI\NepoGUI.csproj", "{0182B30F-11B1-4503-8D66-BC851300BEEC}"
 EndProject
@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{069BF646-68DC-4D95-B037-73962A6CC68B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediator", "Mediator\Mediator.csproj", "{7963C753-909B-4388-81E3-482702837783}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +34,10 @@ Global
 		{069BF646-68DC-4D95-B037-73962A6CC68B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{069BF646-68DC-4D95-B037-73962A6CC68B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{069BF646-68DC-4D95-B037-73962A6CC68B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7963C753-909B-4388-81E3-482702837783}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7963C753-909B-4388-81E3-482702837783}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7963C753-909B-4388-81E3-482702837783}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7963C753-909B-4388-81E3-482702837783}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

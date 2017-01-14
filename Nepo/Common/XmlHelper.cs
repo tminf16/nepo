@@ -8,11 +8,11 @@ using System.Xml.Serialization;
 
 namespace Common
 {
-    public class XmlHelper<T>
+    public class XmlHelper
     {
         private static Dictionary<Type, XmlSerializer> _allSerializers = new Dictionary<Type, XmlSerializer>();
         
-        private static XmlSerializer GetSerializer(Type T)
+        private static XmlSerializer GetSerializer<T>()
         {
             XmlSerializer serializer;
             if (!_allSerializers.TryGetValue(typeof(T), out serializer))
@@ -25,7 +25,7 @@ namespace Common
 
         public static String Serialize<T>(T instance)
         {
-            XmlSerializer serializer = GetSerializer(typeof(T));
+            XmlSerializer serializer = GetSerializer<T>();
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, instance);
             return String.Empty;
@@ -33,7 +33,7 @@ namespace Common
 
         public static T Deserialize<T>(String xml)
         {
-            XmlSerializer serializer = GetSerializer(typeof(T));
+            XmlSerializer serializer = GetSerializer<T>();
             StringReader sr = new StringReader(xml);
             T instance = (T)(serializer.Deserialize(sr) ?? default(T));
             return instance;

@@ -9,9 +9,8 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nepo.Common</RootNamespace>
     <AssemblyName>Nepo.Common</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+<<<<<<< Updated upstream
+=======
     <Reference Include="PresentationFramework" />
+>>>>>>> Stashed changes
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -43,15 +45,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AgentConfig.cs" />
-    <Compile Include="Instance.cs" />
+<<<<<<< Updated upstream
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XmlHelper.cs" />
+=======
     <Compile Include="ImmovableObject.cs" />
-    <Compile Include="MapConfig.cs" />
+    <Compile Include="Instance.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Layer.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Properties\" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
