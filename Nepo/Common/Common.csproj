@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgentConfig.cs" />
+    <Compile Include="DataHandler.cs" />
     <Compile Include="Instance.cs" />
     <Compile Include="XmlHelper.cs" />
     <Compile Include="ImmovableObject.cs" />

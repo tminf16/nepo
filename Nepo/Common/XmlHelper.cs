@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Common
+namespace Nepo.Common
 {
     public class XmlHelper
     {
@@ -28,14 +28,20 @@ namespace Common
             XmlSerializer serializer = GetSerializer<T>();
             StringWriter sw = new StringWriter();
             serializer.Serialize(sw, instance);
-            return String.Empty;
+            return sw.ToString();
         }
 
         public static T Deserialize<T>(String xml)
         {
             XmlSerializer serializer = GetSerializer<T>();
             StringReader sr = new StringReader(xml);
-            T instance = (T)(serializer.Deserialize(sr) ?? default(T));
+            T instance = default(T);
+            try
+            {
+                instance = (T)serializer.Deserialize(sr);
+            }
+            catch (Exception){}
+            
             return instance;
         }
     }
