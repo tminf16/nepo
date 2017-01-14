@@ -1,12 +1,23 @@
-﻿<Window x:Class="NepoGUI.MainWindow"
+﻿<Window x:Class="Nepo.GUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NepoGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="350" Width="525"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        
+        <ScrollViewer>
+            <Grid Background="AliceBlue" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
+                <ItemsControl ItemsSource="{Binding Immovables}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>
