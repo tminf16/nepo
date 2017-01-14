@@ -12,7 +12,7 @@ namespace Nepo.Common
         /// <summary>
         /// Polygons always have 100% opacity.
         /// </summary>
-        public List<Polygon> Polygons { get; set; }
+        public List<List<Point>> Polygons { get; set; }
 
         private Bitmap _map;
 
