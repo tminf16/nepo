@@ -31,14 +31,29 @@ namespace Nepo.GUI
         private int MovableSize = 500;
 
         private Solution currentSolution;
-        public double TargetValue { get; set; }
+        public RelayCommand ManualOptimizeCommand { get; set; }
+        public RelayCommand ResetSolutionCommand { get; set; }
+        public RelayCommand AutomateSolutionCommand { get; set; }
 
+
+        public double TargetValue
+        {
+            get { return (double)GetValue(TargetValueProperty); }
+            set { SetValue(TargetValueProperty, value); }
+        }public static readonly DependencyProperty TargetValueProperty =
+            DependencyProperty.Register("TargetValue", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
+
+
+
+        DistanceIntervalsRule tmpRule = new DistanceIntervalsRule();
         public MainWindow()
         {
-            DistanceIntervalsRule tmpRule = new DistanceIntervalsRule();
-            tmpRule.AddInterval(0, 50, -1);
-            tmpRule.AddInterval(50,150,0.5);
-            ControlTemplate ct = tmpRule.GetUiTemplate();
+            Movables = new List<Control>();
+            ManualOptimizeCommand = new RelayCommand(GetNewSolution);
+            ResetSolutionCommand = new RelayCommand(ResetSolution);
+            AutomateSolutionCommand = new RelayCommand(AutomateSolution);
+            tmpRule.AddInterval(0, 15, -1);
+            tmpRule.AddInterval(15,100,0.5);
             CreateSampleMap();
             Immovables = new List<Ellipse>();
             foreach (var immo in Map.ImmovableObjects)
@@ -49,28 +64,110 @@ namespace Nepo.GUI
                     Height = ImmoSize,
                     Fill = Brushes.Red,
                 };
-                Canvas.SetTop(tmpItem, immo.Location.X - (ImmoSize / 2));
-                Canvas.SetLeft(tmpItem, immo.Location.Y - (ImmoSize / 2));
+                Canvas.SetTop(tmpItem, immo.Location.Y - (ImmoSize / 2));
+                Canvas.SetLeft(tmpItem, immo.Location.X - (ImmoSize / 2));
                 Immovables.Add(tmpItem);
             }
 
-            Movables = new List<Control>();
-            currentSolution = Optimizer.Instance.GenerateSolutions().Item1;
-            foreach (var po in currentSolution.PlanningObjects)
-            {
-                var tmpItem = new Button()
-                {
-                    Width = MovableSize,
-                    Height = MovableSize,
-                    Background = Brushes.Black,
-                };
-                Canvas.SetTop(tmpItem, po.Location.X - (MovableSize / 2));
-                Canvas.SetLeft(tmpItem, po.Location.Y - (MovableSize / 2));
-                tmpItem.Template = ct;
-                Movables.Add(tmpItem);
-            }
+            DrawSolution();
+            currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            
             TargetValue = tmpRule.CalculatePartialTargetValue(currentSolution);
             InitializeComponent();
+        }
+                
+        private void ResetSolution(object obj)
+        {
+            Optimizer.Instance.Reset();
+            currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            GetNewSolution(null);
+        }
+        private void AutomateSolution(object obj)
+        {
+            new TaskFactory().StartNew(async () =>
+            {
+                int i = 0;
+                int targetvalueCounter = 0;
+                double lastTargetValue = 0;
+                double tmpTargetValue = 0;
+                while (i < 10000)
+                {
+                    i++;
+                    Dispatcher.Invoke(() => tmpTargetValue = TargetValue);
+                    if (i % 1 == 0)
+                    {
+                        await Task.Delay(100);
+                    }
+                    GetNewSolution(null);
+                    if (tmpTargetValue == lastTargetValue)
+                        targetvalueCounter++;
+                    else
+                    {
+                        lastTargetValue = tmpTargetValue;
+                        targetvalueCounter = 0;
+                    }
+
+                    if (targetvalueCounter > 100)
+                        break;
+                }
+            });
+        }
+
+        private void GetNewSolution(object obj)
+        {
+            int bestId = 0;
+            double bestValue = 0;
+            for (int i = 0; i < 10; i++)
+            {
+                i++;
+                var result = Optimizer.Instance.SelectChild(0);
+                double currentTargetValue = tmpRule.CalculatePartialTargetValue(currentSolution);
+                bestValue = currentTargetValue;
+                bestId = currentSolution.SolutionID;
+                foreach (var sol in result.Item2)
+                {
+                    double tmptarget = tmpRule.CalculatePartialTargetValue(sol);
+                    if(tmptarget >= bestValue)
+                    {
+                        bestValue = tmptarget;
+                        bestId = sol.SolutionID;
+                        currentSolution = sol;
+                    }
+                }
+                Optimizer.Instance.SelectChild(bestId);
+            }
+            Dispatcher.Invoke(() => TargetValue = bestValue);
+            
+
+            DrawSolution();
+        }
+
+        private void DrawSolution()
+        {
+            if (null == currentSolution)
+                currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+
+            if (0 == Movables.Count())
+            {
+                ControlTemplate ct = tmpRule.GetUiTemplate();
+                foreach (var po in currentSolution.PlanningObjects)
+                {
+                    var tmpItem = new Control() { Width = MovableSize, Height = MovableSize};
+                    tmpItem.Template = ct;
+                    Movables.Add(tmpItem);
+                }
+            }
+
+            for (int i = 0; i < currentSolution.PlanningObjects.Length; i++)
+            {
+                var tmpCtrl = Movables.ElementAt(i);
+                var po = currentSolution.PlanningObjects[i];
+                Dispatcher.Invoke(() => 
+                {
+                    Canvas.SetTop(tmpCtrl, po.Location.Y - (MovableSize / 2));
+                    Canvas.SetLeft(tmpCtrl, po.Location.X - (MovableSize / 2));
+                });
+            }
         }
 
         private static void CreateSampleMap()

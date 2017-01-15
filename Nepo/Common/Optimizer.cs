@@ -13,7 +13,7 @@ namespace Nepo.Common
 
         private Solution currentlyAccepted = null;
         private List<Solution> availableChildren = null;
-        public Tuple<Solution, List<Solution>> GenerateSolutions()
+        private Tuple<Solution, List<Solution>> GenerateSolutions()
         {
             if (null == currentlyAccepted)
             {
@@ -22,19 +22,34 @@ namespace Nepo.Common
                 currentlyAccepted.FillRandomValues(map.MapSize.Width, map.MapSize.Height, map.PlanningObjectCount);
             }
             List<Solution> children = new List<Solution>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 50; i++)
                 children.Add(currentlyAccepted.CreateChildSolution());
             availableChildren = children;
             return new Tuple<Solution, List<Solution>>(currentlyAccepted, children);
         }
 
-        public void SelectChild(int id)
+        public void Reset()
         {
+            currentlyAccepted = null;
+            availableChildren = null;
+        }
+
+        public Tuple<Solution, List<Solution>> SelectChild(int id)
+        {
+            if (0 == id)
+            {
+                if (null == currentlyAccepted)
+                    return GenerateSolutions();
+                else
+                    return new Tuple<Solution, List<Solution>>(currentlyAccepted, availableChildren);
+            }
             var child = availableChildren?.SingleOrDefault(x => x.SolutionID == id);
             if (null == child)
-                return;
+                return new Tuple<Solution, List<Solution>>(currentlyAccepted, availableChildren);
             currentlyAccepted = child;
             availableChildren = null;
+
+            return GenerateSolutions();
         }
     }
 
@@ -72,14 +87,27 @@ namespace Nepo.Common
         internal Solution CreateChildSolution()
         {
             Solution tmpChild = new Solution(PlanningObjects.Length);
+            int mutation = _rand.Next(PlanningObjects.Length);
             for (int i = 0; i < PlanningObjects.Length; i++)
             {
                 tmpChild.PlanningObjects[i] = new PlanningObject();
                 var tmpLocation = PlanningObjects[i].Location;
-                tmpChild.PlanningObjects[i].Location = 
+
+                if (i == mutation)
+                {
+                    tmpChild.PlanningObjects[i].Location =
                     new System.Drawing.Point(
-                        (int)(tmpLocation.X + _rand.NextGaussian(sigma: 10)), 
-                        (int)(tmpLocation.Y + _rand.NextGaussian(sigma: 10)));
+                        (int)(tmpLocation.X + _rand.NextGaussian(sigma: 15)),
+                        (int)(tmpLocation.Y + _rand.NextGaussian(sigma: 15)));
+                }
+                else
+                {
+                    tmpChild.PlanningObjects[i].Location =
+                    new System.Drawing.Point(
+                        (int)(tmpLocation.X),
+                        (int)(tmpLocation.Y));
+                }
+
             }
             return tmpChild;
         }

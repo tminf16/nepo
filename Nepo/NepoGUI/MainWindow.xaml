@@ -12,7 +12,12 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0" Text="{Binding TargetValue}"/>
+        <StackPanel Grid.Column="0" >
+            <TextBlock Text="{Binding TargetValue}"/>
+            <Button Command="{Binding ManualOptimizeCommand}">Next Step</Button>
+            <Button Command="{Binding AutomateSolutionCommand}">Automate</Button>
+            <Button Command="{Binding ResetSolutionCommand}">Reset</Button>
+        </StackPanel>
         <ScrollViewer Grid.Column="1">
             <Grid Background="AliceBlue" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding Immovables}">
