@@ -1,4 +1,5 @@
 ﻿using Nepo.Common;
+using Nepo.Common.Rules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,17 +23,22 @@ namespace Nepo.GUI
     public partial class MainWindow : Window
     {
         public List<Ellipse> Immovables { get; set; }
-        public List<Ellipse> Movables { get; set; }
+        public List<Control> Movables { get; set; }
         public MapConfig Map { get { return DataHandler.GetMapConfig(); } }
         public int MapWidth { get { return Map.MapSize.Width; } set { } }
         public int MapHeight { get { return Map.MapSize.Height; } set { } }
         private int ImmoSize = 5;
-        private int MovableSize = 5;
+        private int MovableSize = 500;
 
         private Solution currentSolution;
+        public double TargetValue { get; set; }
 
         public MainWindow()
         {
+            DistanceIntervalsRule tmpRule = new DistanceIntervalsRule();
+            tmpRule.AddInterval(0, 50, -1);
+            tmpRule.AddInterval(50,150,0.5);
+            ControlTemplate ct = tmpRule.GetUiTemplate();
             CreateSampleMap();
             Immovables = new List<Ellipse>();
             foreach (var immo in Map.ImmovableObjects)
@@ -48,21 +54,22 @@ namespace Nepo.GUI
                 Immovables.Add(tmpItem);
             }
 
-            Movables = new List<Ellipse>();
+            Movables = new List<Control>();
             currentSolution = Optimizer.Instance.GenerateSolutions().Item1;
             foreach (var po in currentSolution.PlanningObjects)
             {
-                var tmpItem = new Ellipse()
+                var tmpItem = new Button()
                 {
                     Width = MovableSize,
                     Height = MovableSize,
-                    Fill = Brushes.Black,
+                    Background = Brushes.Black,
                 };
                 Canvas.SetTop(tmpItem, po.Location.X - (MovableSize / 2));
                 Canvas.SetLeft(tmpItem, po.Location.Y - (MovableSize / 2));
+                tmpItem.Template = ct;
                 Movables.Add(tmpItem);
             }
-
+            TargetValue = tmpRule.CalculatePartialTargetValue(currentSolution);
             InitializeComponent();
         }
 

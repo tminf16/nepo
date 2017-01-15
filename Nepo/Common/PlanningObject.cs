@@ -11,4 +11,12 @@ namespace Nepo.Common
     {
         public Point Location { get; set; }
     }
+
+    public static class PointExtensions
+    {
+        public static int GetDistance(this Point firstPoint, Point secondPoint)
+        {
+            return (int)Math.Sqrt(Math.Pow(firstPoint.X - secondPoint.X, 2) + Math.Pow(firstPoint.Y - secondPoint.Y, 2));
+        }
+    }
 }

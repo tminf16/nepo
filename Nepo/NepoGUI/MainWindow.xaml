@@ -8,7 +8,12 @@
         Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="350" Width="525"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <ScrollViewer>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding TargetValue}"/>
+        <ScrollViewer Grid.Column="1">
             <Grid Background="AliceBlue" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
                 <ItemsControl ItemsSource="{Binding Immovables}">
                     <ItemsControl.ItemsPanel>
@@ -23,6 +28,14 @@
                             <Canvas/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Ellipse Width="50" Height="50" Stroke="Blue" StrokeThickness="10" Fill="Transparent"></Ellipse>
+                                <TextBlock Text="{Binding Width}"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Grid>
         </ScrollViewer>
