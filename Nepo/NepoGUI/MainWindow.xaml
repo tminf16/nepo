@@ -5,15 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NepoGUI"
         mc:Ignorable="d"
-        Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="350" Width="525"
+        Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="550" Width="725"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0" >
-            <TextBlock Text="{Binding TargetValue}"/>
+            <TextBlock>
+                <Run Text="Max Value:"></Run>
+                <Run Text="{Binding MaximumTargetValue}"></Run>
+            </TextBlock>
+            <TextBlock>
+                <Run Text="Current Value:"></Run>
+                <Run Text="{Binding TargetValue}"></Run>
+            </TextBlock>
             <Button Command="{Binding ManualOptimizeCommand}">Next Step</Button>
             <Button Command="{Binding AutomateSolutionCommand}">Automate</Button>
             <Button Command="{Binding ResetSolutionCommand}">Reset</Button>

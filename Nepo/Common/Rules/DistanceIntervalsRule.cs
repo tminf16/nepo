@@ -50,7 +50,7 @@ namespace Nepo.Common.Rules
                         continue;
                     if (!alreadyCounted[immoCount - 1])
                     {
-                        partialTargetValue += interval.Item3;
+                        partialTargetValue += interval.Item3*immo.Weight;
                         alreadyCounted[immoCount - 1] = true;
                     }
 

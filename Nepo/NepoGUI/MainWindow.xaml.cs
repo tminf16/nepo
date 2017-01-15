@@ -43,7 +43,7 @@ namespace Nepo.GUI
         }public static readonly DependencyProperty TargetValueProperty =
             DependencyProperty.Register("TargetValue", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
 
-
+        public double MaximumTargetValue { get; set; }
 
         DistanceIntervalsRule tmpRule = new DistanceIntervalsRule();
         public MainWindow()
@@ -56,12 +56,17 @@ namespace Nepo.GUI
             tmpRule.AddInterval(15,100,0.5);
             CreateSampleMap();
             Immovables = new List<Ellipse>();
+            double minWeight = Map.ImmovableObjects.Min(x => x.Weight);
+            double maxWeight = Map.ImmovableObjects.Max(x => x.Weight);
+            MaximumTargetValue = 0;
             foreach (var immo in Map.ImmovableObjects)
             {
+                MaximumTargetValue += 0.5 * immo.Weight;
+                int additionalSize = (int)((immo.Weight - minWeight) / (maxWeight - minWeight) * 10);
                 var tmpItem = new Ellipse()
                 {
-                    Width = ImmoSize,
-                    Height = ImmoSize,
+                    Width = ImmoSize + additionalSize,
+                    Height = ImmoSize + additionalSize,
                     Fill = Brushes.Red,
                 };
                 Canvas.SetTop(tmpItem, immo.Location.Y - (ImmoSize / 2));
