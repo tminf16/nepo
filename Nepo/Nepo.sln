@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mediator", "Mediator\Mediator.csproj", "{7963C753-909B-4388-81E3-482702837783}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "DataGenerator\DataGenerator.csproj", "{F0E1F10A-08D6-4556-8B50-61AD4B77DFFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{7963C753-909B-4388-81E3-482702837783}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7963C753-909B-4388-81E3-482702837783}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7963C753-909B-4388-81E3-482702837783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E1F10A-08D6-4556-8B50-61AD4B77DFFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E1F10A-08D6-4556-8B50-61AD4B77DFFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E1F10A-08D6-4556-8B50-61AD4B77DFFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E1F10A-08D6-4556-8B50-61AD4B77DFFA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
