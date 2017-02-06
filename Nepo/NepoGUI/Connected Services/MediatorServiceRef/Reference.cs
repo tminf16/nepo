@@ -40,10 +40,10 @@ namespace NepoGUI.MediatorServiceRef {
         System.Threading.Tasks.Task<System.Collections.Generic.List<Nepo.Common.Solution>> GetProposedSolutionsAsync(System.Guid agentGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/Vote", ReplyAction="http://tempuri.org/IMediator/VoteResponse")]
-        void Vote(System.Collections.Generic.List<System.Tuple<int, bool>> votes);
+        void Vote(System.Collections.Generic.List<System.Tuple<int, bool>> votes, System.Guid agentGuid);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/Vote", ReplyAction="http://tempuri.org/IMediator/VoteResponse")]
-        System.Threading.Tasks.Task VoteAsync(System.Collections.Generic.List<System.Tuple<int, bool>> votes);
+        System.Threading.Tasks.Task VoteAsync(System.Collections.Generic.List<System.Tuple<int, bool>> votes, System.Guid agentGuid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -97,12 +97,12 @@ namespace NepoGUI.MediatorServiceRef {
             return base.Channel.GetProposedSolutionsAsync(agentGuid);
         }
         
-        public void Vote(System.Collections.Generic.List<System.Tuple<int, bool>> votes) {
-            base.Channel.Vote(votes);
+        public void Vote(System.Collections.Generic.List<System.Tuple<int, bool>> votes, System.Guid agentGuid) {
+            base.Channel.Vote(votes, agentGuid);
         }
         
-        public System.Threading.Tasks.Task VoteAsync(System.Collections.Generic.List<System.Tuple<int, bool>> votes) {
-            return base.Channel.VoteAsync(votes);
+        public System.Threading.Tasks.Task VoteAsync(System.Collections.Generic.List<System.Tuple<int, bool>> votes, System.Guid agentGuid) {
+            return base.Channel.VoteAsync(votes, agentGuid);
         }
     }
 }
