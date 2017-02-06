@@ -44,20 +44,31 @@ namespace NepoGUI
 
         public double MaximumTargetValue { get; set; }
 
-        DistanceIntervalsRule tmpRule = new DistanceIntervalsRule();
+        DistanceIntervalsRule tmpRule2 = new DistanceIntervalsRule();
+        CurveRule tmpRule = new CurveRule(15, 100);
+        AgentConfig config = new AgentConfig();
         public MainWindow()
         {            
             Movables = new List<Control>();
+
             ManualOptimizeCommand = new RelayCommand(GetNewSolution);
             ResetSolutionCommand = new RelayCommand(ResetSolution);
             AutomateSolutionCommand = new RelayCommand(AutomateSolution);
-            tmpRule.AddInterval(0, 15, -1);
-            tmpRule.AddInterval(15,100,0.5);
+
+            tmpRule2.AddInterval(0, 15, -1);
+            tmpRule2.AddInterval(15,100,0.5);
+            config.Layers = new List<Layer>();
+            config.Rules = new List<ITargetFunctionComponent>();
+            config.Rules.Add(tmpRule);
+
             CreateSampleMap();
+
             Immovables = new List<Ellipse>();
+
             double minWeight = Map.ImmovableObjects.Min(x => x.Weight);
             double maxWeight = Map.ImmovableObjects.Max(x => x.Weight);
             MaximumTargetValue = 0;
+
             foreach (var immo in Map.ImmovableObjects)
             {
                 MaximumTargetValue += 0.5 * immo.Weight;
@@ -95,11 +106,11 @@ namespace NepoGUI
                 int targetvalueCounter = 0;
                 double lastTargetValue = 0;
                 double tmpTargetValue = 0;
-                while (i < 10000)
+                while (currentSolution.Progress < 100)
                 {
                     i++;
                     Dispatcher.Invoke(() => tmpTargetValue = TargetValue);
-                    if (i % 1 == 0)
+                    if (i % 100 == 0)
                     {
                         await Task.Delay(100);
                     }
@@ -112,8 +123,8 @@ namespace NepoGUI
                         targetvalueCounter = 0;
                     }
 
-                    if (targetvalueCounter > 100)
-                        break;
+                    //if (targetvalueCounter > 100)
+                        //break;
                 }
             });
         }
@@ -126,12 +137,13 @@ namespace NepoGUI
             {
                 i++;
                 var result = Optimizer.Instance.SelectChild(0);
+                currentSolution = result.Item1;
                 double currentTargetValue = tmpRule.CalculatePartialTargetValue(currentSolution);
                 bestValue = currentTargetValue;
                 bestId = currentSolution.SolutionID;
                 foreach (var sol in result.Item2)
                 {
-                    double tmptarget = tmpRule.CalculatePartialTargetValue(sol);
+                    double tmptarget = Optimizer.CalculateTargetValue(sol, config);
                     if(tmptarget >= bestValue)
                     {
                         bestValue = tmptarget;
@@ -142,7 +154,6 @@ namespace NepoGUI
                 Optimizer.Instance.SelectChild(bestId);
             }
             Dispatcher.Invoke(() => TargetValue = bestValue);
-            
 
             DrawSolution();
         }

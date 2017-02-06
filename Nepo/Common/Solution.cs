@@ -8,6 +8,7 @@ namespace Nepo.Common
     {
         private static int IdCounter = 0;
         private static Random _rand = new Random((int)DateTime.Now.Ticks);
+
         public Solution()
         {
             IdCounter++;
@@ -25,6 +26,10 @@ namespace Nepo.Common
 
         [DataMember]
         public PlanningObject[] PlanningObjects { get; set; }
+        /// <summary>
+        /// Overall progress of the optimization between 0 and 100. Agents can adjust the target function depending on the progress.
+        /// </summary>
+        public int Progress { get; set; }
 
         internal void FillRandomValues(int width, int height, int planningObjectCount)
         {
@@ -42,6 +47,7 @@ namespace Nepo.Common
         internal Solution CreateChildSolution()
         {
             Solution tmpChild = new Solution(PlanningObjects.Length);
+            tmpChild.Progress = Progress;
             int mutation = _rand.Next(PlanningObjects.Length);
             for (int i = 0; i < PlanningObjects.Length; i++)
             {

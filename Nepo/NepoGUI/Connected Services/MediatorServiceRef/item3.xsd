@@ -36,6 +36,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="votes" nillable="true" type="q5:ArrayOfTupleOfintboolean" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q6:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,7 +48,7 @@
   <xs:element name="DataReady">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Mediator" minOccurs="0" name="popeState" type="q6:CanIHasPope" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Mediator" minOccurs="0" name="popeState" type="q7:CanIHasPope" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

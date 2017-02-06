@@ -70,7 +70,7 @@ namespace Mediator
         /// Client liefert die Lösung mit deren Bewertung zurück. 
         /// </summary>
         /// <param name="votes"></param>
-       internal void Vote(List<Tuple<int, bool>> votes)
+        internal void Vote(List<Tuple<int, bool>> votes, Guid agentGuid)
         {
             // Prüfe, ob alle abgestimmt haben (über Anzahl der vorhandenen Liste
                 // Wenn nein, warten

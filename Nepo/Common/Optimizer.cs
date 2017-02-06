@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nepo.Common.Rules;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace Nepo.Common
 
         private Solution currentlyAccepted = null;
         private List<Solution> availableChildren = null;
+        private static int maxRounds = 100;
+        private int currentRound = 0;
         private Tuple<Solution, List<Solution>> GenerateSolutions()
         {
             if (null == currentlyAccepted)
@@ -22,6 +25,9 @@ namespace Nepo.Common
                 currentlyAccepted.FillRandomValues(map.MapSize.Width, map.MapSize.Height, map.PlanningObjectCount);
             }
             List<Solution> children = new List<Solution>();
+            children.Add(currentlyAccepted);
+            currentRound++;
+            currentlyAccepted.Progress = (int)(1.0 * currentRound / maxRounds);
             for (int i = 0; i < 50; i++)
                 children.Add(currentlyAccepted.CreateChildSolution());
             availableChildren = children;
@@ -32,6 +38,7 @@ namespace Nepo.Common
         {
             currentlyAccepted = null;
             availableChildren = null;
+            currentRound = 0;
         }
 
         public Tuple<Solution, List<Solution>> SelectChild(int id)
@@ -50,6 +57,27 @@ namespace Nepo.Common
             availableChildren = null;
 
             return GenerateSolutions();
+        }
+
+        public static double CalculateTargetValue(Solution currentSolution, AgentConfig config)
+        {
+            double targetvalue = 0;
+            foreach (var rule in config.Rules)
+            {
+                targetvalue += rule.CalculatePartialTargetValue(currentSolution);
+            }
+            foreach (var po in currentSolution.PlanningObjects)
+            {
+                foreach (var layer in config.Layers)
+                {
+                    var color = layer.Map.GetPixel(po.Location.X, po.Location.Y);
+                    var brightness = color.GetBrightness();
+                    var factor = (brightness * 2 - 1);
+                    targetvalue += factor * layer.Weight;
+                }
+            }
+
+            return targetvalue;
         }
     }
 

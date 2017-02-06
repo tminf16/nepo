@@ -34,5 +34,6 @@ namespace Nepo.Common
         }
 
         public string MapPath { get; set; }
+        public double Weight { get; set; } = 1;
     }
 }
