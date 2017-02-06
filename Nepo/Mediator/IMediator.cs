@@ -34,7 +34,7 @@ namespace Mediator
         /// </summary>
         /// <param name="votes">Tuple, consisting of solutionId and if the agent agrees to the solution.</param>
         [OperationContract]
-        void Vote(Tuple<int, bool> votes);
+        void Vote(List<Tuple<int, bool>> votes);
     }
 
     [ServiceContract]

@@ -36,7 +36,7 @@ namespace Mediator
 
         }
 
-        internal void Vote(Tuple<int, bool> votes)
+        internal void Vote(List<Tuple<int, bool>> votes)
         {
             throw new NotImplementedException();
         }

@@ -11,7 +11,7 @@ namespace NepoGUI
     /// </summary>
     public class NepoClient : IDisposable
     {
-        private readonly MediatorClient mediatorClient = new MediatorClient(new InstanceContext(new MediatorCallback()));
+        private readonly MediatorClient mediatorClient;
 
         private readonly MediatorCallback callback;
 
@@ -30,6 +30,11 @@ namespace NepoGUI
         {
             var newData = this.mediatorClient.GetProposedSolutions(this.privateGuid);
             this.NewDataAvailable?.Invoke(this, new NewDataEventArgs(newData));
+        }
+
+        public void Vote(List<Tuple<int, bool>> votes)
+        {
+            this.mediatorClient.Vote(votes);
         }
 
         public void Register()

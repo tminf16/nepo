@@ -28,7 +28,7 @@ namespace Mediator
             return handler.GetProposedSolutions(agentGuid);
         }
 
-        public void Vote(Tuple<int, bool> votes)
+        public void Vote(List<Tuple<int, bool>> votes)
         {
             handler.Vote(votes);
         }
