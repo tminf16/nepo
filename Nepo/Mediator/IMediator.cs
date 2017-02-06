@@ -27,7 +27,7 @@ namespace Mediator
         /// <param name="agentGuid">Unique Id of the agent.</param>
         /// <returns>A list of proposed solutions.</returns>
         [OperationContract]
-        Tuple<List<Solution>, int> GetProposedSolutions(Guid agentGuid);
+        List<Solution> GetProposedSolutions(Guid agentGuid);
 
         /// <summary>
         /// Allows an agent to vote for proposed solutions.

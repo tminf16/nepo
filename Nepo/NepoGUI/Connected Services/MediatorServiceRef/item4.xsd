@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Mediator" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Mediator" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="CanIHasPope">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="WhiteSmoke" />
+      <xs:enumeration value="BlackSmoke" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CanIHasPope" nillable="true" type="tns:CanIHasPope" />
+</xs:schema>

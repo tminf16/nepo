@@ -23,7 +23,7 @@ namespace Mediator
         }
 
 
-        public Tuple<List<Solution>, int> GetProposedSolutions(Guid agentGuid)
+        public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
             return handler.GetProposedSolutions(agentGuid);
         }

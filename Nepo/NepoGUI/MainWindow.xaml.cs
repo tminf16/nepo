@@ -1,21 +1,17 @@
-﻿using Nepo.Common;
-using Nepo.Common.Rules;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Nepo.Common;
+using Nepo.Common.Rules;
+using NepoGUI.MediatorServiceRef;
 
-namespace Nepo.GUI
+namespace NepoGUI
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
@@ -25,16 +21,19 @@ namespace Nepo.GUI
         public List<Ellipse> Immovables { get; set; }
         public List<Control> Movables { get; set; }
         public MapConfig Map { get { return DataHandler.GetMapConfig(); } }
-        public int MapWidth { get { return Map.MapSize.Width; } set { } }
-        public int MapHeight { get { return Map.MapSize.Height; } set { } }
+        public int MapWidth { get { return Map.MapSize.Width; }}
+        public int MapHeight { get { return Map.MapSize.Height; }}
         private int ImmoSize = 5;
         private int MovableSize = 500;
+
+        
 
         private Solution currentSolution;
         public RelayCommand ManualOptimizeCommand { get; set; }
         public RelayCommand ResetSolutionCommand { get; set; }
         public RelayCommand AutomateSolutionCommand { get; set; }
 
+        
 
         public double TargetValue
         {
@@ -47,7 +46,7 @@ namespace Nepo.GUI
 
         DistanceIntervalsRule tmpRule = new DistanceIntervalsRule();
         public MainWindow()
-        {
+        {            
             Movables = new List<Control>();
             ManualOptimizeCommand = new RelayCommand(GetNewSolution);
             ResetSolutionCommand = new RelayCommand(ResetSolution);
@@ -87,6 +86,7 @@ namespace Nepo.GUI
             currentSolution = Optimizer.Instance.SelectChild(0).Item1;
             GetNewSolution(null);
         }
+
         private void AutomateSolution(object obj)
         {
             new TaskFactory().StartNew(async () =>

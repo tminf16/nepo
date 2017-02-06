@@ -1,7 +1,9 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace Nepo.Common
 {
+    [DataContract]
     public class Solution
     {
         private static int IdCounter = 0;
@@ -17,7 +19,11 @@ namespace Nepo.Common
             SolutionID = IdCounter;
             PlanningObjects = new PlanningObject[objectCount];
         }
+
+        [DataMember]
         public int SolutionID { get; set; }
+
+        [DataMember]
         public PlanningObject[] PlanningObjects { get; set; }
 
         internal void FillRandomValues(int width, int height, int planningObjectCount)

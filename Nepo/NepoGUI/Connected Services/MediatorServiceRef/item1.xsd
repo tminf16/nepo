@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Nepo.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Nepo.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary1/Service1/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Drawing" />
+  <xs:complexType name="Instance">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AgentConfigs" nillable="true" type="tns:ArrayOfAgentConfig" />
+      <xs:element minOccurs="0" name="Map" nillable="true" type="tns:MapConfig" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Instance" nillable="true" type="tns:Instance" />
+  <xs:complexType name="ArrayOfAgentConfig">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="AgentConfig" nillable="true" type="tns:AgentConfig" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfAgentConfig" nillable="true" type="tns:ArrayOfAgentConfig" />
+  <xs:complexType name="AgentConfig">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Layers" nillable="true" type="tns:ArrayOfLayer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="AgentConfig" nillable="true" type="tns:AgentConfig" />
+  <xs:complexType name="ArrayOfLayer">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Layer" nillable="true" type="tns:Layer" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLayer" nillable="true" type="tns:ArrayOfLayer" />
+  <xs:complexType name="Layer">
+    <xs:sequence>
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Drawing" name="_map" nillable="true" type="q1:Bitmap" />
+      <xs:element name="_x003C_MapPath_x003E_k__BackingField" nillable="true" type="xs:string" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Drawing" name="_x003C_Polygons_x003E_k__BackingField" nillable="true" type="q2:ArrayOfArrayOfPoint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Layer" nillable="true" type="tns:Layer" />
+  <xs:complexType name="MapConfig">
+    <xs:sequence>
+      <xs:element name="_x003C_ImmovableObjects_x003E_k__BackingField" nillable="true" type="tns:ArrayOfImmovableObject" />
+      <xs:element name="_x003C_Layers_x003E_k__BackingField" nillable="true" type="tns:ArrayOfLayer" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Drawing" name="_x003C_MapSize_x003E_k__BackingField" type="q3:Size" />
+      <xs:element name="_x003C_PlanningObjectCount_x003E_k__BackingField" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MapConfig" nillable="true" type="tns:MapConfig" />
+  <xs:complexType name="ArrayOfImmovableObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ImmovableObject" nillable="true" type="tns:ImmovableObject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfImmovableObject" nillable="true" type="tns:ArrayOfImmovableObject" />
+  <xs:complexType name="ImmovableObject">
+    <xs:sequence>
+      <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="Location" type="q4:Point" />
+      <xs:element minOccurs="0" name="Weight" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ImmovableObject" nillable="true" type="tns:ImmovableObject" />
+  <xs:complexType name="ArrayOfSolution">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Solution" nillable="true" type="tns:Solution" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSolution" nillable="true" type="tns:ArrayOfSolution" />
+  <xs:complexType name="Solution">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PlanningObjects" nillable="true" type="tns:ArrayOfPlanningObject" />
+      <xs:element minOccurs="0" name="SolutionID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Solution" nillable="true" type="tns:Solution" />
+  <xs:complexType name="ArrayOfPlanningObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PlanningObject" nillable="true" type="tns:PlanningObject" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlanningObject" nillable="true" type="tns:ArrayOfPlanningObject" />
+  <xs:complexType name="PlanningObject">
+    <xs:sequence>
+      <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="Location" type="q5:Point" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlanningObject" nillable="true" type="tns:PlanningObject" />
+</xs:schema>
