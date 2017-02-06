@@ -1,0 +1,43 @@
+﻿<UserControl x:Class="Nepo.Common.MapControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Nepo.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="200" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid Background="AliceBlue">
+        <Grid>
+            <ItemsControl ItemsSource="{Binding MapLayerBitmaps}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <Grid>
+            <ItemsControl ItemsSource="{Binding AgentLayerBitmaps}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" Opacity="0.5"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+        <ItemsControl ItemsSource="{Binding AllImmovables, UpdateSourceTrigger=PropertyChanged}" Background="Transparent">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+        <ItemsControl ItemsSource="{Binding Movables}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+    </Grid>
+</UserControl>

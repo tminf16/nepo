@@ -23,10 +23,7 @@ namespace NepoGUI
         public MapConfig Map { get { return DataHandler.GetMapConfig(); } }
         public int MapWidth { get { return Map.MapSize.Width; }}
         public int MapHeight { get { return Map.MapSize.Height; }}
-        private int ImmoSize = 5;
-        private int MovableSize = 500;
 
-        
 
         private Solution currentSolution;
         public RelayCommand ManualOptimizeCommand { get; set; }
@@ -61,34 +58,20 @@ namespace NepoGUI
             ManualOptimizeCommand = new RelayCommand(GetNewSolution);
             ResetSolutionCommand = new RelayCommand(ResetSolution);
             AutomateSolutionCommand = new RelayCommand(AutomateSolution);
-
-            CreateSampleMap();
-
-            Immovables = new List<Ellipse>();
-
-            double minWeight = Map.ImmovableObjects.Min(x => x.Weight);
-            double maxWeight = Map.ImmovableObjects.Max(x => x.Weight);
-            MaximumTargetValue = 0;
-
-            foreach (var immo in Map.ImmovableObjects)
-            {
-                MaximumTargetValue += 0.5 * immo.Weight;
-                int additionalSize = (int)((immo.Weight - minWeight) / (maxWeight - minWeight) * 10);
-                var tmpItem = new Ellipse()
-                {
-                    Width = ImmoSize + additionalSize,
-                    Height = ImmoSize + additionalSize,
-                    Fill = Brushes.Red,
-                };
-                Canvas.SetTop(tmpItem, immo.Location.Y - (ImmoSize / 2));
-                Canvas.SetLeft(tmpItem, immo.Location.X - (ImmoSize / 2));
-                Immovables.Add(tmpItem);
-            }
-
-            DrawSolution();
+            
             currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            MaximumTargetValue = Session.Get.Map.ImmovableObjects.Sum(x => x.Weight);
             TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
+
+
             InitializeComponent();
+
+
+            OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
+            OptimizeMapControl.SetSolution(currentSolution);
+
+            ConfigMapControl.Configure(Session.Get.Map, Session.Get.Config);
+            ConfigMapControl.Render();
         }
                 
         private void ResetSolution(object obj)
@@ -103,8 +86,6 @@ namespace NepoGUI
             new TaskFactory().StartNew(async () =>
             {
                 int i = 0;
-                int targetvalueCounter = 0;
-                double lastTargetValue = 0;
                 double tmpTargetValue = 0;
                 while (currentSolution.Progress < 100)
                 {
@@ -115,16 +96,6 @@ namespace NepoGUI
                         await Task.Delay(100);
                     }
                     GetNewSolution(null);
-                    if (tmpTargetValue == lastTargetValue)
-                        targetvalueCounter++;
-                    else
-                    {
-                        lastTargetValue = tmpTargetValue;
-                        targetvalueCounter = 0;
-                    }
-
-                    //if (targetvalueCounter > 100)
-                        //break;
                 }
             });
         }
@@ -166,37 +137,8 @@ namespace NepoGUI
         {
             if (null == currentSolution)
                 currentSolution = Optimizer.Instance.SelectChild(0).Item1;
-
-            if (0 == Movables.Count())
-            {
-                List<ControlTemplate> templates = new List<ControlTemplate>();
-                foreach (var rule in Session.Get.Config.Rules)
-                {
-                    templates.Add(rule.GetUiTemplate());
-                }
-                foreach (var po in currentSolution.PlanningObjects)
-                {
-                    var tmpGrid = new Grid() { Width = MovableSize, Height = MovableSize };
-                    foreach (var template in templates)
-                    {
-                        var tmpItem = new Control() { Width = MovableSize, Height = MovableSize };
-                        tmpItem.Template = template;
-                        tmpGrid.Children.Add(tmpItem);
-                    }
-                    Movables.Add(tmpGrid);
-                }
-            }
-
-            for (int i = 0; i < currentSolution.PlanningObjects.Length; i++)
-            {
-                var tmpCtrl = Movables.ElementAt(i);
-                var po = currentSolution.PlanningObjects[i];
-                Dispatcher.Invoke(() => 
-                {
-                    Canvas.SetTop(tmpCtrl, po.Location.Y - (MovableSize / 2));
-                    Canvas.SetLeft(tmpCtrl, po.Location.X - (MovableSize / 2));
-                });
-            }
+            OptimizeMapControl.SetSolution(currentSolution);
+            
         }
 
         private static void CreateSampleMap()

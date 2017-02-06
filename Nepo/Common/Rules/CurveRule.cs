@@ -115,9 +115,11 @@ namespace Nepo.Common.Rules
                 ellipse.SetValue(Ellipse.StrokeProperty, new SolidColorBrush(Color.FromArgb(120, 0,0,0)));
                 ellipse.SetValue(Ellipse.StrokeThicknessProperty, 0.5);
 
-                RadialGradientBrush brush = new RadialGradientBrush();
-                brush.GradientOrigin = new Point(0.5, 0.5);
-                brush.Center = new Point(0.5, 0.5);
+                RadialGradientBrush brush = new RadialGradientBrush()
+                {
+                    GradientOrigin = new Point(0.5, 0.5),
+                    Center = new Point(0.5, 0.5)
+                };
                 brush.GradientStops.Add(new GradientStop(Color.FromArgb((byte)(120), 255, 0, 0), 0));
                 brush.GradientStops.Add(new GradientStop(Colors.Transparent, 1.0 * Min / Max));
                 brush.GradientStops.Add(new GradientStop(Color.FromArgb((byte)(120), 0, 255, 0), 1.0 * (Min + (Max - Min) / 3.0) / Max));

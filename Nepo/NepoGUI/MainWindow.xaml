@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NepoGUI"
+        xmlns:common="clr-namespace:Nepo.Common;assembly=Nepo.Common"
         mc:Ignorable="d"
         Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="550" Width="725"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
@@ -30,36 +31,15 @@
                         <Button Command="{Binding ResetSolutionCommand}">Reset</Button>
                     </StackPanel>
                     <ScrollViewer Grid.Column="1">
-                        <Grid Background="AliceBlue" Width="{Binding MapWidth}" Height="{Binding MapHeight}">
-                            <ItemsControl ItemsSource="{Binding Immovables}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                            </ItemsControl>
-                            <ItemsControl ItemsSource="{Binding Movables}">
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <Canvas/>
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Ellipse Width="50" Height="50" Stroke="Blue" StrokeThickness="10" Fill="Transparent"></Ellipse>
-                                            <TextBlock Text="{Binding Width}"></TextBlock>
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
-                        </Grid>
+                        <common:MapControl Name="OptimizeMapControl"></common:MapControl>
                     </ScrollViewer>
                 </Grid>
 
             </TabItem>
             <TabItem Header="Configuration">
-                
+                <StackPanel>
+                    <common:MapControl Name="ConfigMapControl"></common:MapControl>
+                </StackPanel>
             </TabItem>
         </TabControl>
     </Grid>
