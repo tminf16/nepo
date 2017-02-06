@@ -14,19 +14,22 @@ namespace Mediator
     /// </summary>
     public class MediatorService : IMediator
     {
+
+        private MediatorHandler handler = new MediatorHandler();
+ 
         public Instance Register(Guid agentGuid)
         {
-            throw new NotImplementedException();
+            return handler.Register(agentGuid);
         }
 
         public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
-            throw new NotImplementedException();
+            return handler.GetProposedSolutions(agentGuid);
         }
 
         public void Vote(Tuple<int, bool> votes)
         {
-            throw new NotImplementedException();
+            handler.Vote(votes);
         }
     }
 }

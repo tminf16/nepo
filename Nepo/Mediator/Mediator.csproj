@@ -71,6 +71,7 @@
       <DependentUpon>Mediator.svc</DependentUpon>
     </Compile>
     <Compile Include="IMediator.cs" />
+    <Compile Include="MediatorHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +89,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{069bf646-68dc-4d95-b037-73962a6cc68b}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataGenerator\DataGenerator.csproj">
+      <Project>{f0e1f10a-08d6-4556-8b50-61ad4b77dffa}</Project>
+      <Name>DataGenerator</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
