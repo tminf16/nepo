@@ -42,6 +42,16 @@ namespace NepoGUI
         }public static readonly DependencyProperty TargetValueProperty =
             DependencyProperty.Register("TargetValue", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
 
+
+        public int Progress
+        {
+            get { return (int)GetValue(ProgressProperty); }
+            set { SetValue(ProgressProperty, value); }
+        }public static readonly DependencyProperty ProgressProperty =
+            DependencyProperty.Register("Progress", typeof(int), typeof(MainWindow), new PropertyMetadata(0));
+
+
+
         public double MaximumTargetValue { get; set; }
    
         public MainWindow()
@@ -143,7 +153,11 @@ namespace NepoGUI
                 }
                 Optimizer.Instance.SelectChild(bestId);
             }
-            Dispatcher.Invoke(() => TargetValue = bestValue);
+            Dispatcher.Invoke(() =>
+            {
+                TargetValue = bestValue;
+                Progress = currentSolution.Progress;
+            });
 
             DrawSolution();
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,7 @@ namespace Nepo.Common
         private static T GetConfig<T>()
         {
             String filename = typeof(T).Name + ".xml";
+            filename = Directory.GetCurrentDirectory() + "\\" + filename;
             T config = default(T);
             if (!File.Exists(filename))
                 File.Create(filename).Close();
@@ -63,7 +65,8 @@ namespace Nepo.Common
                 filename = typeof(T).Name + ".xml";
             if (String.IsNullOrEmpty(filename))
                 return;
-            
+
+            filename = Directory.GetCurrentDirectory() + "\\" + filename;
             StreamWriter sw = new StreamWriter(filename);
             sw.Write(XmlHelper.Serialize(instance));
             sw.Close();

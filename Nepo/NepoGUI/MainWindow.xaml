@@ -24,6 +24,7 @@
                             <Run Text="Current Value:"></Run>
                             <Run Text="{Binding TargetValue}"></Run>
                         </TextBlock>
+                        <ProgressBar Height="25" Value="{Binding Progress}" Minimum="0" Maximum="100"></ProgressBar>
                         <Button Command="{Binding ManualOptimizeCommand}">Next Step</Button>
                         <Button Command="{Binding AutomateSolutionCommand}">Automate</Button>
                         <Button Command="{Binding ResetSolutionCommand}">Reset</Button>
