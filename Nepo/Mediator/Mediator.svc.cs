@@ -22,7 +22,8 @@ namespace Mediator
             return handler.Register(agentGuid);
         }
 
-        public List<Solution> GetProposedSolutions(Guid agentGuid)
+
+        public Tuple<List<Solution>, int> GetProposedSolutions(Guid agentGuid)
         {
             return handler.GetProposedSolutions(agentGuid);
         }
@@ -30,6 +31,14 @@ namespace Mediator
         public void Vote(Tuple<int, bool> votes)
         {
             handler.Vote(votes);
+        }
+    }
+
+    public class MediatorServiceCallback : IMediatorCallback
+    {
+        public void DataReady(CanIHasPope popeState)
+        {
+            throw new NotImplementedException();
         }
     }
 }
