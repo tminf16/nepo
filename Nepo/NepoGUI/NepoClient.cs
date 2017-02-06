@@ -32,14 +32,16 @@ namespace NepoGUI
             this.NewDataAvailable?.Invoke(this, new NewDataEventArgs(newData));
         }
 
+		
         public void Vote(List<Tuple<int, bool>> votes)
         {
             this.mediatorClient.Vote(votes);
         }
 
-        public void Register()
+
+        public Instance Register()
         {
-            this.mediatorClient.Register(this.privateGuid);
+            return this.mediatorClient.Register(this.privateGuid);
         }
 
         public void Dispose()
