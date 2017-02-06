@@ -19,7 +19,7 @@ namespace NepoGUI
     public partial class MainWindow : Window
     {
         public List<Ellipse> Immovables { get; set; }
-        public List<Control> Movables { get; set; }
+        public List<Grid> Movables { get; set; }
         public MapConfig Map { get { return DataHandler.GetMapConfig(); } }
         public int MapWidth { get { return Map.MapSize.Width; }}
         public int MapHeight { get { return Map.MapSize.Height; }}
@@ -43,23 +43,14 @@ namespace NepoGUI
             DependencyProperty.Register("TargetValue", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
 
         public double MaximumTargetValue { get; set; }
-
-        DistanceIntervalsRule tmpRule2 = new DistanceIntervalsRule();
-        CurveRule tmpRule = new CurveRule(15, 100);
-        AgentConfig config = new AgentConfig();
+   
         public MainWindow()
         {            
-            Movables = new List<Control>();
+            Movables = new List<Grid>();
 
             ManualOptimizeCommand = new RelayCommand(GetNewSolution);
             ResetSolutionCommand = new RelayCommand(ResetSolution);
             AutomateSolutionCommand = new RelayCommand(AutomateSolution);
-
-            tmpRule2.AddInterval(0, 15, -1);
-            tmpRule2.AddInterval(15,100,0.5);
-            config.Layers = new List<Layer>();
-            config.Rules = new List<ITargetFunctionComponent>();
-            config.Rules.Add(tmpRule);
 
             CreateSampleMap();
 
@@ -86,8 +77,7 @@ namespace NepoGUI
 
             DrawSolution();
             currentSolution = Optimizer.Instance.SelectChild(0).Item1;
-            
-            TargetValue = tmpRule.CalculatePartialTargetValue(currentSolution);
+            TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
             InitializeComponent();
         }
                 
@@ -138,12 +128,12 @@ namespace NepoGUI
                 i++;
                 var result = Optimizer.Instance.SelectChild(0);
                 currentSolution = result.Item1;
-                double currentTargetValue = tmpRule.CalculatePartialTargetValue(currentSolution);
+                double currentTargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
                 bestValue = currentTargetValue;
                 bestId = currentSolution.SolutionID;
                 foreach (var sol in result.Item2)
                 {
-                    double tmptarget = Optimizer.CalculateTargetValue(sol, config);
+                    double tmptarget = Optimizer.CalculateTargetValue(sol, Session.Get.Config);
                     if(tmptarget >= bestValue)
                     {
                         bestValue = tmptarget;
@@ -165,12 +155,21 @@ namespace NepoGUI
 
             if (0 == Movables.Count())
             {
-                ControlTemplate ct = tmpRule.GetUiTemplate();
+                List<ControlTemplate> templates = new List<ControlTemplate>();
+                foreach (var rule in Session.Get.Config.Rules)
+                {
+                    templates.Add(rule.GetUiTemplate());
+                }
                 foreach (var po in currentSolution.PlanningObjects)
                 {
-                    var tmpItem = new Control() { Width = MovableSize, Height = MovableSize};
-                    tmpItem.Template = ct;
-                    Movables.Add(tmpItem);
+                    var tmpGrid = new Grid() { Width = MovableSize, Height = MovableSize };
+                    foreach (var template in templates)
+                    {
+                        var tmpItem = new Control() { Width = MovableSize, Height = MovableSize };
+                        tmpItem.Template = template;
+                        tmpGrid.Children.Add(tmpItem);
+                    }
+                    Movables.Add(tmpGrid);
                 }
             }
 

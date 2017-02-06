@@ -48,10 +48,11 @@ namespace Mediator
 
             for (int i = 0; i< 10; i++)
             {
-                tmp = new Solution();
-                tmp.SolutionID = i;
-
-                for(int k=0; k<5; k++)
+                tmp = new Solution()
+                {
+                    SolutionID = i
+                };
+                for (int k=0; k<5; k++)
                 {
                     tmp.PlanningObjects[k].Location = new System.Drawing.Point(10,20);
                 }
@@ -109,9 +110,10 @@ namespace Mediator
             }
             DataHandler.SaveMapConfig(config);
 
-            Instance instance = new Instance();
-            instance.Map = config;
-
+            Instance instance = new Instance()
+            {
+                Map = config
+            };
             return instance;
 
         }

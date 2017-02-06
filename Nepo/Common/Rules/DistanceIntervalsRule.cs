@@ -9,16 +9,17 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 
 namespace Nepo.Common.Rules
 {
     public class DistanceIntervalsRule : ITargetFunctionComponent
     {
-        public List<Tuple<int, int, double>> Intervals { get; set; }
+        public List<Interval> Intervals { get; set; }
 
         public DistanceIntervalsRule()
         {
-            Intervals = new List<Tuple<int, int, double>>();
+            Intervals = new List<Interval>();
         }
 
         public void AddInterval(int min, int max, double value)
@@ -29,9 +30,10 @@ namespace Nepo.Common.Rules
                 value = 1;
             if (value < -1)
                 value = -1;
-            Intervals.Add(new Tuple<int, int, double>(min, max, value));
+            Intervals.Add(new Interval(min, max, value));
         }
 
+        override
         public double CalculatePartialTargetValue(Solution solution)
         {
             bool[] alreadyCounted = new bool[DataHandler.GetMapConfig().ImmovableObjects.Count];
@@ -45,12 +47,12 @@ namespace Nepo.Common.Rules
                 {
                     immoCount++;
                     var distance = po.Location.GetDistance(immo.Location);
-                    var interval = Intervals.FirstOrDefault(x => x.Item1 <= distance && x.Item2 > distance);
+                    var interval = Intervals.FirstOrDefault(x => x.Min <= distance && x.Max > distance);
                     if (null == interval)
                         continue;
                     if (!alreadyCounted[immoCount - 1])
                     {
-                        partialTargetValue += interval.Item3*immo.Weight;
+                        partialTargetValue += interval.Value*immo.Weight;
                         alreadyCounted[immoCount - 1] = true;
                     }
 
@@ -59,6 +61,7 @@ namespace Nepo.Common.Rules
             return partialTargetValue;
         }
 
+        override
         public ControlTemplate GetUiTemplate()
         {
 
@@ -66,24 +69,43 @@ namespace Nepo.Common.Rules
             var grid = new FrameworkElementFactory(typeof(Grid));
             //grid.SetValue(Grid.BackgroundProperty, Brushes.Blue);
             uiElement.VisualTree = grid;
-            foreach (var tuple in Intervals)
+            foreach (var interval in Intervals)
             {
                 var ellipse = new FrameworkElementFactory(typeof(Ellipse));
                 SolidColorBrush b;
-                if(0>tuple.Item3)
-                    b = new SolidColorBrush(Color.FromArgb((byte)(-120*tuple.Item3), 255, 0, 0));
+                if(0>interval.Value)
+                    b = new SolidColorBrush(Color.FromArgb((byte)(-120*interval.Value), 255, 0, 0));
                 else
-                    b = new SolidColorBrush(Color.FromArgb((byte)(120 * tuple.Item3), 0, 255, 0));
-                ellipse.SetValue(Ellipse.WidthProperty, (double)tuple.Item2*2);
-                ellipse.SetValue(Ellipse.HeightProperty, (double)tuple.Item2*2);
+                    b = new SolidColorBrush(Color.FromArgb((byte)(120 * interval.Value), 0, 255, 0));
+                ellipse.SetValue(Ellipse.WidthProperty, (double)interval.Max*2);
+                ellipse.SetValue(Ellipse.HeightProperty, (double)interval.Max*2);
                 ellipse.SetValue(Ellipse.FillProperty, Brushes.Transparent);
                 ellipse.SetValue(Ellipse.StrokeProperty, b);
-                ellipse.SetValue(Ellipse.StrokeThicknessProperty, (double)(tuple.Item2 - tuple.Item1));
+                ellipse.SetValue(Ellipse.StrokeThicknessProperty, (double)(interval.Max - interval.Min));
 
                 grid.AppendChild(ellipse);
             }
 
             return uiElement;
+        }
+    }
+
+    public class Interval
+    {
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public double Value { get; set; }
+
+        public Interval()
+        {
+
+        }
+
+        public Interval(int Min, int Max, double Value)
+        {
+            this.Min = Min;
+            this.Max = Max;
+            this.Value = Value;
         }
     }
 }

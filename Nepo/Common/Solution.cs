@@ -46,8 +46,10 @@ namespace Nepo.Common
 
         internal Solution CreateChildSolution()
         {
-            Solution tmpChild = new Solution(PlanningObjects.Length);
-            tmpChild.Progress = Progress;
+            Solution tmpChild = new Solution(PlanningObjects.Length)
+            {
+                Progress = Progress
+            };
             int mutation = _rand.Next(PlanningObjects.Length);
             for (int i = 0; i < PlanningObjects.Length; i++)
             {

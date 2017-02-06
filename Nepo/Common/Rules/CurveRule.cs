@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using System.Xml.Serialization;
 
 namespace Nepo.Common.Rules
 {
@@ -34,6 +35,12 @@ namespace Nepo.Common.Rules
             MinusHalfDeltaSquare = -1.0 / HalfDelta / HalfDelta;
         }
 
+        public CurveRule()
+        {
+
+        }
+
+        override
         public double CalculatePartialTargetValue(Solution solution)
         {
             double[] alreadyCounted = new double[DataHandler.GetMapConfig().ImmovableObjects.Count];
@@ -83,6 +90,7 @@ namespace Nepo.Common.Rules
             return correctedValue;
         }
 
+        override
         public ControlTemplate GetUiTemplate()
         {
 
