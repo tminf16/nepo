@@ -5,29 +5,28 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Nepo.Common;
 
 namespace Mediator
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Mediator" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Mediator.svc or Mediator.svc.cs at the Solution Explorer and start debugging.
-    public class Mediator : IMediator
+    /// <summary>
+    /// Handles WCF specific logic.
+    /// </summary>
+    public class MediatorService : IMediator
     {
-        public string GetData(int value)
+        public Instance Register(Guid agentGuid)
         {
-            return string.Format("You entered: {0}", value);
+            throw new NotImplementedException();
         }
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
+        public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
-            if (composite == null)
-            {
-                throw new ArgumentNullException("composite");
-            }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
+            throw new NotImplementedException();
+        }
+
+        public void Vote(Tuple<int, bool> votes)
+        {
+            throw new NotImplementedException();
         }
     }
 }

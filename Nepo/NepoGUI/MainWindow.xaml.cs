@@ -189,7 +189,7 @@ namespace Nepo.GUI
                 config.ImmovableObjects.Add(new ImmovableObject()
                 {
                     Location = new System.Drawing.Point(rand.Next(500), rand.Next(500)),
-                    Weight = rand.Next(100, 150)
+                    Weight = rand.Next(100, 150) 
                 });
             }
             DataHandler.SaveMapConfig(config);

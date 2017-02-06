@@ -1,10 +1,12 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using Nepo.Common;
 
 namespace Mediator
 {
@@ -12,36 +14,28 @@ namespace Mediator
     [ServiceContract]
     public interface IMediator
     {
-
+        /// <summary>
+        /// Registers an agent with the mediator.
+        /// </summary>
+        /// <param name="agentGuid">Unique Id of the agent.</param>
+        /// <returns>The inital instance.</returns>
         [OperationContract]
-        string GetData(int value);
+        Instance Register(Guid agentGuid);
 
+        /// <summary>
+        /// Gets a list of proposed solutions from the mediator.
+        /// </summary>
+        /// <param name="agentGuid">Unique Id of the agent.</param>
+        /// <returns>A list of proposed solutions.</returns>
         [OperationContract]
-        CompositeType GetDataUsingDataContract(CompositeType composite);
+        List<Solution> GetProposedSolutions(Guid agentGuid);
 
-        // TODO: Add your service operations here
-    }
+        /// <summary>
+        /// Allows an agent to vote for proposed solutions.
+        /// </summary>
+        /// <param name="votes">Tuple, consisting of solutionId and if the agent agrees to the solution.</param>
+        [OperationContract]
+        void Vote(Tuple<int, bool> votes);
 
-
-    // Use a data contract as illustrated in the sample below to add composite types to service operations.
-    [DataContract]
-    public class CompositeType
-    {
-        bool boolValue = true;
-        string stringValue = "Hello ";
-
-        [DataMember]
-        public bool BoolValue
-        {
-            get { return boolValue; }
-            set { boolValue = value; }
-        }
-
-        [DataMember]
-        public string StringValue
-        {
-            get { return stringValue; }
-            set { stringValue = value; }
-        }
     }
 }
