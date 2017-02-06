@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Mediator;
 
 namespace NepoMediator
 {
@@ -20,9 +21,13 @@ namespace NepoMediator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly MediatorHost host;
+
         public MainWindow()
         {
             InitializeComponent();
+            this.host = new MediatorHost();
+            this.host.Start();
         }
     }
 }

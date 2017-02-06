@@ -10,8 +10,7 @@ using Nepo.Common;
 
 namespace Mediator
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IMediator" in both code and config file together.
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(IMediatorCallback))]
     public interface IMediator
     {
         /// <summary>
@@ -28,7 +27,7 @@ namespace Mediator
         /// <param name="agentGuid">Unique Id of the agent.</param>
         /// <returns>A list of proposed solutions.</returns>
         [OperationContract]
-        List<Solution> GetProposedSolutions(Guid agentGuid);
+        Tuple<List<Solution>, int> GetProposedSolutions(Guid agentGuid);
 
         /// <summary>
         /// Allows an agent to vote for proposed solutions.
@@ -36,6 +35,30 @@ namespace Mediator
         /// <param name="votes">Tuple, consisting of solutionId and if the agent agrees to the solution.</param>
         [OperationContract]
         void Vote(Tuple<int, bool> votes);
+    }
 
+    [ServiceContract]
+    public interface IMediatorCallback
+    {
+        [OperationContract]
+        void DataReady(CanIHasPope popeState);
+    }
+
+    /// <summary>
+    /// Habemus Papam?
+    /// </summary>
+    [DataContract]
+    public enum CanIHasPope
+    {
+        /// <summary>
+        /// Pope ready.
+        /// </summary>
+        [EnumMember]
+        WhiteSmoke,
+        /// <summary>
+        /// No pope yet.
+        /// </summary>
+        [EnumMember]
+        BlackSmoke
     }
 }

@@ -19,12 +19,21 @@ namespace Mediator
             throw new NotImplementedException();
         }
 
-        public List<Solution> GetProposedSolutions(Guid agentGuid)
+
+        public Tuple<List<Solution>, int> GetProposedSolutions(Guid agentGuid)
         {
             throw new NotImplementedException();
         }
 
         public void Vote(Tuple<int, bool> votes)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class MediatorServiceCallback : IMediatorCallback
+    {
+        public void DataReady(CanIHasPope popeState)
         {
             throw new NotImplementedException();
         }
