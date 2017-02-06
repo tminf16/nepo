@@ -14,10 +14,15 @@ namespace Mediator
     /// </summary>
     public class MediatorService : IMediator
     {
-        private MediatorHandler handler = new MediatorHandler();
+        private MediatorHandler handler;
 
         private readonly Dictionary<Guid, IMediatorCallback> callbackChannels = new Dictionary<Guid, IMediatorCallback>();
 
+
+        public MediatorService()
+        {
+            handler = new MediatorHandler(this);
+        }
 
         public Instance Register(Guid agentGuid)
         {
@@ -29,10 +34,10 @@ namespace Mediator
         {
             return handler.GetProposedSolutions(agentGuid);
         }
-        
+
         public void Vote(List<Tuple<int, bool>> votes, Guid agentGuid)
         {
-            handler.Vote(votes, agentGuid);
+            handler.Vote(agentGuid, votes);
         }
 
         public void DataReadyCallback(CanIHasPope popeState)
