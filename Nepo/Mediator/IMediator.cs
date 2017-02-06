@@ -37,6 +37,9 @@ namespace Mediator
         void Vote(List<Tuple<int, bool>> votes);
     }
 
+    /// <summary>
+    /// Callback contract. 
+    /// </summary>
     [ServiceContract]
     public interface IMediatorCallback
     {

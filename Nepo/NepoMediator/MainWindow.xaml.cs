@@ -27,7 +27,10 @@ namespace NepoMediator
         {
             InitializeComponent();
             this.host = new MediatorHost();
-            this.host.Start();
+            Task.Run(() =>
+            {
+                this.host.Start();
+            });
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Mediator
             return Instance;
         }
 
-       public  List<Solution> GetProposedSolutions(Guid agentGuid)
+       public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
             throw new NotImplementedException();
 
