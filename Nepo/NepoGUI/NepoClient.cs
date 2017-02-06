@@ -35,7 +35,7 @@ namespace NepoGUI
 		
         public void Vote(List<Tuple<int, bool>> votes)
         {
-            this.mediatorClient.Vote(votes);
+            this.mediatorClient.Vote(votes, this.privateGuid);
         }
 
 

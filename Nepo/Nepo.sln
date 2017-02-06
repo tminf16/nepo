@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NepoMediator", "NepoMediato
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90E8E083-D92D-4902-92A0-5328AA7229BE}"
 	ProjectSection(SolutionItems) = preProject
+		..\Doc\Dokumentation Nepo.docx = ..\Doc\Dokumentation Nepo.docx
 		..\Doc\Structure.vsdx = ..\Doc\Structure.vsdx
 	EndProjectSection
 EndProject

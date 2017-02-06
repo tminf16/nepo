@@ -33,8 +33,9 @@ namespace Mediator
         /// Allows an agent to vote for proposed solutions.
         /// </summary>
         /// <param name="votes">Tuple, consisting of solutionId and if the agent agrees to the solution.</param>
+        /// <param name="agentGuid">Unique Id of the agent.</param>
         [OperationContract]
-        void Vote(List<Tuple<int, bool>> votes);
+        void Vote(List<Tuple<int, bool>> votes, Guid agentGuid);
     }
 
     /// <summary>

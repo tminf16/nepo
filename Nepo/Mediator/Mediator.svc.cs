@@ -18,6 +18,7 @@ namespace Mediator
 
         private readonly Dictionary<Guid, IMediatorCallback> callbackChannels = new Dictionary<Guid, IMediatorCallback>();
 
+
         public Instance Register(Guid agentGuid)
         {
             this.callbackChannels.Add(agentGuid, OperationContext.Current.GetCallbackChannel<IMediatorCallback>());
@@ -28,10 +29,10 @@ namespace Mediator
         {
             return handler.GetProposedSolutions(agentGuid);
         }
-
-        public void Vote(List<Tuple<int, bool>> votes)
+        
+        public void Vote(List<Tuple<int, bool>> votes, Guid agentGuid)
         {
-            handler.Vote(votes);
+            handler.Vote(votes, agentGuid);
         }
 
         public void DataReadyCallback(CanIHasPope popeState)
