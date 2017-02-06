@@ -133,7 +133,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{069bf646-68dc-4d95-b037-73962a6cc68b}</Project>
       <Name>Common</Name>
@@ -144,8 +143,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-=======
->>>>>>> Stashed changes
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
