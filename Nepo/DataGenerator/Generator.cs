@@ -62,6 +62,8 @@ namespace Nepo.DataGenerator
             var layer = new Layer();
 
             var bitmap = new Bitmap(map.MapSize.Height, map.MapSize.Width);
+
+            return null;
         }
 
         
