@@ -10,6 +10,7 @@
         <StackPanel Background="White" Orientation="Vertical">
             <TextBlock>Welcome to NEPO</TextBlock>
             <TextBlock>The following instances are available:</TextBlock>
+            <Button Command="{Binding CheckInstanceCommand}">Check</Button>
             <ItemsControl ItemsSource="{Binding AvailableInstances}" Margin="0,10,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

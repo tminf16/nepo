@@ -52,19 +52,22 @@ namespace Nepo.Common
         private static MapConfig _map = null;
         public static MapConfig GetMapConfig(string instance = null)
         {
-            return _map ?? (_map = GetConfig<MapConfig>(instance));
+            if(String.IsNullOrEmpty(instance))
+                return _map ?? (_map = GetConfig<MapConfig>());
+            return GetConfig<MapConfig>(instance);
         }
 
         private static AgentConfig _agent = null;
         public static AgentConfig GetAgentConfig(string instance = null)
         {
-            return _agent ?? (_agent = GetConfig<AgentConfig>(instance));
+            if (String.IsNullOrEmpty(instance))
+                return _agent ?? (_agent = GetConfig<AgentConfig>());
+            return GetConfig<AgentConfig>(instance);
         }
-
-        private static List<AgentConfig> _agents = null;
-        public static List<AgentConfig> GetAgentConfigs(string instance = null)
+        
+        public static List<AgentConfig> GetAgentConfigs(string instance)
         {
-            return _agents ?? (_agents = GetConfig<List<AgentConfig>>(instance));
+            return GetConfig<List<AgentConfig>>(instance);
         }
     }
 

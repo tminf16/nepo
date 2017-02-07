@@ -16,6 +16,9 @@ namespace NepoGUI
         public MapConfig Map { get; set; }
         public List<Instance> Instances { get; set; }
         private Instance _currentInstance;
+
+        private NepoClient _client = new NepoClient();
+
         public Instance CurrentInstance { get { return _currentInstance; } set
             {
                 _currentInstance = value;
@@ -44,6 +47,13 @@ namespace NepoGUI
         {
             DataHandler.SaveAgentConfig(Config);
             DataHandler.SaveMapConfig(Map);
+        }
+
+        public void CheckMediator()
+        {
+            var result = _client.Register();
+            result.Save();
+            Instances = Instance.LoadInstances();
         }
     }
 }

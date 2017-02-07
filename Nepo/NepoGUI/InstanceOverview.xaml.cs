@@ -1,6 +1,7 @@
 ﻿using Nepo.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,20 +20,35 @@ namespace NepoGUI
     /// <summary>
     /// Interaktionslogik für InstanceOverview.xaml
     /// </summary>
-    public partial class InstanceOverview : UserControl
+    public partial class InstanceOverview : UserControl, INotifyPropertyChanged
     {
         public List<Instance> AvailableInstances { get { return Session.Get.Instances; } set { } }
         public RelayCommand SelectInstanceCommand { get; set; }
+        public RelayCommand CheckInstanceCommand { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public InstanceOverview()
         {
             SelectInstanceCommand = new RelayCommand(SelectInstance);
+            CheckInstanceCommand = new RelayCommand(CheckInstance);
             InitializeComponent();
         }
 
         private void SelectInstance(object obj)
         {
             GuiNavigation.Get.SelectInstance((Guid)obj);
+        }
 
+        private void CheckInstance(object obj)
+        {
+            Session.Get.CheckMediator();
+            AvailableInstances = Instance.LoadInstances();
+            Dispatcher.Invoke(() =>OnPropertyChanged("AvailableInstances"));
         }
     }
 }
