@@ -120,6 +120,9 @@
     <None Include="Connected Services\MediatorServiceRef\item5.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\MediatorServiceRef\item6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\MediatorServiceRef\MediatorService.wsdl" />
     <None Include="Properties\DataSources\Nepo.Common.Instance.datasource" />
     <None Include="Properties\DataSources\Nepo.Common.Solution.datasource" />
