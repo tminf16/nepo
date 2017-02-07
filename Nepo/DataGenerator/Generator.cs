@@ -57,6 +57,15 @@ namespace Nepo.DataGenerator
             return result;
         }
 
+        public static Layer GenerateLayer(MapGenerationConstraints constraints, Random rng, MapConfig map)
+        {
+            var layer = new Layer();
+
+            var bitmap = new Bitmap(map.MapSize.Height, map.MapSize.Width);
+        }
+
+        
+
         private static List<ImmovableObject> GenerateImmovableObjects(int count, MapGenerationConstraints constraints, Random rng)
         {
             var result = new List<ImmovableObject>();

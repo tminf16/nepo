@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Windows.Shapes;
 using System.Xml.Serialization;
 
 namespace Nepo.Common
 {
+    [DataContract]
     [Serializable]
     public class Layer
-    {
-        /// <summary>
-        /// Polygons always have 100% opacity.
-        /// </summary>
-        public List<List<Point>> Polygons { get; set; }
-
+    {        
         private Bitmap _map;
 
         [XmlIgnore]
+        [DataMember]
         public Bitmap Map
         {
             get
@@ -27,13 +26,20 @@ namespace Nepo.Common
                 }
                 else
                 {
-                    _map = (Bitmap) Image.FromFile(this.MapPath);
+                    _map = (Bitmap) Image.FromFile(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.fileName));
                     return _map;
                 }
             }
-        }
 
-        public string MapPath { get; set; }
+            set
+            {
+                this._map = value;
+                this._map.Save(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.fileName));
+            }
+        }
+        
+        public string fileName { get; set; }
+        [DataMember]
         public double Weight { get; set; } = 1;
     }
 }

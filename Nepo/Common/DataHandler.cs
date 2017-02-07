@@ -58,13 +58,18 @@ namespace Nepo.Common
 
     public static class XmlExtensions
     {
-        public static void Save<T>(this T instance)
+        public static void Save<T>(this T instance, string filename = null)
         {
-            String filename = String.Empty;
-            if (typeof(MapConfig) == typeof(T) || typeof(AgentConfig) == typeof(T))
+
+            if (string.IsNullOrEmpty(filename) && (typeof(MapConfig) == typeof(T) || typeof(AgentConfig) == typeof(T)))
+            {
                 filename = typeof(T).Name + ".xml";
-            if (String.IsNullOrEmpty(filename))
-                return;
+            }
+
+            if (string.IsNullOrEmpty(filename))
+            {
+                throw new ArgumentNullException(nameof(filename));
+            }                         
 
             filename = Directory.GetCurrentDirectory() + "\\" + filename;
             StreamWriter sw = new StreamWriter(filename);
