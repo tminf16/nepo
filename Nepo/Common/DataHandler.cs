@@ -10,10 +10,10 @@ namespace Nepo.Common
 {
     public class DataHandler
     {
-        private static T GetConfig<T>()
+        private static T GetConfig<T>(String instanceFolder = null)
         {
             String filename = typeof(T).Name + ".xml";
-            filename = Directory.GetCurrentDirectory() + "\\" + filename;
+            filename = Directory.GetCurrentDirectory() + "\\" + (null == instanceFolder ? "" : (instanceFolder + "\\")) + filename;
             T config = default(T);
             if (!File.Exists(filename))
                 File.Create(filename).Close();
