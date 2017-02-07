@@ -46,6 +46,7 @@ namespace Nepo.DataGenerator
         {
             var result = new Instance
             {
+                InstanceId = Guid.NewGuid(),
                 Map =
                 {
                     MapSize = rng.NextSize(constraints.MinSize, constraints.MaxSize),
