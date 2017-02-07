@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using System.Threading.Tasks;
 using Nepo.Common;
 
 namespace Mediator
@@ -46,7 +47,7 @@ namespace Mediator
         {
             foreach (var callback in callbackChannels)
             {
-                callback.Value.DataReady(popeState);
+                Task.Run(() => { callback.Value.DataReady(popeState); });
             }
         }
     }
