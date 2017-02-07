@@ -54,7 +54,7 @@ namespace Mediator
         public void Unregister(Guid agentGuid)
         {
             callbackChannels.Remove(agentGuid);
-            throw new NotImplementedException();
+            handler.Unregister(agentGuid);
         }
     }
 }

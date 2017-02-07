@@ -16,6 +16,9 @@ namespace Mediator
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
         private List<Solution> currentSolution = new List<Solution>();
+        private int roundCount = 0;
+        private int maxRound = 3;
+
 
 
         public MediatorHandler(MediatorService service)
@@ -31,8 +34,18 @@ namespace Mediator
         /// <returns></returns>ö
         public Instance Register(Guid agentGuid)
         {
+            if(AgentList.Count == 0)
+            {
+                roundCount = 0;
+            }
             this.AgentList.Add(agentGuid);
             return Instance;
+        }
+
+
+        public void Unregister(Guid agentGuid)
+        {
+            this.AgentList.Remove(agentGuid);
         }
 
 
@@ -104,8 +117,20 @@ namespace Mediator
                 // Alle Abstimmungen erhalten -> Mutiere Lösung und rufe Callback auf
                 this.currentSolution = generateNewSolution();
 
-                // Mediator is Ready for Clients
-                service.DataReadyCallback(CanIHasPope.BlackSmoke);
+                // Nächste Runde
+                roundCount++;
+
+                if(roundCount > maxRound)
+                {
+                    // Abstimmung beendet
+                    service.DataReadyCallback(CanIHasPope.WhiteSmoke);
+                }
+                else
+                {
+                    // Es folgt eine weitere Abstimmungsrunde
+                    service.DataReadyCallback(CanIHasPope.BlackSmoke);
+                }
+
             }
         }
 

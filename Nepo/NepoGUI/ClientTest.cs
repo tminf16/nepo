@@ -22,6 +22,7 @@ namespace NepoGUI
             NepoClient _client = new NepoClient();
             client = _client;
             _client.NewDataAvailable += Client_NewDataAvailable;
+            _client.HabemusPapam += _client_HabemusPapam;
 
             // Register on Mediator Server
             Instance _instance = _client.Register();
@@ -32,6 +33,12 @@ namespace NepoGUI
             while (true) ;
         }
 
+        private static void _client_HabemusPapam(object sender, EventArgs e)
+        {
+            Console.WriteLine("bye bye cruel world");
+            client.Unregister();
+            Environment.Exit(0);
+        }
 
         private static void nextRound()
         {
