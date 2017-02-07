@@ -23,8 +23,6 @@ namespace Mediator
             this.service = service;
         }
 
-
-
         /// <summary>
         /// Registriere Client-Agenten und liefere initiale Lösung zurück
         /// 
@@ -34,11 +32,6 @@ namespace Mediator
         public Instance Register(Guid agentGuid)
         {
             this.AgentList.Add(agentGuid);
-
-            /*if (null == Instance)
-            {
-                Instance = InitInstance();
-            }*/
             return Instance;
         }
 
@@ -112,7 +105,7 @@ namespace Mediator
                 this.currentSolution = generateNewSolution();
 
                 // Mediator is Ready for Clients
-                service.DataReadyCallback(CanIHasPope.WhiteSmoke);
+                service.DataReadyCallback(CanIHasPope.BlackSmoke);
             }
         }
 

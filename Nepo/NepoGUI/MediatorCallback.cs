@@ -1,5 +1,6 @@
 ﻿using System;
 using NepoGUI.MediatorServiceRef;
+using System.Threading.Tasks;
 
 namespace NepoGUI
 {
@@ -9,21 +10,20 @@ namespace NepoGUI
 
         public void DataReady(CanIHasPope popeState)
         {
-<<<<<<< Updated upstream
-            this.DataIsReady?.Invoke(this, new DataReadyEventArgs(popeState));   
-=======
-            Console.Write("");
->>>>>>> Stashed changes
+            Task.Run(() =>
+            {
+                this.DataIsReady?.Invoke(this, new DataReadyEventArgs(popeState));
+            });
         }
     }
 
     public class DataReadyEventArgs
     {
-        public CanIHasPope popeState;
+        public CanIHasPope PopeState { get; set;  }
 
         public DataReadyEventArgs(CanIHasPope popeState)
         {
-            
+            this.PopeState = popeState;
         }
     }
 }
