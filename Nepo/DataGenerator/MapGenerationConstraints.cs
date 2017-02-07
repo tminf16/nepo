@@ -56,6 +56,6 @@ namespace Nepo.DataGenerator
         /// <summary>
         /// Constraints for generating immovable objects.
         /// </summary>
-        public ImmovableObjectContraints ImmovableObjectContraints { get; set; }        
+        public ImmovableObjectContraints ImmovableObjectContraints { get; set; } = new ImmovableObjectContraints();
     }
 }

@@ -138,6 +138,10 @@
       <Project>{069bf646-68dc-4d95-b037-73962a6cc68b}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DataGenerator\DataGenerator.csproj">
+      <Project>{F0E1F10A-08D6-4556-8B50-61AD4B77DFFA}</Project>
+      <Name>DataGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mediator\Mediator.csproj">
       <Project>{7963c753-909b-4388-81e3-482702837783}</Project>
       <Name>Mediator</Name>

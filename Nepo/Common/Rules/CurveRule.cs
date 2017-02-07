@@ -65,7 +65,7 @@ namespace Nepo.Common.Rules
                 {
                     immoCount++;
                     var distance = po.Location.GetDistance(immo.Location);
-                    double value = F(distance, correction) *immo.Weight;
+                    double value = F(distance, correction) *(double)immo.Weight;
 
                     if (0.0 < alreadyCounted[immoCount - 1])
                     {

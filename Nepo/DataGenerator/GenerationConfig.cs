@@ -15,7 +15,7 @@ namespace Nepo.DataGenerator
         /// <summary>
         /// Seed used for instance generation. Set to -1 for no seed.
         /// </summary>
-        public int Seed { get; set; } = 0;
+        public int Seed { get; set; } = -1;
 
         /// <summary>
         /// Number of Instances to generate.

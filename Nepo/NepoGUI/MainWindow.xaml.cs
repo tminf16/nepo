@@ -60,7 +60,7 @@ namespace NepoGUI
             AutomateSolutionCommand = new RelayCommand(AutomateSolution);
             
             currentSolution = Optimizer.Instance.SelectChild(0).Item1;
-            MaximumTargetValue = Session.Get.Map.ImmovableObjects.Sum(x => x.Weight);
+            MaximumTargetValue = (double)Session.Get.Map.ImmovableObjects.Sum(x => x.Weight);
             TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
 
 
