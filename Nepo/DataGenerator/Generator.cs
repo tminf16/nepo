@@ -28,12 +28,12 @@ namespace Nepo.DataGenerator
                 constraints = new GenerationConfig();
             }            
             
-            var rng = constraints.Seed == -1 ? new Random() : new Random(constraints.Seed);
+            
             var result = new List<Instance>();
 
             for (int i = 1; i <= constraints.InstanceCount; ++i)
             {
-                result.Add(GenerateInstance(constraints.Constraints, rng));
+                result.Add(GenerateInstance(constraints.Constraints));
             }
 
             var tcs = new TaskCompletionSource<List<Instance>>();
@@ -42,11 +42,13 @@ namespace Nepo.DataGenerator
         }
 
 
-        public static Instance GenerateInstance(MapGenerationConstraints constraints, Random rng)
+        public static Instance GenerateInstance(MapGenerationConstraints constraints)
         {
+            var guid = Guid.NewGuid();
+            var rng = new Random(guid.GetHashCode());
             var result = new Instance
             {
-                InstanceId = Guid.NewGuid(),
+                InstanceId = guid,
                 Map =
                 {
                     MapSize = rng.NextSize(constraints.MinSize, constraints.MaxSize),
