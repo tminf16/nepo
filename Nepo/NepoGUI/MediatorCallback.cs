@@ -9,7 +9,11 @@ namespace NepoGUI
 
         public void DataReady(CanIHasPope popeState)
         {
+<<<<<<< Updated upstream
             this.DataIsReady?.Invoke(this, new DataReadyEventArgs(popeState));   
+=======
+            Console.Write("");
+>>>>>>> Stashed changes
         }
     }
 
