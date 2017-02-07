@@ -55,8 +55,8 @@ namespace Nepo.Common
 
             AllImmovables.Clear();
 
-            double minWeight = _currentMap.ImmovableObjects.Min(x => x.Weight);
-            double maxWeight = _currentMap.ImmovableObjects.Max(x => x.Weight);
+            var minWeight = _currentMap.ImmovableObjects.Min(x => x.Weight);
+            var maxWeight = _currentMap.ImmovableObjects.Max(x => x.Weight);
 
             foreach (var immo in _currentMap.ImmovableObjects)
             {
