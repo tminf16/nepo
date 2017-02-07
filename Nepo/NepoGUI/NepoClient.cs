@@ -19,6 +19,8 @@ namespace NepoGUI
 
         public event EventHandler<NewDataEventArgs> NewDataAvailable;
 
+        public event EventHandler HabemusPapam;
+
         public NepoClient()
         {
             this.callback = new MediatorCallback();
@@ -27,10 +29,17 @@ namespace NepoGUI
             
         }
 
-        private void Callback_DataIsReady(object sender, EventArgs e)
+        private void Callback_DataIsReady(object sender, DataReadyEventArgs e)
         {
-            var newData = this.mediatorClient.GetProposedSolutions(this.privateGuid);
-            this.NewDataAvailable?.Invoke(this, new NewDataEventArgs(newData));
+            if (e.popeState == CanIHasPope.BlackSmoke)
+            {
+                var newData = this.mediatorClient.GetProposedSolutions(this.privateGuid);
+                this.NewDataAvailable?.Invoke(this, new NewDataEventArgs(newData));
+            }
+            else
+            {
+                this.HabemusPapam?.Invoke(this, new EventArgs());
+            }
         }
 
 		

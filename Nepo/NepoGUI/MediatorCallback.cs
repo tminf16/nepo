@@ -5,11 +5,11 @@ namespace NepoGUI
 {
     public class MediatorCallback : IMediatorCallback
     {
-        public event EventHandler DataIsReady;
+        public event EventHandler<DataReadyEventArgs> DataIsReady;
 
         public void DataReady(CanIHasPope popeState)
         {
-           
+            this.DataIsReady?.Invoke(this, new DataReadyEventArgs(popeState));   
         }
     }
 
