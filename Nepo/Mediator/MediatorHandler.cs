@@ -15,8 +15,7 @@ namespace Mediator
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
         private List<Solution> currentSolution = new List<Solution>();
-        private int roundCount = 0;
-        private int maxRound = 3;
+        private int maxRound = 50;
 
 
         public MediatorHandler(MediatorService service)
@@ -32,10 +31,6 @@ namespace Mediator
         /// <returns></returns>ö
         public Instance Register(Guid agentGuid)
         {
-            if(AgentList.Count == 0)
-            {
-                roundCount = 0;
-            }
             this.AgentList.Add(agentGuid);
 
             if(Instance == null)
@@ -46,10 +41,14 @@ namespace Mediator
             return Instance;
         }
 
-
         public void Unregister(Guid agentGuid)
         {
             this.AgentList.Remove(agentGuid);
+        }
+
+        internal Solution GetCurrentSolution(Guid agentGuid)
+        {
+            return Optimizer.Instance.SelectChild(0).Item1;
         }
 
 
@@ -63,7 +62,7 @@ namespace Mediator
         /// <returns></returns>
         public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
-            return currentSolution;
+            return Optimizer.Instance.SelectChild(0).Item2;
         }
 
         /// <summary>
@@ -109,7 +108,7 @@ namespace Mediator
             {
                 // Es sind noch nicht alle Teilnehmer am Mediator angemeldet
                 // Speichere Vote des Teilnehmers in Struktur
-                return;
+                //return;
 
             }
 
@@ -118,13 +117,12 @@ namespace Mediator
             // Prüfe, ob jeder Teilnehmer abgestimmt hat
             if (allClientsVoted())
             {
-                // Alle Abstimmungen erhalten -> Mutiere Lösung und rufe Callback auf
-                this.currentSolution = generateNewSolution();
+                Optimizer.Instance.FindNewAcceptedSolution(DecisonHandler.GetVotesForRound());
 
                 // Nächste Runde
-                roundCount++;
+                DecisonHandler.newRound();
 
-                if(roundCount > maxRound)
+                if(DecisonHandler.CurrentRound > maxRound)
                 {
                     // Abstimmung beendet
                     service.DataReadyCallback(CanIHasPope.WhiteSmoke);

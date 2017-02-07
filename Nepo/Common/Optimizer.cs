@@ -79,6 +79,14 @@ namespace Nepo.Common
 
             return targetvalue;
         }
+
+        public void FindNewAcceptedSolution(List<Tuple<Guid, int>> list)
+        {
+            var agentsCount = list.GroupBy(x => x.Item1).Count();
+            var results = list.GroupBy(x => x.Item2).OrderBy(x => x.Count()).Select(x=>new { id = x.Key, count = x.Count() });
+            var selection = results.First();
+            SelectChild(selection.id);
+        }
     }
 
     public static class RandomExtension

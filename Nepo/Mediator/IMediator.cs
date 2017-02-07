@@ -20,7 +20,15 @@ namespace Mediator
         /// <returns>The inital instance.</returns>
         [OperationContract]
         Instance Register(Guid agentGuid);
-
+        
+        /// <summary>
+        /// Gets currently accepted solution from the mediator.
+        /// </summary>
+        /// <param name="agentGuid">Unique Id of the agent.</param>
+        /// <returns>The currently accepted solution.</returns>
+        [OperationContract]
+        Solution GetCurrentSolution(Guid agentGuid);
+        
         /// <summary>
         /// Gets a list of proposed solutions from the mediator.
         /// </summary>

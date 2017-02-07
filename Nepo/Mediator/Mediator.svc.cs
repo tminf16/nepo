@@ -36,6 +36,11 @@ namespace Mediator
             return handler.Register(agentGuid);
         }
 
+        public Solution GetCurrentSolution(Guid agentGuid)
+        {
+            return handler.GetCurrentSolution(agentGuid);
+        }
+
         public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
             return handler.GetProposedSolutions(agentGuid);

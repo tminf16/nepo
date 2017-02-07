@@ -18,6 +18,8 @@ namespace NepoGUI
         private Instance _currentInstance;
 
         private NepoClient _client = new NepoClient();
+        private Solution _currentSolution;
+
 
         public Instance CurrentInstance { get { return _currentInstance; } set
             {
