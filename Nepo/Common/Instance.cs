@@ -9,7 +9,7 @@ namespace Nepo.Common
     public class Instance
     {
         [DataMember]
-        public Guid InstanceId;
+        public Guid InstanceId { get; set; }
         [DataMember]
         public MapConfig Map { get; set; } = new MapConfig();
         [DataMember]
@@ -26,9 +26,22 @@ namespace Nepo.Common
                     continue;
                 var tmpInstance = new Instance();
                 tmpInstance.InstanceId = instanceId;
+                tmpInstance.Map = DataHandler.GetMapConfig(instanceId.ToString());
+                tmpInstance.AgentConfigs = DataHandler.GetAgentConfigs(instanceId.ToString());
+
+                result.Add(tmpInstance);
             }
 
             return result;
+        }
+
+        public void Save()
+        {
+            DirectoryInfo instanceDir = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + InstanceId.ToString());
+            if (!instanceDir.Exists)
+                instanceDir.Create();
+            DataHandler.SaveAgentConfigs(AgentConfigs, InstanceId.ToString());
+            DataHandler.SaveMapConfig(Map, InstanceId.ToString());
         }
     }
 }

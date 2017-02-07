@@ -17,5 +17,10 @@ namespace Nepo.Common
         public List<ImmovableObject> ImmovableObjects { get; set; }
         [DataMember]
         public List<Layer> Layers { get; set; }
+        public MapConfig()
+        {
+            ImmovableObjects = new List<ImmovableObject>();
+            Layers = new List<Layer>();
+        }
     }
 }

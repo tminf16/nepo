@@ -52,18 +52,23 @@ namespace NepoGUI
         public double MaximumTargetValue { get; set; }
         GuiNavigation navi;
         public MainWindow()
-        {            
+        {
             //Movables = new List<Grid>();
 
             //ManualOptimizeCommand = new RelayCommand(GetNewSolution);
             //ResetSolutionCommand = new RelayCommand(ResetSolution);
             //AutomateSolutionCommand = new RelayCommand(AutomateSolution);
-            
+
             //currentSolution = Optimizer.Instance.SelectChild(0).Item1;
             //MaximumTargetValue = (double)Session.Get.Map.ImmovableObjects.Sum(x => x.Weight);
             //TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
 
 
+            var test = new Instance();
+            test.InstanceId = Guid.NewGuid();
+            test.AgentConfigs = new List<AgentConfig>();
+            test.Map = new MapConfig();
+            //test.Save();
             InitializeComponent();
             navi = new GuiNavigation(MyIncrediblePresenter);
 
