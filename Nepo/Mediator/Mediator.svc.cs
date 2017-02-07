@@ -15,7 +15,6 @@ namespace Mediator
     public class MediatorService : IMediator
     {
         private static MediatorHandler handler;
-
         private static readonly Dictionary<Guid, IMediatorCallback> callbackChannels = new Dictionary<Guid, IMediatorCallback>();
 
 

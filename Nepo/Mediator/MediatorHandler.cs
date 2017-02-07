@@ -72,7 +72,10 @@ namespace Mediator
                 tmp = new Solution();
                 tmp.SolutionID = i;
 
-                for (int k = 0; k < 5; k++)
+                PlanningObject[] po = { new PlanningObject(), new PlanningObject(), new PlanningObject() }; // creates populated array of length 2
+                tmp.PlanningObjects = po;
+
+                for (int k = 0; k < 3; k++)
                 {
                     tmp.PlanningObjects[k].Location = new System.Drawing.Point(10, 20);
                 }
@@ -89,13 +92,13 @@ namespace Mediator
         /// <param name="votes"></param>
         internal void Vote(Guid guid, List<Tuple<int, bool>> votes)
         {
+            DecisonHandler.saveVote(guid, votes);
+            
             // Prüfe, ob mindestens zwei Teilnehmer (Provider, Client) vorhanden
             if (AgentList.Count < 2)
             {
                 // Es sind noch nicht alle Teilnehmer am Mediator angemeldet
-
                 // Speichere Vote des Teilnehmers in Struktur
-                DecisonHandler.saveVote(guid, votes);
                 return;
 
             }
