@@ -26,7 +26,7 @@ namespace Nepo.Common
                 }
                 else
                 {
-                    _map = (Bitmap) Image.FromFile(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.fileName));
+                    _map = (Bitmap) Image.FromFile(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.FileName));
                     return _map;
                 }
             }
@@ -34,11 +34,11 @@ namespace Nepo.Common
             set
             {
                 this._map = value;
-                this._map.Save(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.fileName));
+                this._map.Save(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.FileName));
             }
         }
         
-        public string fileName { get; set; }
+        public string FileName { get; set; }
         [DataMember]
         public double Weight { get; set; } = 1;
     }

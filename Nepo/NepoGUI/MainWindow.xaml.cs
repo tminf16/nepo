@@ -64,10 +64,12 @@ namespace NepoGUI
             //TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
 
 
-            var test = new Instance();
-            test.InstanceId = Guid.NewGuid();
-            test.AgentConfigs = new List<AgentConfig>();
-            test.Map = new MapConfig();
+            var test = new Instance()
+            {
+                InstanceId = Guid.NewGuid(),
+                AgentConfigs = new List<AgentConfig>(),
+                Map = new MapConfig()
+            };
             //test.Save();
             InitializeComponent();
             navi = new GuiNavigation(MyIncrediblePresenter);
