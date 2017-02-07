@@ -59,12 +59,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ImmovableObject" nillable="true" type="tns:ImmovableObject" />
-  <xs:complexType name="ArrayOfSolution">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Solution" nillable="true" type="tns:Solution" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfSolution" nillable="true" type="tns:ArrayOfSolution" />
   <xs:complexType name="Solution">
     <xs:sequence>
       <xs:element minOccurs="0" name="PlanningObjects" nillable="true" type="tns:ArrayOfPlanningObject" />
@@ -84,4 +78,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PlanningObject" nillable="true" type="tns:PlanningObject" />
+  <xs:complexType name="ArrayOfSolution">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Solution" nillable="true" type="tns:Solution" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSolution" nillable="true" type="tns:ArrayOfSolution" />
 </xs:schema>

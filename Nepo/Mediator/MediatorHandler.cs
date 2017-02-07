@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Nepo.DataGenerator;
 using Nepo.Common;
+using Nepo.Common.Rules;
 
 namespace Mediator
 {
@@ -15,12 +16,13 @@ namespace Mediator
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
         private List<Solution> currentSolution = new List<Solution>();
-        private int maxRound = 50;
+        private int maxRound = 1000;
 
 
         public MediatorHandler(MediatorService service)
         {
             this.service = service;
+            Optimizer.maxRounds = maxRound;
         }
 
         /// <summary>
@@ -36,6 +38,7 @@ namespace Mediator
             if(Instance == null)
             {
                 Instance = InitInstance();
+                Optimizer.Instance.SetMap(Instance.Map);
             }
 
             return Instance;
@@ -115,7 +118,7 @@ namespace Mediator
             // Alle Teilnehmer sind angemeldet
 
             // Prüfe, ob jeder Teilnehmer abgestimmt hat
-            if (allClientsVoted())
+            //if (allClientsVoted())
             {
                 Optimizer.Instance.FindNewAcceptedSolution(DecisonHandler.GetVotesForRound());
 
@@ -166,6 +169,14 @@ namespace Mediator
         private Instance InitInstance()
         {
             List<Instance> liste = Generator.GenerateInstances().Result;
+            //liste[0].AgentConfigs = new List<AgentConfig>();
+            //liste[0].AgentConfigs.Add(
+            //    new AgentConfig()
+            //    {
+            //        Rules = new List<ITargetFunctionComponent>()
+            //    });
+            //liste[0].AgentConfigs.ElementAt(0).Rules.Add(
+            //            new CurveRule(15, 100));
             return liste[0];
 
             /*var config = new MapConfig()

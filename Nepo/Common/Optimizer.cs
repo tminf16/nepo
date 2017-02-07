@@ -14,21 +14,27 @@ namespace Nepo.Common
 
         private Solution currentlyAccepted = null;
         private List<Solution> availableChildren = null;
-        private static int maxRounds = 100;
+        public static int maxRounds = 100;
         private int currentRound = 0;
+        private int childsCount = 10;
+        private MapConfig map;
+
+        public void SetMap(MapConfig map)
+        {
+            this.map = map;
+        }
         private Tuple<Solution, List<Solution>> GenerateSolutions()
         {
             if (null == currentlyAccepted)
             {
                 currentlyAccepted = new Solution();
-                var map = DataHandler.GetMapConfig();
                 currentlyAccepted.FillRandomValues(map.MapSize.Width, map.MapSize.Height, map.PlanningObjectCount);
             }
             List<Solution> children = new List<Solution>();
             children.Add(currentlyAccepted);
             currentRound++;
-            currentlyAccepted.Progress = (int)(1.0 * currentRound / maxRounds);
-            for (int i = 0; i < 50; i++)
+            currentlyAccepted.Progress = (int)((100.0 * currentRound) / maxRounds);
+            for (int i = 0; i < childsCount; i++)
                 children.Add(currentlyAccepted.CreateChildSolution());
             availableChildren = children;
             return new Tuple<Solution, List<Solution>>(currentlyAccepted, children);
@@ -50,6 +56,7 @@ namespace Nepo.Common
                 else
                     return new Tuple<Solution, List<Solution>>(currentlyAccepted, availableChildren);
             }
+            
             var child = availableChildren?.SingleOrDefault(x => x.SolutionID == id);
             if (null == child)
                 return new Tuple<Solution, List<Solution>>(currentlyAccepted, availableChildren);
@@ -57,6 +64,17 @@ namespace Nepo.Common
             availableChildren = null;
 
             return GenerateSolutions();
+        }
+
+        public static List<int> FindBestSolutions(List<Solution> availableChildSolutions, AgentConfig config, int count)
+        {
+            List<Tuple<int, double>> targetValues = new List<Tuple<int, double>>();
+            foreach (var sol in availableChildSolutions)
+            {
+                targetValues.Add(new Tuple<int, double>(sol.SolutionID, CalculateTargetValue(sol, config)));
+            }
+            var results = targetValues.OrderBy(x => x.Item2).Take(count).Select(x=>x.Item1).ToList();
+            return results;
         }
 
         public static double CalculateTargetValue(Solution currentSolution, AgentConfig config)

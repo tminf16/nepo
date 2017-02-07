@@ -21,6 +21,12 @@ namespace NepoGUI.MediatorServiceRef {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/Register", ReplyAction="http://tempuri.org/IMediator/RegisterResponse")]
         System.Threading.Tasks.Task<Nepo.Common.Instance> RegisterAsync(System.Guid agentGuid);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/GetCurrentSolution", ReplyAction="http://tempuri.org/IMediator/GetCurrentSolutionResponse")]
+        Nepo.Common.Solution GetCurrentSolution(System.Guid agentGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/GetCurrentSolution", ReplyAction="http://tempuri.org/IMediator/GetCurrentSolutionResponse")]
+        System.Threading.Tasks.Task<Nepo.Common.Solution> GetCurrentSolutionAsync(System.Guid agentGuid);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/GetProposedSolutions", ReplyAction="http://tempuri.org/IMediator/GetProposedSolutionsResponse")]
         System.Collections.Generic.List<Nepo.Common.Solution> GetProposedSolutions(System.Guid agentGuid);
         
@@ -81,6 +87,14 @@ namespace NepoGUI.MediatorServiceRef {
         
         public System.Threading.Tasks.Task<Nepo.Common.Instance> RegisterAsync(System.Guid agentGuid) {
             return base.Channel.RegisterAsync(agentGuid);
+        }
+        
+        public Nepo.Common.Solution GetCurrentSolution(System.Guid agentGuid) {
+            return base.Channel.GetCurrentSolution(agentGuid);
+        }
+        
+        public System.Threading.Tasks.Task<Nepo.Common.Solution> GetCurrentSolutionAsync(System.Guid agentGuid) {
+            return base.Channel.GetCurrentSolutionAsync(agentGuid);
         }
         
         public System.Collections.Generic.List<Nepo.Common.Solution> GetProposedSolutions(System.Guid agentGuid) {

@@ -42,12 +42,21 @@ namespace NepoGUI
             }
         }
 
-		
+        public Solution GetCurrentSolution()
+        {
+            return this.mediatorClient.GetCurrentSolution(this.privateGuid);
+        }
+
+        public List<Solution> GetProposedSolutions()
+        {
+            return this.mediatorClient.GetProposedSolutions(this.privateGuid);
+        }
+
+
         public void Vote(List<Tuple<int, bool>> votes)
         {
             this.mediatorClient.Vote(votes, this.privateGuid);
         }
-
 
         public Instance Register()
         {

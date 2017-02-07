@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -11,9 +12,12 @@ using System.Xml.Serialization;
 
 namespace Nepo.Common.Rules
 {
+    [DataContract]
     public class CurveRule : ITargetFunctionComponent
     {
+        [DataMember]
         public int Min { get; set; } = 15;
+        [DataMember]
         public int Max { get; set; } = 100;
 
         private double? _HalfDelta = null;

@@ -29,6 +29,7 @@ namespace Nepo.Common
         /// <summary>
         /// Overall progress of the optimization between 0 and 100. Agents can adjust the target function depending on the progress.
         /// </summary>
+        [DataMember]
         public int Progress { get; set; }
 
         internal void FillRandomValues(int width, int height, int planningObjectCount)

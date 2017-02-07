@@ -18,25 +18,39 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetProposedSolutions">
+  <xs:element name="GetCurrentSolution">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q3:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetCurrentSolutionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Nepo.Common" minOccurs="0" name="GetCurrentSolutionResult" nillable="true" type="q4:Solution" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProposedSolutions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q5:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetProposedSolutionsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Nepo.Common" minOccurs="0" name="GetProposedSolutionsResult" nillable="true" type="q4:ArrayOfSolution" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Nepo.Common" minOccurs="0" name="GetProposedSolutionsResult" nillable="true" type="q6:ArrayOfSolution" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="Vote">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="votes" nillable="true" type="q5:ArrayOfTupleOfintboolean" />
-        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q6:guid" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="votes" nillable="true" type="q7:ArrayOfTupleOfintboolean" />
+        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q8:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -48,7 +62,7 @@
   <xs:element name="Unregister">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q7:guid" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="agentGuid" type="q9:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -60,7 +74,7 @@
   <xs:element name="DataReady">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Mediator" minOccurs="0" name="popeState" type="q8:CanIHasPope" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/Mediator" minOccurs="0" name="popeState" type="q10:CanIHasPope" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

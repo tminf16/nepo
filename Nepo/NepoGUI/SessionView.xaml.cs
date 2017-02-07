@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Nepo.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace NepoGUI
     /// </summary>
     public partial class SessionView : UserControl
     {
+
+
         public SessionView()
         {
             InitializeComponent();
+        }
+
+        public void Draw()
+        {
+            OptimizeView.Draw();
         }
 
         internal void LoadValues()

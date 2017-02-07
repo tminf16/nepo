@@ -55,7 +55,10 @@ namespace Mediator
         {
             foreach (var callback in callbackChannels)
             {
-                Task.Run(() => { callback.Value.DataReady(popeState); });
+                Task.Run(() => 
+                {
+                    callback.Value.DataReady(popeState);
+                });
             }
         }
 
