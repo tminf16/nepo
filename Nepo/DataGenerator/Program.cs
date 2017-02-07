@@ -12,7 +12,7 @@ namespace DataGenerator
     {
         static void Main(string[] args)
         {
-            DataHandler.SaveMapConfig(Generator.GenerateInstance(new MapGenerationConstraints(), new Random()).Map);
+            DataHandler.SaveMapConfig(Generator.GenerateInstance(new MapGenerationConstraints()).Map);
         }
     }
 }
