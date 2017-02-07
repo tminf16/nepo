@@ -44,9 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BitmapGenerator.cs" />
     <Compile Include="Generator.cs" />
     <Compile Include="ImmovableObjectContraints.cs" />
     <Compile Include="GenerationConfig.cs" />
+    <Compile Include="LayerContraints.cs" />
     <Compile Include="MapGenerationConstraints.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

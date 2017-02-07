@@ -36,6 +36,13 @@ namespace Mediator
         /// <param name="agentGuid">Unique Id of the agent.</param>
         [OperationContract]
         void Vote(List<Tuple<int, bool>> votes, Guid agentGuid);
+
+        /// <summary>
+        /// Unregisters an agent.
+        /// </summary>
+        /// <param name="agentGuid"></param>
+        [OperationContract]
+        void Unregister(Guid agentGuid);
     }
 
     /// <summary>

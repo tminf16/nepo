@@ -9,19 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace NepoGUI.MediatorServiceRef {
-    using System.Runtime.Serialization;
     
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CanIHasPope", Namespace="http://schemas.datacontract.org/2004/07/Mediator")]
-    public enum CanIHasPope : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        WhiteSmoke = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        BlackSmoke = 1,
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MediatorServiceRef.IMediator", CallbackContract=typeof(NepoGUI.MediatorServiceRef.IMediatorCallback))]
@@ -44,13 +32,19 @@ namespace NepoGUI.MediatorServiceRef {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/Vote", ReplyAction="http://tempuri.org/IMediator/VoteResponse")]
         System.Threading.Tasks.Task VoteAsync(System.Collections.Generic.List<System.Tuple<int, bool>> votes, System.Guid agentGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/Unregister", ReplyAction="http://tempuri.org/IMediator/UnregisterResponse")]
+        void Unregister(System.Guid agentGuid);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/Unregister", ReplyAction="http://tempuri.org/IMediator/UnregisterResponse")]
+        System.Threading.Tasks.Task UnregisterAsync(System.Guid agentGuid);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface IMediatorCallback {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IMediator/DataReady", ReplyAction="http://tempuri.org/IMediator/DataReadyResponse")]
-        void DataReady(NepoGUI.MediatorServiceRef.CanIHasPope popeState);
+        void DataReady(Mediator.CanIHasPope popeState);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -103,6 +97,14 @@ namespace NepoGUI.MediatorServiceRef {
         
         public System.Threading.Tasks.Task VoteAsync(System.Collections.Generic.List<System.Tuple<int, bool>> votes, System.Guid agentGuid) {
             return base.Channel.VoteAsync(votes, agentGuid);
+        }
+        
+        public void Unregister(System.Guid agentGuid) {
+            base.Channel.Unregister(agentGuid);
+        }
+        
+        public System.Threading.Tasks.Task UnregisterAsync(System.Guid agentGuid) {
+            return base.Channel.UnregisterAsync(agentGuid);
         }
     }
 }

@@ -50,5 +50,11 @@ namespace Mediator
                 Task.Run(() => { callback.Value.DataReady(popeState); });
             }
         }
+
+        public void Unregister(Guid agentGuid)
+        {
+            callbackChannels.Remove(agentGuid);
+            throw new NotImplementedException();
+        }
     }
 }

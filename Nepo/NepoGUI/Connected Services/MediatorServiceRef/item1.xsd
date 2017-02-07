@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Nepo.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Nepo.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/Nepo.Common" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Nepo.Common" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary1/Service1/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary1/Service1/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Nepo.Common.Rules" />
   <xs:import schemaLocation="http://localhost:8733/Design_Time_Addresses/WcfServiceLibrary1/Service1/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Drawing" />
   <xs:complexType name="Instance">
     <xs:sequence>
       <xs:element minOccurs="0" name="AgentConfigs" nillable="true" type="tns:ArrayOfAgentConfig" />
+      <xs:element minOccurs="0" name="InstanceId" type="ser:guid" />
       <xs:element minOccurs="0" name="Map" nillable="true" type="tns:MapConfig" />
     </xs:sequence>
   </xs:complexType>
@@ -17,6 +20,7 @@
   <xs:complexType name="AgentConfig">
     <xs:sequence>
       <xs:element minOccurs="0" name="Layers" nillable="true" type="tns:ArrayOfLayer" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Nepo.Common.Rules" minOccurs="0" name="Rules" nillable="true" type="q1:ArrayOfITargetFunctionComponent" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AgentConfig" nillable="true" type="tns:AgentConfig" />
@@ -28,18 +32,17 @@
   <xs:element name="ArrayOfLayer" nillable="true" type="tns:ArrayOfLayer" />
   <xs:complexType name="Layer">
     <xs:sequence>
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System.Drawing" name="_map" nillable="true" type="q1:Bitmap" />
-      <xs:element name="_x003C_MapPath_x003E_k__BackingField" nillable="true" type="xs:string" />
-      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Drawing" name="_x003C_Polygons_x003E_k__BackingField" nillable="true" type="q2:ArrayOfArrayOfPoint" />
+      <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="Map" nillable="true" type="q2:Bitmap" />
+      <xs:element minOccurs="0" name="Weight" type="xs:double" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Layer" nillable="true" type="tns:Layer" />
   <xs:complexType name="MapConfig">
     <xs:sequence>
-      <xs:element name="_x003C_ImmovableObjects_x003E_k__BackingField" nillable="true" type="tns:ArrayOfImmovableObject" />
-      <xs:element name="_x003C_Layers_x003E_k__BackingField" nillable="true" type="tns:ArrayOfLayer" />
-      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Drawing" name="_x003C_MapSize_x003E_k__BackingField" type="q3:Size" />
-      <xs:element name="_x003C_PlanningObjectCount_x003E_k__BackingField" type="xs:int" />
+      <xs:element minOccurs="0" name="ImmovableObjects" nillable="true" type="tns:ArrayOfImmovableObject" />
+      <xs:element minOccurs="0" name="Layers" nillable="true" type="tns:ArrayOfLayer" />
+      <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="MapSize" type="q3:Size" />
+      <xs:element minOccurs="0" name="PlanningObjectCount" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="MapConfig" nillable="true" type="tns:MapConfig" />
@@ -52,7 +55,7 @@
   <xs:complexType name="ImmovableObject">
     <xs:sequence>
       <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="Location" type="q4:Point" />
-      <xs:element minOccurs="0" name="Weight" type="xs:double" />
+      <xs:element minOccurs="0" name="Weight" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ImmovableObject" nillable="true" type="tns:ImmovableObject" />

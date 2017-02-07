@@ -14,18 +14,6 @@
     <xs:attribute ref="ser:FactoryType" />
   </xs:complexType>
   <xs:element name="Image" nillable="true" type="tns:Image" />
-  <xs:complexType name="ArrayOfArrayOfPoint">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ArrayOfPoint" nillable="true" type="tns:ArrayOfPoint" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfArrayOfPoint" nillable="true" type="tns:ArrayOfArrayOfPoint" />
-  <xs:complexType name="ArrayOfPoint">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Point" type="tns:Point" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPoint" nillable="true" type="tns:ArrayOfPoint" />
   <xs:complexType name="Point">
     <xs:annotation>
       <xs:appinfo>

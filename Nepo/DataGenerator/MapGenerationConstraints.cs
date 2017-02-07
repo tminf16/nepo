@@ -54,6 +54,11 @@ namespace Nepo.DataGenerator
         public int MaxLayerCount { get; set; } = 1;
 
         /// <summary>
+        /// Constraints for generating layers.
+        /// </summary>
+        public LayerConstraints LayerConstraints { get; set; } = new LayerConstraints();             
+
+        /// <summary>
         /// Constraints for generating immovable objects.
         /// </summary>
         public ImmovableObjectContraints ImmovableObjectContraints { get; set; } = new ImmovableObjectContraints();

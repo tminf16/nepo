@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using Mediator;
 using Nepo.Common;
 using NepoGUI.MediatorServiceRef;
 
@@ -26,6 +27,7 @@ namespace NepoGUI
             this.callback = new MediatorCallback();
             this.mediatorClient = new MediatorClient(new InstanceContext(this.callback));
             this.callback.DataIsReady += Callback_DataIsReady;
+            
             
         }
 
