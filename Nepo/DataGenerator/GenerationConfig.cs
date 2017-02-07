@@ -20,7 +20,7 @@ namespace Nepo.DataGenerator
         /// <summary>
         /// Number of Instances to generate.
         /// </summary>
-        public int InstanceCount { get; set; }
+        public int InstanceCount { get; set; } = 1;
 
         /// <summary>
         /// Constraints for Map Generation.
