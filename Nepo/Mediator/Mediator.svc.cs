@@ -29,7 +29,10 @@ namespace Mediator
 
         public Instance Register(Guid agentGuid)
         {
-            callbackChannels.Add(agentGuid, OperationContext.Current.GetCallbackChannel<IMediatorCallback>());
+            if (!callbackChannels.ContainsKey(agentGuid))
+            {
+                callbackChannels.Add(agentGuid, OperationContext.Current.GetCallbackChannel<IMediatorCallback>());
+            }
             return handler.Register(agentGuid);
         }
 
