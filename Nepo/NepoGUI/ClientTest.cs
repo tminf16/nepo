@@ -29,9 +29,6 @@ namespace NepoGUI
             client.Vote(votes);
             Console.Write("");
 
-
-
-
         }
 
         private static void Client_NewDataAvailable(object sender, NewDataEventArgs e)

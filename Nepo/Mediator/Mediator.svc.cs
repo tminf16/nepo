@@ -14,19 +14,22 @@ namespace Mediator
     /// </summary>
     public class MediatorService : IMediator
     {
-        private MediatorHandler handler;
+        private static MediatorHandler handler;
 
-        private readonly Dictionary<Guid, IMediatorCallback> callbackChannels = new Dictionary<Guid, IMediatorCallback>();
+        private static readonly Dictionary<Guid, IMediatorCallback> callbackChannels = new Dictionary<Guid, IMediatorCallback>();
 
 
         public MediatorService()
         {
-            handler = new MediatorHandler(this);
+            if(handler == null)
+            {
+                handler = new MediatorHandler(this);
+            }
         }
 
         public Instance Register(Guid agentGuid)
         {
-            this.callbackChannels.Add(agentGuid, OperationContext.Current.GetCallbackChannel<IMediatorCallback>());
+            callbackChannels.Add(agentGuid, OperationContext.Current.GetCallbackChannel<IMediatorCallback>());
             return handler.Register(agentGuid);
         }
 
