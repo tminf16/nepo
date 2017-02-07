@@ -33,7 +33,7 @@ namespace NepoGUI
 
         private void Callback_DataIsReady(object sender, DataReadyEventArgs e)
         {
-            if (e.popeState == CanIHasPope.BlackSmoke)
+            if (e.PopeState == CanIHasPope.BlackSmoke)
             {
                 var newData = this.mediatorClient.GetProposedSolutions(this.privateGuid);
                 this.NewDataAvailable?.Invoke(this, new NewDataEventArgs(newData));
