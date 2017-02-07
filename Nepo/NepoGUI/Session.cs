@@ -14,11 +14,30 @@ namespace NepoGUI
         
         public AgentConfig Config { get; set; }
         public MapConfig Map { get; set; }
+        public List<Instance> Instances { get; set; }
+        private Instance _currentInstance;
+        public Instance CurrentInstance { get { return _currentInstance; } set
+            {
+                _currentInstance = value;
+                if (null == value)
+                {
+                    Config = DataHandler.GetAgentConfig();
+                    Map = DataHandler.GetMapConfig();
+                    return;
+                }
+                Map = value.Map;
+                if (null == value.AgentConfigs || 0 == value.AgentConfigs.Count)
+                    Config = DataHandler.GetAgentConfig();
+                else
+                    Config = value.AgentConfigs.FirstOrDefault();
+
+            } }
 
         public Session()
         {
             Config = DataHandler.GetAgentConfig();
             Map = DataHandler.GetMapConfig();
+            Instances = Instance.LoadInstances();
         }
 
         public void Save()

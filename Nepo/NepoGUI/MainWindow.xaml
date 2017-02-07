@@ -9,7 +9,10 @@
         Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="550" Width="725"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <TabControl>
+        <ContentControl Name="MyIncrediblePresenter">
+            
+        </ContentControl>
+        <!--<TabControl>
             <TabItem Header="Local optimization">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -41,6 +44,6 @@
                     <common:MapControl Name="ConfigMapControl"></common:MapControl>
                 </StackPanel>
             </TabItem>
-        </TabControl>
+        </TabControl>-->
     </Grid>
 </Window>

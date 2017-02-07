@@ -10,10 +10,10 @@ namespace Nepo.Common
 {
     public class DataHandler
     {
-        private static T GetConfig<T>()
+        private static T GetConfig<T>(String instanceFolder = null)
         {
             String filename = typeof(T).Name + ".xml";
-            filename = Directory.GetCurrentDirectory() + "\\" + filename;
+            filename = Directory.GetCurrentDirectory() + "\\" + (null == instanceFolder ? "" : (instanceFolder + "\\")) + filename;
             T config = default(T);
             if (!File.Exists(filename))
                 File.Create(filename).Close();
@@ -34,34 +34,46 @@ namespace Nepo.Common
             return config;
         }
 
-        public static void SaveMapConfig(MapConfig config)
+        public static void SaveMapConfig(MapConfig config, string instance = null)
         {
-            config.Save();
+            config.Save(instancename: instance);
         }
 
-        public static void SaveAgentConfig(AgentConfig config)
+        public static void SaveAgentConfig(AgentConfig config, string instance = null)
         {
-            config.Save();
+            config.Save(instancename: instance);
+        }
+
+
+        public static void SaveAgentConfigs(List<AgentConfig> configs, string instance = null)
+        {
+            configs.Save(instancename: instance);
         }
         private static MapConfig _map = null;
-        public static MapConfig GetMapConfig()
+        public static MapConfig GetMapConfig(string instance = null)
         {
-            return _map ?? (_map = GetConfig<MapConfig>());
+            return _map ?? (_map = GetConfig<MapConfig>(instance));
         }
 
         private static AgentConfig _agent = null;
-        public static AgentConfig GetAgentConfig()
+        public static AgentConfig GetAgentConfig(string instance = null)
         {
-            return _agent ?? (_agent = GetConfig<AgentConfig>());
+            return _agent ?? (_agent = GetConfig<AgentConfig>(instance));
+        }
+
+        private static List<AgentConfig> _agents = null;
+        public static List<AgentConfig> GetAgentConfigs(string instance = null)
+        {
+            return _agents ?? (_agents = GetConfig<List<AgentConfig>>(instance));
         }
     }
 
     public static class XmlExtensions
     {
-        public static void Save<T>(this T instance, string filename = null)
+        public static void Save<T>(this T instance, string filename = null, string instancename = null)
         {
 
-            if (string.IsNullOrEmpty(filename) && (typeof(MapConfig) == typeof(T) || typeof(AgentConfig) == typeof(T)))
+            if (string.IsNullOrEmpty(filename) && (typeof(MapConfig) == typeof(T) || typeof(AgentConfig) == typeof(T) || typeof(List<AgentConfig>) == typeof(T)))
             {
                 filename = typeof(T).Name + ".xml";
             }
@@ -69,9 +81,9 @@ namespace Nepo.Common
             if (string.IsNullOrEmpty(filename))
             {
                 throw new ArgumentNullException(nameof(filename));
-            }                         
+            }
 
-            filename = Directory.GetCurrentDirectory() + "\\" + filename;
+            filename = Directory.GetCurrentDirectory() + "\\" + (null == instancename ? "" : (instancename + "\\")) + filename;
             StreamWriter sw = new StreamWriter(filename);
             sw.Write(XmlHelper.Serialize(instance));            
             sw.Close();

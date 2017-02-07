@@ -32,46 +32,52 @@ namespace NepoGUI
 
         
 
-        public double TargetValue
-        {
-            get { return (double)GetValue(TargetValueProperty); }
-            set { SetValue(TargetValueProperty, value); }
-        }public static readonly DependencyProperty TargetValueProperty =
-            DependencyProperty.Register("TargetValue", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
+        //public double TargetValue
+        //{
+        //    get { return (double)GetValue(TargetValueProperty); }
+        //    set { SetValue(TargetValueProperty, value); }
+        //}public static readonly DependencyProperty TargetValueProperty =
+        //    DependencyProperty.Register("TargetValue", typeof(double), typeof(MainWindow), new PropertyMetadata(0.0));
 
 
-        public int Progress
-        {
-            get { return (int)GetValue(ProgressProperty); }
-            set { SetValue(ProgressProperty, value); }
-        }public static readonly DependencyProperty ProgressProperty =
-            DependencyProperty.Register("Progress", typeof(int), typeof(MainWindow), new PropertyMetadata(0));
+        //public int Progress
+        //{
+        //    get { return (int)GetValue(ProgressProperty); }
+        //    set { SetValue(ProgressProperty, value); }
+        //}public static readonly DependencyProperty ProgressProperty =
+            //DependencyProperty.Register("Progress", typeof(int), typeof(MainWindow), new PropertyMetadata(0));
 
 
 
         public double MaximumTargetValue { get; set; }
-   
+        GuiNavigation navi;
         public MainWindow()
-        {            
-            Movables = new List<Grid>();
+        {
+            //Movables = new List<Grid>();
 
-            ManualOptimizeCommand = new RelayCommand(GetNewSolution);
-            ResetSolutionCommand = new RelayCommand(ResetSolution);
-            AutomateSolutionCommand = new RelayCommand(AutomateSolution);
-            
-            currentSolution = Optimizer.Instance.SelectChild(0).Item1;
-            MaximumTargetValue = (double)Session.Get.Map.ImmovableObjects.Sum(x => x.Weight);
-            TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
+            //ManualOptimizeCommand = new RelayCommand(GetNewSolution);
+            //ResetSolutionCommand = new RelayCommand(ResetSolution);
+            //AutomateSolutionCommand = new RelayCommand(AutomateSolution);
+
+            //currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            //MaximumTargetValue = (double)Session.Get.Map.ImmovableObjects.Sum(x => x.Weight);
+            //TargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
 
 
+            var test = new Instance();
+            test.InstanceId = Guid.NewGuid();
+            test.AgentConfigs = new List<AgentConfig>();
+            test.Map = new MapConfig();
+            //test.Save();
             InitializeComponent();
+            navi = new GuiNavigation(MyIncrediblePresenter);
 
 
-            OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
-            OptimizeMapControl.SetSolution(currentSolution);
+            //OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
+            //OptimizeMapControl.SetSolution(currentSolution);
 
-            ConfigMapControl.Configure(Session.Get.Map, Session.Get.Config);
-            ConfigMapControl.Render();
+            //ConfigMapControl.Configure(Session.Get.Map, Session.Get.Config);
+            //ConfigMapControl.Render();
 
             this.SizeToContent = SizeToContent.Height | SizeToContent.Width;
         }
@@ -80,66 +86,66 @@ namespace NepoGUI
         {
             Optimizer.Instance.Reset();
             currentSolution = Optimizer.Instance.SelectChild(0).Item1;
-            GetNewSolution(null);
+            //GetNewSolution(null);
         }
 
-        private void AutomateSolution(object obj)
-        {
-            new TaskFactory().StartNew(async () =>
-            {
-                int i = 0;
-                double tmpTargetValue = 0;
-                while (currentSolution.Progress < 100)
-                {
-                    i++;
-                    Dispatcher.Invoke(() => tmpTargetValue = TargetValue);
-                    if (i % 100 == 0)
-                    {
-                        await Task.Delay(100);
-                    }
-                    GetNewSolution(null);
-                }
-            });
-        }
+        //private void AutomateSolution(object obj)
+        //{
+        //    new TaskFactory().StartNew(async () =>
+        //    {
+        //        int i = 0;
+        //        double tmpTargetValue = 0;
+        //        while (currentSolution.Progress < 100)
+        //        {
+        //            i++;
+        //            Dispatcher.Invoke(() => tmpTargetValue = TargetValue);
+        //            if (i % 100 == 0)
+        //            {
+        //                await Task.Delay(100);
+        //            }
+        //            GetNewSolution(null);
+        //        }
+        //    });
+        //}
 
-        private void GetNewSolution(object obj)
-        {
-            int bestId = 0;
-            double bestValue = 0;
-            for (int i = 0; i < 10; i++)
-            {
-                i++;
-                var result = Optimizer.Instance.SelectChild(0);
-                currentSolution = result.Item1;
-                double currentTargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
-                bestValue = currentTargetValue;
-                bestId = currentSolution.SolutionID;
-                foreach (var sol in result.Item2)
-                {
-                    double tmptarget = Optimizer.CalculateTargetValue(sol, Session.Get.Config);
-                    if(tmptarget >= bestValue)
-                    {
-                        bestValue = tmptarget;
-                        bestId = sol.SolutionID;
-                        currentSolution = sol;
-                    }
-                }
-                Optimizer.Instance.SelectChild(bestId);
-            }
-            Dispatcher.Invoke(() =>
-            {
-                TargetValue = bestValue;
-                Progress = currentSolution.Progress;
-            });
+        //private void GetNewSolution(object obj)
+        //{
+        //    int bestId = 0;
+        //    double bestValue = 0;
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        i++;
+        //        var result = Optimizer.Instance.SelectChild(0);
+        //        currentSolution = result.Item1;
+        //        double currentTargetValue = Optimizer.CalculateTargetValue(currentSolution, Session.Get.Config);
+        //        bestValue = currentTargetValue;
+        //        bestId = currentSolution.SolutionID;
+        //        foreach (var sol in result.Item2)
+        //        {
+        //            double tmptarget = Optimizer.CalculateTargetValue(sol, Session.Get.Config);
+        //            if(tmptarget >= bestValue)
+        //            {
+        //                bestValue = tmptarget;
+        //                bestId = sol.SolutionID;
+        //                currentSolution = sol;
+        //            }
+        //        }
+        //        Optimizer.Instance.SelectChild(bestId);
+        //    }
+        //    Dispatcher.Invoke(() =>
+        //    {
+        //        TargetValue = bestValue;
+        //        Progress = currentSolution.Progress;
+        //    });
 
-            DrawSolution();
-        }
+        //    DrawSolution();
+        //}
 
         private void DrawSolution()
         {
-            if (null == currentSolution)
-                currentSolution = Optimizer.Instance.SelectChild(0).Item1;
-            OptimizeMapControl.SetSolution(currentSolution);
+            //if (null == currentSolution)
+            //    currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            //OptimizeMapControl.SetSolution(currentSolution);
             
         }
 
