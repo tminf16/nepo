@@ -10,8 +10,19 @@ namespace Mediator
     public class MediatorHandler
     {
 
-        private Instance Instance = null;
+        //private Instance Instance = null;
+        private readonly Instance Instance = new Instance();
         private List<Guid> AgentList = new List<Guid>();
+        private MediatorService service;
+        private DecisionHandler DecisonHandler = new DecisionHandler();
+        private List<Solution> currentSolution = new List<Solution>();
+
+
+        public MediatorHandler(MediatorService service)
+        {
+            this.service = service;
+        }
+
 
 
         /// <summary>
@@ -19,66 +30,105 @@ namespace Mediator
         /// 
         /// </summary>
         /// <param name="agentGuid"></param>
-        /// <returns></returns>
+        /// <returns></returns>ö
         public Instance Register(Guid agentGuid)
         {
             this.AgentList.Add(agentGuid);
 
-            if(null == Instance)
+            /*if (null == Instance)
             {
                 Instance = InitInstance();
-            }
-            
+            }*/
             return Instance;
         }
 
 
         /// <summary>
         /// 
-        /// Client verlangt nach einer neuen Lösung. Mediator liefert eine Liste mit
-        /// akzeptierbaren Lösungen.
+        /// Called if Client receives <paramm name="NewDataEventArgs"></paramm> to get
+        /// new Solutions
         /// 
         /// </summary>
         /// <param name="agentGuid"></param>
         /// <returns></returns>
         public List<Solution> GetProposedSolutions(Guid agentGuid)
         {
+            return currentSolution;
+        }
+
+        /// <summary>
+        /// Generate a new Solution
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        private List<Solution> generateNewSolution()
+        {
             List<Solution> Solution_Mock = new List<Solution>();
             Solution tmp;
 
-            for (int i = 0; i< 10; i++)
+            // Mock the Mutation
+            for (int i = 0; i < 10; i++)
             {
-                tmp = new Solution()
+                tmp = new Solution();
+                tmp.SolutionID = i;
+
+                for (int k = 0; k < 5; k++)
                 {
-                    SolutionID = i
-                };
-                for (int k=0; k<5; k++)
-                {
-                    tmp.PlanningObjects[k].Location = new System.Drawing.Point(10,20);
+                    tmp.PlanningObjects[k].Location = new System.Drawing.Point(10, 20);
                 }
                 Solution_Mock.Add(tmp);
             }
-
-            Console.WriteLine("");
-            // Generiere eine mutierte Lösung
-
-
-
-            throw new NotImplementedException();
+            return Solution_Mock;
         }
+
+
 
         /// <summary>
         /// Client liefert die Lösung mit deren Bewertung zurück. 
         /// </summary>
         /// <param name="votes"></param>
-        internal void Vote(List<Tuple<int, bool>> votes, Guid agentGuid)
+        internal void Vote(Guid guid, List<Tuple<int, bool>> votes)
         {
-            // Prüfe, ob alle abgestimmt haben (über Anzahl der vorhandenen Liste
-                // Wenn nein, warten
-                // Wenn ja, wähle die Top Lösung aus und mutiere.
-                    // Rufe Callback auf
+            // Prüfe, ob mindestens zwei Teilnehmer (Provider, Client) vorhanden
+            if (AgentList.Count < 2)
+            {
+                // Es sind noch nicht alle Teilnehmer am Mediator angemeldet
 
-            throw new NotImplementedException();
+                // Speichere Vote des Teilnehmers in Struktur
+                DecisonHandler.saveVote(guid, votes);
+                return;
+
+            }
+
+            // Alle Teilnehmer sind angemeldet
+
+            // Prüfe, ob jeder Teilnehmer abgestimmt hat
+            if (allClientsVoted())
+            {
+                // Alle Abstimmungen erhalten -> Mutiere Lösung und rufe Callback auf
+                this.currentSolution = generateNewSolution();
+
+                // Mediator is Ready for Clients
+                service.DataReadyCallback(CanIHasPope.WhiteSmoke);
+            }
+        }
+
+        /// <summary>
+        /// Check if all Clients commited their votes
+        /// </summary>
+        /// <returns></returns>
+        private bool allClientsVoted()
+        {
+            Boolean all_ready = true;
+            foreach (var item in AgentList)
+            {
+                if (!DecisonHandler.hasClientVoted(item))
+                {
+                    all_ready = false;
+                }
+            }
+
+            return all_ready;
         }
 
 
@@ -110,10 +160,9 @@ namespace Mediator
             }
             DataHandler.SaveMapConfig(config);
 
-            Instance instance = new Instance()
-            {
-                Map = config
-            };
+            Instance instance = new Instance();
+            instance.Map = config;
+
             return instance;
 
         }

@@ -20,14 +20,21 @@ namespace NepoGUI
             NepoClient client = new NepoClient();
             Instance instance = client.Register();
             client.NewDataAvailable += Client_NewDataAvailable;
-            Console.Write("");
 
+            List<Tuple<int, bool>> votes = new List<Tuple<int, bool>>();
+            votes.Add(new Tuple<int, bool>(0, true));
+            votes.Add(new Tuple<int, bool>(1, false));
+            votes.Add(new Tuple<int, bool>(2, false));
+
+            client.Vote(votes);
+            Console.Write("");
 
         }
 
         private static void Client_NewDataAvailable(object sender, NewDataEventArgs e)
         {
-            throw new NotImplementedException();
+            List<Solution> list = e.ProposedSolutions;
+            Console.WriteLine("");
         }
     }
 }

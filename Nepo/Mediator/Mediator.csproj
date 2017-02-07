@@ -67,6 +67,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DecisionHandler.cs" />
     <Compile Include="Mediator.svc.cs">
       <DependentUpon>Mediator.svc</DependentUpon>
     </Compile>

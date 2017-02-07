@@ -15,7 +15,7 @@ namespace NepoGUI
 
         private readonly MediatorCallback callback;
 
-        private readonly Guid privateGuid = new Guid();
+        private readonly Guid privateGuid = Guid.NewGuid();
 
         public event EventHandler<NewDataEventArgs> NewDataAvailable;
 
@@ -24,6 +24,7 @@ namespace NepoGUI
             this.callback = new MediatorCallback();
             this.mediatorClient = new MediatorClient(new InstanceContext(this.callback));
             this.callback.DataIsReady += Callback_DataIsReady;
+            
         }
 
         private void Callback_DataIsReady(object sender, EventArgs e)
