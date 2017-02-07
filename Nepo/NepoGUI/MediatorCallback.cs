@@ -1,6 +1,7 @@
 ﻿using System;
-using NepoGUI.MediatorServiceRef;
 using System.Threading.Tasks;
+using Mediator;
+using IMediatorCallback = NepoGUI.MediatorServiceRef.IMediatorCallback;
 
 namespace NepoGUI
 {
