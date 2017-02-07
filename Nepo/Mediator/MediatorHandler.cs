@@ -10,15 +10,13 @@ namespace Mediator
     public class MediatorHandler
     {
 
-        //private Instance Instance = null;
-        private readonly Instance Instance = new Instance();
+        private Instance Instance;
         private List<Guid> AgentList = new List<Guid>();
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
         private List<Solution> currentSolution = new List<Solution>();
         private int roundCount = 0;
         private int maxRound = 3;
-
 
 
         public MediatorHandler(MediatorService service)
@@ -39,6 +37,12 @@ namespace Mediator
                 roundCount = 0;
             }
             this.AgentList.Add(agentGuid);
+
+            if(Instance == null)
+            {
+                Instance = InitInstance();
+            }
+
             return Instance;
         }
 
@@ -163,8 +167,10 @@ namespace Mediator
         /// </summary>
         private Instance InitInstance()
         {
+            List<Instance> liste = Generator.GenerateInstances().Result;
+            return liste[0];
 
-            var config = new MapConfig()
+            /*var config = new MapConfig()
             {
                 MapSize = new System.Drawing.Size(500, 500),
                 PlanningObjectCount = 5
@@ -182,9 +188,8 @@ namespace Mediator
             DataHandler.SaveMapConfig(config);
 
             Instance instance = new Instance();
-            instance.Map = config;
+            instance.Map = config;*( */
 
-            return instance;
 
         }
 
