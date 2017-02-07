@@ -72,6 +72,8 @@ namespace NepoGUI
 
             ConfigMapControl.Configure(Session.Get.Map, Session.Get.Config);
             ConfigMapControl.Render();
+
+            this.SizeToContent = SizeToContent.Height | SizeToContent.Width;
         }
                 
         private void ResetSolution(object obj)
