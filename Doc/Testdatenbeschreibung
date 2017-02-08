@@ -1,0 +1,4 @@
+Testdatensatz - Example
+
+InstanceGUID	AnzTuerme	ClientABest	ClientAMediation	ClientBBest	ClientBMediation	MaxRounds	AnzVorschlaegeProRunde	AnzErzwungeneAkzeptanz
+931d11f1-a847-49cc-9996-6c2fccaa5285	5	1	0.5	1	0.4	1000	10	1
