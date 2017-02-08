@@ -184,14 +184,17 @@ namespace Mediator
         private Instance InitInstance()
         {
             List<Instance> liste = Generator.GenerateInstances().Result;
+            //liste[0].Map.ImmovableObjects = liste[0].Map.ImmovableObjects.Take(1).ToList();
             liste[0].AgentConfigs = new List<AgentConfig>();
             liste[0].AgentConfigs.Add(
                 new AgentConfig()
                 {
                     Rules = new List<TargetFunctionComponentBase>()
                 });
+            var rule = new DistanceIntervalsRule();
+            rule.AddInterval(15, 100, 1);
             liste[0].AgentConfigs.ElementAt(0).Rules.Add(
-                        new CurveRule(15, 100));
+                        rule);
             return liste[0];
 
             /*var config = new MapConfig()

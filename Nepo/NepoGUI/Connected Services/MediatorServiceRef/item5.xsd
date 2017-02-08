@@ -10,6 +10,30 @@
     <xs:sequence />
   </xs:complexType>
   <xs:element name="TargetFunctionComponentBase" nillable="true" type="tns:TargetFunctionComponentBase" />
+  <xs:complexType name="DistanceIntervalsRule">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:TargetFunctionComponentBase">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Intervals" nillable="true" type="tns:ArrayOfInterval" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DistanceIntervalsRule" nillable="true" type="tns:DistanceIntervalsRule" />
+  <xs:complexType name="ArrayOfInterval">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Interval" nillable="true" type="tns:Interval" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfInterval" nillable="true" type="tns:ArrayOfInterval" />
+  <xs:complexType name="Interval">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Max" type="xs:int" />
+      <xs:element minOccurs="0" name="Min" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" type="xs:double" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Interval" nillable="true" type="tns:Interval" />
   <xs:complexType name="CurveRule">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:TargetFunctionComponentBase">

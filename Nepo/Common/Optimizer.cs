@@ -73,7 +73,7 @@ namespace Nepo.Common
             {
                 targetValues.Add(new Tuple<int, double>(sol.SolutionID, CalculateTargetValue(sol, config)));
             }
-            var results = targetValues.OrderByDescending(x => x.Item2).Take(count).Select(x=>x.Item1).ToList();
+            var results = targetValues.OrderByDescending(x => x.Item2).ThenByDescending(x=>x.Item1).Take(count).Select(x=>x.Item1).ToList();
             return results;
         }
 
@@ -101,7 +101,7 @@ namespace Nepo.Common
         public void FindNewAcceptedSolution(List<Tuple<Guid, int>> list)
         {
             var agentsCount = list.GroupBy(x => x.Item1).Count();
-            var results = list.GroupBy(x => x.Item2).OrderBy(x => x.Count()).Select(x=>new { id = x.Key, count = x.Count() });
+            var results = list.GroupBy(x => x.Item2).OrderByDescending(x => x.Count()).Select(x=>new { id = x.Key, count = x.Count() });
             var selection = results.First();
             SelectChild(selection.id);
         }

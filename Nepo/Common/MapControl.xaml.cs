@@ -74,8 +74,8 @@ namespace Nepo.Common
                     Height = ImmoSize + additionalSize,
                     Fill = System.Windows.Media.Brushes.Red,
                 };
-                Canvas.SetTop(tmpItem, immo.Location.Y - (ImmoSize / 2));
-                Canvas.SetLeft(tmpItem, immo.Location.X - (ImmoSize / 2));
+                Canvas.SetTop(tmpItem, immo.Location.Y - (tmpItem.Height / 2));
+                Canvas.SetLeft(tmpItem, immo.Location.X - (tmpItem.Width / 2));
                 AllImmovables.Add(tmpItem);
             }
 
@@ -120,8 +120,8 @@ namespace Nepo.Common
                 var po = _currentSolution.PlanningObjects[i];
                 Dispatcher.Invoke(() =>
                 {
-                    Canvas.SetTop(tmpCtrl, po.Location.Y - (this.Height / 2));
-                    Canvas.SetLeft(tmpCtrl, po.Location.X - (this.Width / 2));
+                    Canvas.SetTop(tmpCtrl, po.Location.Y - (tmpCtrl.Height / 2));
+                    Canvas.SetLeft(tmpCtrl, po.Location.X - (tmpCtrl.Width / 2));
                 });
             }
         }

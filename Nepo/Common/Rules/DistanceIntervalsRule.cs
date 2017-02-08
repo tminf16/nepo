@@ -17,6 +17,7 @@ namespace Nepo.Common.Rules
     [DataContract]
     public class DistanceIntervalsRule : TargetFunctionComponentBase
     {
+        [DataMember]
         public List<Interval> Intervals { get; set; }
 
         public DistanceIntervalsRule()
@@ -92,10 +93,14 @@ namespace Nepo.Common.Rules
         }
     }
 
+    [DataContract]
     public class Interval
     {
+        [DataMember]
         public int Min { get; set; }
+        [DataMember]
         public int Max { get; set; }
+        [DataMember]
         public double Value { get; set; }
 
         public Interval()
