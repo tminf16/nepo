@@ -176,7 +176,7 @@ namespace Mediator
             return all_ready;
         }
 
-
+   
 
 
         /// <summary>
@@ -199,6 +199,10 @@ namespace Mediator
             rule.AddInterval(15, 100, 1);
             liste[0].AgentConfigs.ElementAt(0).Rules.Add(
                         rule);
+
+            Logger.anzTuerme = liste[0].Map.PlanningObjectCount;
+            Logger.printAnzTuerme();
+
             return liste[0];
         }
 

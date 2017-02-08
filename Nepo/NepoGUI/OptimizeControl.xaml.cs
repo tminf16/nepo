@@ -51,7 +51,7 @@ namespace NepoGUI
 
         private void StartVoting(object obj)
         {
-            Vote();   
+            Vote();
         }
 
         private void Vote()
