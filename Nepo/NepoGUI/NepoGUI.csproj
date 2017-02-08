@@ -38,7 +38,6 @@
     <StartupObject>NepoGUI.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nepo.Common, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

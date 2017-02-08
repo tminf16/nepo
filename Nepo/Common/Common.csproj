@@ -59,7 +59,7 @@
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Rules\CurveRule.cs" />
     <Compile Include="Rules\DistanceIntervalsRule.cs" />
-    <Compile Include="Rules\ITargetFunctionComponent.cs" />
+    <Compile Include="Rules\TargetFunctionComponentBase.cs" />
     <Compile Include="Solution.cs" />
     <Compile Include="XmlHelper.cs" />
     <Compile Include="ImmovableObject.cs" />

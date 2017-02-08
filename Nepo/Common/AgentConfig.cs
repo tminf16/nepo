@@ -10,11 +10,11 @@ namespace Nepo.Common
         [DataMember]
         public List<Layer> Layers { get; set; }
         [DataMember]
-        public List<ITargetFunctionComponent> Rules { get; set; }
+        public List<TargetFunctionComponentBase> Rules { get; set; }
         public AgentConfig()
         {
             Layers = new List<Layer>();
-            Rules = new List<ITargetFunctionComponent>();
+            Rules = new List<TargetFunctionComponentBase>();
         }
     }
 }

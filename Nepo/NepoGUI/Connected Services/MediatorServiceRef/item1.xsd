@@ -20,7 +20,7 @@
   <xs:complexType name="AgentConfig">
     <xs:sequence>
       <xs:element minOccurs="0" name="Layers" nillable="true" type="tns:ArrayOfLayer" />
-      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Nepo.Common.Rules" minOccurs="0" name="Rules" nillable="true" type="q1:ArrayOfITargetFunctionComponent" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Nepo.Common.Rules" minOccurs="0" name="Rules" nillable="true" type="q1:ArrayOfTargetFunctionComponentBase" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="AgentConfig" nillable="true" type="tns:AgentConfig" />

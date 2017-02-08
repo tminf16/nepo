@@ -14,8 +14,12 @@ using System.Xml.Serialization;
 
 namespace Nepo.Common.Rules
 {
+<<<<<<< Updated upstream
     [DataContract]
+    public class DistanceIntervalsRule : ITargetFunctionComponent
+=======
     public class DistanceIntervalsRule : TargetFunctionComponentBase
+>>>>>>> Stashed changes
     {
         public List<Interval> Intervals { get; set; }
 

@@ -169,14 +169,14 @@ namespace Mediator
         private Instance InitInstance()
         {
             List<Instance> liste = Generator.GenerateInstances().Result;
-            //liste[0].AgentConfigs = new List<AgentConfig>();
-            //liste[0].AgentConfigs.Add(
-            //    new AgentConfig()
-            //    {
-            //        Rules = new List<ITargetFunctionComponent>()
-            //    });
-            //liste[0].AgentConfigs.ElementAt(0).Rules.Add(
-            //            new CurveRule(15, 100));
+            liste[0].AgentConfigs = new List<AgentConfig>();
+            liste[0].AgentConfigs.Add(
+                new AgentConfig()
+                {
+                    Rules = new List<TargetFunctionComponentBase>()
+                });
+            liste[0].AgentConfigs.ElementAt(0).Rules.Add(
+                        new CurveRule(15, 100));
             return liste[0];
 
             /*var config = new MapConfig()

@@ -13,7 +13,7 @@ using System.Xml.Serialization;
 namespace Nepo.Common.Rules
 {
     [DataContract]
-    public class CurveRule : ITargetFunctionComponent
+    public class CurveRule : TargetFunctionComponentBase
     {
         [DataMember]
         public int Min { get; set; } = 15;

@@ -12,9 +12,9 @@ namespace Nepo.Common.Rules
     [DataContract]
     [XmlInclude(typeof(DistanceIntervalsRule))]
     [XmlInclude(typeof(CurveRule))]
-    public abstract class ITargetFunctionComponent
+    [KnownType(typeof(CurveRule))]
+    public abstract class TargetFunctionComponentBase
     { 
-        
         public abstract double CalculatePartialTargetValue(Solution solution);
         public abstract ControlTemplate GetUiTemplate();
     }
