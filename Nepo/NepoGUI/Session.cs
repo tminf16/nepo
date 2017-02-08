@@ -37,6 +37,7 @@ namespace NepoGUI
                     return;
                 }
                 Map = value.Map;
+                Optimizer.Instance.SetMap(Map);
                 if (null == value.AgentConfigs || 0 == value.AgentConfigs.Count)
                     Config = DataHandler.GetAgentConfig();
                 else
