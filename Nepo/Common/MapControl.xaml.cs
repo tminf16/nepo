@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace Nepo.Common
 {
@@ -50,8 +51,9 @@ namespace Nepo.Common
 
             foreach (var maplayer in mapconfig.Layers)
                 MapLayerBitmaps.Add(maplayer.Map);
-            foreach (var agentlayer in config.Layers)
-                AgentLayerBitmaps.Add(agentlayer.Map);
+            if(null != config)
+                foreach (var agentlayer in config.Layers)
+                    AgentLayerBitmaps.Add(agentlayer.Map);
 
             AllImmovables.Clear();
 
@@ -79,9 +81,16 @@ namespace Nepo.Common
 
             Movables.Clear();
             List<ControlTemplate> templates = new List<ControlTemplate>();
-            foreach (var rule in config.Rules)
+            if(null != config)
             {
-                templates.Add(rule.GetUiTemplate());
+                foreach (var rule in config.Rules)
+                {
+                    templates.Add(rule.GetUiTemplate());
+                }
+            }
+            else
+            {
+                templates.Add(GetDefaultTemplate());
             }
             for (int i = 0; i < mapconfig.PlanningObjectCount; i++)
             {
@@ -115,6 +124,29 @@ namespace Nepo.Common
                     Canvas.SetLeft(tmpCtrl, po.Location.X - (this.Width / 2));
                 });
             }
+        }
+
+        private ControlTemplate GetDefaultTemplate()
+        {
+            var uiElement = new ControlTemplate();
+            var grid = new FrameworkElementFactory(typeof(Grid));
+            uiElement.VisualTree = grid;
+            var rect1 = new FrameworkElementFactory(typeof(Rectangle));
+            rect1.SetValue(Rectangle.HeightProperty, 1.0);
+            rect1.SetValue(Rectangle.WidthProperty, 20.0);
+            rect1.SetValue(Rectangle.FillProperty, System.Windows.Media.Brushes.Black);
+
+            var rect2 = new FrameworkElementFactory(typeof(Rectangle));
+            rect2.SetValue(Rectangle.WidthProperty, 1.0);
+            rect2.SetValue(Rectangle.HeightProperty, 20.0);
+            rect2.SetValue(Rectangle.FillProperty, System.Windows.Media.Brushes.Black);
+
+            grid.SetValue(Grid.WidthProperty, 20.0 );
+            grid.SetValue(Grid.HeightProperty, 20.0);
+            grid.AppendChild(rect1);
+            grid.AppendChild(rect2);
+
+            return uiElement;
         }
     }
 }

@@ -4,9 +4,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NepoMediator"
+        xmlns:common="clr-namespace:Nepo.Common;assembly=Nepo.Common"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button Command="{Binding ResetCommand}">Reset</Button>
+        </StackPanel>
+        <common:MapControl Grid.Column="1" Name="MyIncredibleMapControl"></common:MapControl>
     </Grid>
 </Window>

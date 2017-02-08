@@ -14,6 +14,7 @@ namespace Mediator
         private Dictionary<Tuple<int, Guid>, List<Tuple<int, bool>>> Liste = new Dictionary<Tuple<int, Guid>, List<Tuple<int, bool>>>();
 
         private Dictionary<Guid, List<int>> votesForCurrentRound = new Dictionary<Guid, List<int>>();
+       
 
         /// <summary>
         /// Check if Client with given GUID has voted in current round

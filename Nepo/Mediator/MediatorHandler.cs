@@ -11,18 +11,31 @@ namespace Mediator
     public class MediatorHandler
     {
 
-        private Instance Instance;
+        public Instance Instance;
         private List<Guid> AgentList = new List<Guid>();
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
         private List<Solution> currentSolution = new List<Solution>();
         private int maxRound = 1000;
 
+        private static MediatorHandler _instance;
+        public static MediatorHandler HandlerInstance { get { return _instance; } }
+        public event EventHandler NewDataAvailable;
+
 
         public MediatorHandler(MediatorService service)
         {
             this.service = service;
             Optimizer.maxRounds = maxRound;
+            _instance = this;
+        }
+
+        public void Reset()
+        {
+            DecisonHandler.Reset();
+            Optimizer.Instance.Reset();
+            service.DataReadyCallback(CanIHasPope.BlackSmoke);
+            NewDataAvailable?.Invoke(null, null);
         }
 
         /// <summary>
@@ -49,7 +62,7 @@ namespace Mediator
             this.AgentList.Remove(agentGuid);
         }
 
-        internal Solution GetCurrentSolution(Guid agentGuid)
+        public Solution GetCurrentSolution(Guid agentGuid)
         {
             return Optimizer.Instance.SelectChild(0).Item1;
         }
@@ -129,11 +142,13 @@ namespace Mediator
                 {
                     // Abstimmung beendet
                     service.DataReadyCallback(CanIHasPope.WhiteSmoke);
+                    NewDataAvailable?.Invoke(null, null);
                 }
                 else
                 {
                     // Es folgt eine weitere Abstimmungsrunde
                     service.DataReadyCallback(CanIHasPope.BlackSmoke);
+                    NewDataAvailable?.Invoke(null, null);
                 }
 
             }

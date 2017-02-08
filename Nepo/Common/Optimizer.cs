@@ -73,7 +73,7 @@ namespace Nepo.Common
             {
                 targetValues.Add(new Tuple<int, double>(sol.SolutionID, CalculateTargetValue(sol, config)));
             }
-            var results = targetValues.OrderBy(x => x.Item2).Take(count).Select(x=>x.Item1).ToList();
+            var results = targetValues.OrderByDescending(x => x.Item2).Take(count).Select(x=>x.Item1).ToList();
             return results;
         }
 
