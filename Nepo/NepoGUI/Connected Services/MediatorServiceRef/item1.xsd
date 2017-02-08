@@ -32,6 +32,7 @@
   <xs:element name="ArrayOfLayer" nillable="true" type="tns:ArrayOfLayer" />
   <xs:complexType name="Layer">
     <xs:sequence>
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="Map" nillable="true" type="q2:Bitmap" />
       <xs:element minOccurs="0" name="Weight" type="xs:double" />
     </xs:sequence>

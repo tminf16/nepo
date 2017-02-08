@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Windows.Shapes;
@@ -14,30 +16,43 @@ namespace Nepo.Common
     {        
         private Bitmap _map;
 
-        [XmlIgnore]
-        [DataMember]
-        public Bitmap Map
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        [XmlElement("Map")]
+        public byte[] MapSerialized
         {
             get
-            {
-                if (_map != null)
+            { // serialize
+                if (this.Map == null) return null;
+                using (MemoryStream ms = new MemoryStream())
                 {
-                    return _map;
+                    this.Map.Save(ms, ImageFormat.Bmp);
+                    return ms.ToArray();
+                }
+            }
+            set
+            { // deserialize
+                if (value == null)
+                {
+                    this.Map = null;
                 }
                 else
                 {
-                    _map = (Bitmap) Image.FromFile(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.FileName));
-                    return _map;
+                    using (MemoryStream ms = new MemoryStream(value))
+                    {
+                        this.Map = new Bitmap(ms);
+                    }
                 }
             }
-
-            set
-            {
-                this._map = value;
-                this._map.Save(System.IO.Path.Combine(Directory.GetCurrentDirectory(), this.FileName));
-            }
         }
-        
+
+        [DataMember]
+        [XmlIgnore]
+        public Bitmap Map
+        {
+            get;
+            set;
+        }
+        [DataMember]
         public string FileName { get; set; }
         [DataMember]
         public double Weight { get; set; } = 1;

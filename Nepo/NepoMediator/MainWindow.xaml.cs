@@ -36,11 +36,11 @@ namespace NepoMediator
             });
             Task.Run(()=>
             {
-                while (null == MediatorHandler.HandlerInstance)
+                while (null == MediatorHandler.HandlerInstance?.Instance)
                     Thread.Sleep(100);
                 Dispatcher.Invoke(()=>
                 {
-                    MyIncredibleMapControl.Configure(MediatorHandler.HandlerInstance.Instance.Map, null);
+                    this.MyIncredibleMapControl.Configure(MediatorHandler.HandlerInstance.Instance.Map, null);
                     MediatorHandler.HandlerInstance.NewDataAvailable += HandlerInstance_NewDataAvailable;
                     this.SizeToContent = SizeToContent.WidthAndHeight;
                     this.SizeToContent = SizeToContent.Manual;
@@ -50,7 +50,7 @@ namespace NepoMediator
 
         private void HandlerInstance_NewDataAvailable(object sender, EventArgs e)
         {
-            MyIncredibleMapControl.SetSolution(MediatorHandler.HandlerInstance.GetCurrentSolution(new Guid()));
+            this.MyIncredibleMapControl.SetSolution(MediatorHandler.HandlerInstance.GetCurrentSolution(new Guid()));
         }
 
         private void Reset(object obj)

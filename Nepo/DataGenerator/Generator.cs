@@ -55,18 +55,24 @@ namespace Nepo.DataGenerator
                     PlanningObjectCount = rng.Next(constraints.MinPlanningObjectCount, constraints.MaxPlanningObjectCount)
                 }
             };
-            var immovableObjectCount = rng.Next(constraints.MinImmovableObjectCount, constraints.MaxImmovableObjectCount);                        
-            result.Map.ImmovableObjects = GenerateImmovableObjects(immovableObjectCount, constraints, rng);            
+            var immovableObjectCount = rng.Next(constraints.MinImmovableObjectCount, constraints.MaxImmovableObjectCount);
+            result.Map.ImmovableObjects = GenerateImmovableObjects(immovableObjectCount, constraints, rng);
+            result.Map.Layers = GenerateLayers(constraints, rng, result);
+
+            
             return result;
         }
 
-        public static Layer GenerateLayer(MapGenerationConstraints constraints, Random rng, MapConfig map)
+        public static List<Layer> GenerateLayers(MapGenerationConstraints constraints, Random rng, Instance instance)
         {
-            var layer = new Layer();
-
-            var bitmap = new Bitmap(map.MapSize.Height, map.MapSize.Width);
-
-            return null;
+            var result = new List<Layer>();
+            var layerOne = new Layer()
+            {
+                FileName = $"Deadzones.bmp",
+                Map = BitmapGenerator.AddBlobs(new Bitmap(instance.Map.MapSize.Width, instance.Map.MapSize.Height), rng, constraints)
+            };            
+            result.Add(layerOne);
+            return result;
         }
 
         

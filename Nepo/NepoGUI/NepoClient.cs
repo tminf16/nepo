@@ -60,7 +60,8 @@ namespace NepoGUI
 
         public Instance Register()
         {
-            return this.mediatorClient.Register(this.privateGuid);
+            var result = this.mediatorClient.Register(this.privateGuid);
+            return result;
         }
 
         public void Unregister()

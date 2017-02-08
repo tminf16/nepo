@@ -88,6 +88,7 @@ namespace Nepo.Common
 
             filename = Directory.GetCurrentDirectory() + "\\" + (null == instancename ? "" : (instancename + "\\")) + filename;
             StreamWriter sw = new StreamWriter(filename);
+
             sw.Write(XmlHelper.Serialize(instance));            
             sw.Close();
         }
