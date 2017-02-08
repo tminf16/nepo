@@ -42,8 +42,16 @@ namespace NepoGUI
                     Config = DataHandler.GetAgentConfig();
                 else
                     Config = value.AgentConfigs.FirstOrDefault();
-                _currentSolution = _client.GetCurrentSolution();
-                _availableChildSolutions = _client.GetProposedSolutions();
+                if (value.InstanceId == ServerInstance)
+                {
+                    _currentSolution = _client.GetCurrentSolution();
+                    _availableChildSolutions = _client.GetProposedSolutions();
+                }
+                else
+                {
+                    _currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+                    _availableChildSolutions = Optimizer.Instance.SelectChild(0).Item2;
+                }
             } }
 
         public Session()
@@ -70,7 +78,14 @@ namespace NepoGUI
         {
             _availableChildSolutions = e.ProposedSolutions;
             _currentSolution = _client.GetCurrentSolution();
-            NewDataAvailable?.Invoke(null, null);
+            NewDataAvailable?.Invoke(false, null);
+        }
+
+        public void NewLocalData()
+        {
+            _availableChildSolutions = Optimizer.Instance.SelectChild(0).Item2;
+            _currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            NewDataAvailable?.Invoke(true, null);
         }
 
         public void Save()

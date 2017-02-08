@@ -105,6 +105,12 @@ namespace Nepo.Common
             var selection = results.First();
             SelectChild(selection.id);
         }
+        public void FindNewAcceptedSolution(List<int> list)
+        {
+            var results = list.OrderByDescending(x => x).ToList();
+            var selection = results.First();
+            SelectChild(selection);
+        }
     }
 
     public static class RandomExtension

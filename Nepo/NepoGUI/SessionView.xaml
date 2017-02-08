@@ -15,6 +15,9 @@
             <TabItem Header="Configuration">
                 <common:MapControl></common:MapControl>
             </TabItem>
+            <TabItem Header="Local">
+                <local:OptimizeControl x:Name="LocalOpt"></local:OptimizeControl>
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>

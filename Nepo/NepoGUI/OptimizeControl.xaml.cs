@@ -35,13 +35,11 @@ namespace NepoGUI
         {
             get { return (double)GetValue(TargetValueProperty); }
             set { SetValue(TargetValueProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for TargetValue.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TargetValueProperty =
+        } public static readonly DependencyProperty TargetValueProperty =
             DependencyProperty.Register("TargetValue", typeof(double), typeof(OptimizeControl), new PropertyMetadata(0.0));
 
 
+        public bool Local { get; set; }
 
         public RelayCommand StartVotingCommand { get; set; }
 
@@ -49,8 +47,6 @@ namespace NepoGUI
         {
             StartVotingCommand = new RelayCommand(StartVoting);
             InitializeComponent();
-            Session.Get.NewDataAvailable += Get_NewDataAvailable;
-
         }
 
         private void StartVoting(object obj)
@@ -60,14 +56,28 @@ namespace NepoGUI
 
         private void Vote()
         {
-            Session.Get.Vote(
-                Optimizer.FindBestSolutions(
-                    Session.Get.AvailableChildSolutions,
-                    Session.Get.Config, 1));
+            if (Local)
+            {
+                Optimizer.Instance.FindNewAcceptedSolution(
+                    Optimizer.FindBestSolutions(
+                        Session.Get.AvailableChildSolutions,
+                        Session.Get.Config, 1));
+                Task.Run(()=>Session.Get.NewLocalData());
+            }
+            else
+            {
+                Session.Get.Vote(
+                    Optimizer.FindBestSolutions(
+                        Session.Get.AvailableChildSolutions,
+                        Session.Get.Config, 1));
+            }
         }
 
         private void Get_NewDataAvailable(object sender, EventArgs e)
         {
+            if (Local != ((bool)sender))
+                return;
+
             Dispatcher.Invoke(() =>
             {
                 TargetValue = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.Config);
@@ -88,6 +98,7 @@ namespace NepoGUI
             if (null == currentInstance)
                 return;
             OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
+            Session.Get.NewDataAvailable += Get_NewDataAvailable;
         }
     }
 }

@@ -26,6 +26,7 @@ namespace NepoGUI
         public SessionView()
         {
             InitializeComponent();
+            LocalOpt.Local = true;
         }
 
         public void Draw()
@@ -36,6 +37,7 @@ namespace NepoGUI
         internal void LoadValues()
         {
             OptimizeView.LoadValues();
+            LocalOpt.LoadValues();
         }
     }
 }
