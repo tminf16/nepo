@@ -38,6 +38,7 @@ namespace NepoGUI
         {
             OptimizeView.LoadValues();
             LocalOpt.LoadValues();
+            ConfigurationView.LoadValues();
         }
     }
 }

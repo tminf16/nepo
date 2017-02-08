@@ -13,7 +13,7 @@
                 <local:OptimizeControl x:Name="OptimizeView"/>
             </TabItem>
             <TabItem Header="Configuration">
-                <common:MapControl></common:MapControl>
+                <local:ConfigurationControl x:Name="ConfigurationView"></local:ConfigurationControl>
             </TabItem>
             <TabItem Header="Local">
                 <local:OptimizeControl x:Name="LocalOpt"></local:OptimizeControl>
