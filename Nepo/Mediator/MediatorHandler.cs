@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using Nepo.DataGenerator;
@@ -124,14 +126,16 @@ namespace Mediator
             {
                 // Es sind noch nicht alle Teilnehmer am Mediator angemeldet
                 // Speichere Vote des Teilnehmers in Struktur
-                //return;
+                return;
 
             }
-
-            // Alle Teilnehmer sind angemeldet
+   
+                // Alle angemeldet -> Initial Solution
+                //this.currentSolution = generateNewSolution();
+                //service.DataReadyCallback(CanIHasPope.BlackSmoke);
 
             // Prüfe, ob jeder Teilnehmer abgestimmt hat
-            //if (allClientsVoted())
+            if (allClientsVoted())
             {
                 Optimizer.Instance.FindNewAcceptedSolution(DecisonHandler.GetVotesForRound());
 
@@ -196,28 +200,6 @@ namespace Mediator
             liste[0].AgentConfigs.ElementAt(0).Rules.Add(
                         rule);
             return liste[0];
-
-            /*var config = new MapConfig()
-            {
-                MapSize = new System.Drawing.Size(500, 500),
-                PlanningObjectCount = 5
-            };
-            Random rand = new Random((int)DateTime.Now.Ticks);
-            config.ImmovableObjects = new List<ImmovableObject>();
-            for (int i = 0; i < 20; i++)
-            {
-                config.ImmovableObjects.Add(new ImmovableObject()
-                {
-                    Location = new System.Drawing.Point(rand.Next(500), rand.Next(500)),
-                    Weight = rand.Next(100, 150)
-                });
-            }
-            DataHandler.SaveMapConfig(config);
-
-            Instance instance = new Instance();
-            instance.Map = config;*( */
-
-
         }
 
 

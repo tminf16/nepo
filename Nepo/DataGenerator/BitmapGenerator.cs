@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using LibNoise;
+using LibNoise.Builder;
+using LibNoise.Filter;
+using LibNoise.Model;
+using LibNoise.Primitive;
 
 namespace Nepo.DataGenerator
 {
@@ -35,19 +40,60 @@ namespace Nepo.DataGenerator
 
             for (var i = 0; i < blobCount; ++i)
             {
-                BitmapGenerator.DrawEllipse(bitmap, new Point(rng.NextSize(new Size(0, 0), bitmap.Size)), rng.Next(blobMin, blobMax), rng.Next(blobMin, blobMax));
+                BitmapGenerator.FillEllipse(bitmap, new Point(rng.NextSize(new Size(0, 0), bitmap.Size)), rng.Next(blobMin, blobMax), rng.Next(blobMin, blobMax));
             }            
 
             return bitmap;
         }
 
-        private static void DrawEllipse(Bitmap bitmap, Point center, int width, int height)
+        private static void FillEllipse(Bitmap bitmap, Point center, int width, int height)
         {
             System.Drawing.Pen myPen = new System.Drawing.Pen(Color.FromArgb(255, Color.Black));
             var formGraphics = Graphics.FromImage(bitmap); 
             formGraphics.DrawEllipse(myPen, center.X, center.Y, width, height);
             myPen.Dispose();
             formGraphics.Dispose();
+        }
+
+        public static Bitmap AddHeightNoise(Bitmap bitmap, Random rng)
+        {
+            var noiseMap = GenerateNoiseMap(rng, bitmap.Size);
+            for (var i = 0; i < bitmap.Size.Height; ++i)
+            {
+                for (var j = 0; j < bitmap.Size.Width; ++j)
+                {
+                    var pixel = bitmap.GetPixel(i, j);
+                    bitmap.SetPixel(i, j, Color.FromArgb((int)(127*noiseMap.GetValue(i,j)+127), pixel));
+                }
+            }
+            
+            return bitmap;
+
+        }
+
+        public static IMap2D<float> GenerateNoiseMap(Random rng, Size size)
+        {
+            var builder = new LibNoise.Builder.NoiseMapBuilderPlane(1, size.Width, 1, size.Height, false);
+            
+
+            var source = new SimplexPerlin();
+            builder.SourceModule = source;
+
+            builder.SetSize(size.Width, size.Height);
+            var baseMap = new NoiseMap(size.Width, size.Height);
+
+            builder.NoiseMap = baseMap;
+            
+            builder.Build();
+
+            var map = builder.NoiseMap;
+            float min;
+            float max;
+            map.MinMax(out min, out max);
+            Console.WriteLine(map.Width);
+            Console.WriteLine(map.GetValue(200, 300));
+            Console.WriteLine($"Min: {min}, Max: {max}");
+            return builder.NoiseMap;
         }
     }
 }
