@@ -14,6 +14,7 @@ namespace Nepo.Common
         public MapConfig Map { get; set; } = new MapConfig();
         [DataMember]
         public List<AgentConfig> AgentConfigs { get; set; }
+        public bool Online { get; set; }
 
         public static List<Instance> LoadInstances()
         {

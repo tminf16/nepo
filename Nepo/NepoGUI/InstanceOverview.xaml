@@ -10,7 +10,7 @@
         <StackPanel Background="White" Orientation="Vertical">
             <TextBlock>Welcome to NEPO</TextBlock>
             <TextBlock>The following instances are available:</TextBlock>
-            <Button Command="{Binding CheckInstanceCommand}">Check</Button>
+            <!--<Button Command="{Binding CheckInstanceCommand}">Check</Button>-->
             <ItemsControl ItemsSource="{Binding AvailableInstances}" Margin="0,10,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -35,7 +35,8 @@
                             <TextBlock Grid.Row="2">
                                 <Run>Movables count:</Run></TextBlock>
                             <TextBlock Grid.Row="3">
-                                <Run>Blabla</Run>
+                                <Run>Online:</Run>
+                                <Run Text="{Binding Online}"/>
                             </TextBlock>
 
                             <Button Grid.Column="1" Grid.RowSpan="4" VerticalAlignment="Center" CommandParameter="{Binding InstanceId}" Command="{Binding SelectInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Select</Button>

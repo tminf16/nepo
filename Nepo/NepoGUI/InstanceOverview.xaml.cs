@@ -37,6 +37,7 @@ namespace NepoGUI
             SelectInstanceCommand = new RelayCommand(SelectInstance);
             CheckInstanceCommand = new RelayCommand(CheckInstance);
             InitializeComponent();
+            Task.Run(()=>CheckInstance(null));
         }
 
         private void SelectInstance(object obj)
@@ -48,6 +49,9 @@ namespace NepoGUI
         {
             Session.Get.CheckMediator();
             AvailableInstances = Instance.LoadInstances();
+            var onlineinstance = AvailableInstances.SingleOrDefault(x => x.InstanceId == Session.Get.ServerInstance);
+            if (null != onlineinstance)
+                onlineinstance.Online = true;
             Dispatcher.Invoke(() =>OnPropertyChanged("AvailableInstances"));
         }
     }

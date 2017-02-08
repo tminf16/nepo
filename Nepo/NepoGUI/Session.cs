@@ -11,11 +11,13 @@ namespace NepoGUI
     {
         private static Session _get = null;
         public static Session Get { get { return _get ?? (_get = new Session()); } }
-        
+
         public AgentConfig Config { get; set; }
         public MapConfig Map { get; set; }
         public List<Instance> Instances { get; set; }
         private Instance _currentInstance;
+        private Guid _serverInstance;
+        public Guid ServerInstance { get { return _serverInstance; } }
 
         private NepoClient _client = new NepoClient();
         private Solution _currentSolution;
@@ -80,6 +82,7 @@ namespace NepoGUI
         {
             var result = _client.Register();
             result.Save();
+            _serverInstance = result.InstanceId;
             Instances = Instance.LoadInstances();
         }
     }

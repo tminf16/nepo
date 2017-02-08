@@ -62,6 +62,7 @@
   <xs:complexType name="Solution">
     <xs:sequence>
       <xs:element minOccurs="0" name="PlanningObjects" nillable="true" type="tns:ArrayOfPlanningObject" />
+      <xs:element minOccurs="0" name="Progress" type="xs:int" />
       <xs:element minOccurs="0" name="SolutionID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

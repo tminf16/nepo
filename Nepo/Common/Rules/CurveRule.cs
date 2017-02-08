@@ -53,8 +53,7 @@ namespace Nepo.Common.Rules
 
         }
 
-        override
-        public double CalculatePartialTargetValue(Solution solution)
+        override public double CalculatePartialTargetValue(Solution solution)
         {
             double[] alreadyCounted = new double[DataHandler.GetMapConfig().ImmovableObjects.Count];
             for (int i = 0; i < alreadyCounted.Length; i++)

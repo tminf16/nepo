@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Xml.Serialization;
 
 namespace Nepo.Common.Rules
 {
+    [DataContract]
     public class DistanceIntervalsRule : ITargetFunctionComponent
     {
         public List<Interval> Intervals { get; set; }
