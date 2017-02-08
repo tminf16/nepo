@@ -63,7 +63,7 @@ namespace NepoGUI
             Session.Get.Vote(
                 Optimizer.FindBestSolutions(
                     Session.Get.AvailableChildSolutions,
-                    Session.Get.Config, 1));
+                    Session.Get.Config, 5));
         }
 
         private void Get_NewDataAvailable(object sender, EventArgs e)

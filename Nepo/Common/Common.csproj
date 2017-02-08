@@ -51,6 +51,7 @@
     <Compile Include="AgentConfig.cs" />
     <Compile Include="DataHandler.cs" />
     <Compile Include="Instance.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="MapControl.xaml.cs">
       <DependentUpon>MapControl.xaml</DependentUpon>
     </Compile>
