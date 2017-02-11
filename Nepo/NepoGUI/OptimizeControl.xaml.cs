@@ -81,6 +81,7 @@ namespace NepoGUI
             Dispatcher.Invoke(() =>
             {
                 TargetValue = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.Config);
+                Logger.clientAMediation = TargetValue;
                 Progress = Session.Get.CurrentSolution.Progress;
             });
             Draw();
@@ -94,7 +95,11 @@ namespace NepoGUI
 
         public void LoadValues()
         {
+            
             Instance currentInstance = Session.Get.CurrentInstance;
+
+            Logger.printGUID();
+
             if (null == currentInstance)
                 return;
             OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);

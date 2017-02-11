@@ -30,6 +30,7 @@ namespace Mediator
             this.service = service;
             Optimizer.maxRounds = maxRound;
             _instance = this;
+            Logger.maxrounds = maxRound;
         }
 
         public void Reset()

@@ -18,19 +18,28 @@ namespace Nepo.Common
         public static double clientBBest { get; set; }
         public static double clientBMediation { get; set; }
         public static int maxrounds { get; set; }
-        public static int anzVorschlaegeProRunde { get; set; }
+        public static int anzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
         public static int anzErzwungeneAkzeptanz { get; set; }
 
         private static String outputFilepath = "C:\\tmp\\sample.txt";
 
         public static void printGUID()
         {
+            
+
             Console.WriteLine("TestinstGUID="+testinstanzguid);
+            WriteToFile("TestinstGUID=" + testinstanzguid);
+        }
+
+        public static void printTarget()
+        {
+            WriteToFile("TargetVal=" + clientAMediation);
         }
 
         public static void printAnzTuerme()
         {
             Console.WriteLine("Anzahl Tuerme=" + anzTuerme);
+            WriteToFile("Anzahl Tuerme=" + anzTuerme);
         }
 
 
@@ -50,13 +59,25 @@ namespace Nepo.Common
 
         public static void WriteToFile(String value)
         {
-            // Example #3: Write only some strings in an array to a file.
-            // The using statement automatically flushes AND CLOSES the stream and calls 
-            // IDisposable.Dispose on the stream object.
-            using (StreamWriter file = new StreamWriter(@outputFilepath))
+
+
+            // This text is added only once to the file.
+            if (!File.Exists(outputFilepath))
+            {
+                // Create a file to write to.
+                using (StreamWriter file = File.CreateText(outputFilepath))
+                {
+                    file.WriteLine(value);
+                }
+            }
+
+            // This text is always added, making the file longer over time
+            // if it is not deleted.
+            using (StreamWriter file = File.AppendText(outputFilepath))
             {
                 file.WriteLine(value);
             }
+
 
         }
 
