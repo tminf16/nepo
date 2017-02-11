@@ -23,7 +23,7 @@ namespace Nepo.Common
         public static int AnzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
         public static int AnzErzwungeneAkzeptanz { get; set; }
 
-        private static String OutputFilepath = "C:\\tmp\\sample.txt";
+        private static String OutputFilepath = Directory.GetCurrentDirectory() + "\\" + "NepoLog.txt";
 
 
         /// <summary>
@@ -33,8 +33,13 @@ namespace Nepo.Common
         /// <param name="targetValue"></param>
         public static void addMyTargetValue(Guid guid, double targetValue)
         {
-            TargetValueByClient.Add(guid, targetValue);
-            WriteToFile("CLIENT=" + guid + ":targetValue=" + targetValue);
+
+            if (!TargetValueByClient.ContainsKey(guid))
+            {
+                TargetValueByClient.Add(guid, targetValue);
+                WriteToFile("CLIENT=" + guid + ":targetValue=" + targetValue);
+            }
+
         }
 
         public static void printGUID()
