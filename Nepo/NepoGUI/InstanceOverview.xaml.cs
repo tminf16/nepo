@@ -53,7 +53,7 @@ namespace NepoGUI
             if (null != onlineinstance)
             {
                 onlineinstance.Online = true;
-                Logger.testinstanzguid = onlineinstance.InstanceId;
+                Logger.Testinstanzguid = onlineinstance.InstanceId;
                 //Logger.print();
             }
             Dispatcher.Invoke(() =>OnPropertyChanged("AvailableInstances"));

@@ -64,7 +64,18 @@ namespace Nepo.Common
                 return _agent ?? (_agent = GetConfig<AgentConfig>());
             return GetConfig<AgentConfig>(instance);
         }
-        
+
+
+        private static int _forcedAcceptance = 0;
+        public static int GetForcedAcceptance(string instance = null)
+        {
+            if (String.IsNullOrEmpty(instance))
+                return _forcedAcceptance = GetConfig<int>();
+            return GetConfig<int>(instance);
+        }
+
+
+
         public static List<AgentConfig> GetAgentConfigs(string instance)
         {
             return GetConfig<List<AgentConfig>>(instance);

@@ -11,35 +11,46 @@ namespace Nepo.Common
     public class Logger
     {
 
-        public static Guid testinstanzguid { get; set; }
-        public static int anzTuerme { get; set; }
-        public static double clientABest { get; set; }
-        public static double clientAMediation { get; set; }
-        public static double clientBBest { get; set; }
-        public static double clientBMediation { get; set; }
-        public static int maxrounds { get; set; }
-        public static int anzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
-        public static int anzErzwungeneAkzeptanz { get; set; }
+        public static Guid Testinstanzguid { get; set; }
+        public static int AnzTuerme { get; set; }
 
-        private static String outputFilepath = "C:\\tmp\\sample.txt";
+
+        public static Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
+
+        public static double MediationResult { get; set; }
+        
+        public static int Maxrounds { get; set; }
+        public static int AnzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
+        public static int AnzErzwungeneAkzeptanz { get; set; }
+
+        private static String OutputFilepath = "C:\\tmp\\sample.txt";
+
+
+        /// <summary>
+        /// Target Value of Client after Habemus Papam
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <param name="targetValue"></param>
+        public static void addMyTargetValue(Guid guid, double targetValue)
+        {
+            TargetValueByClient.Add(guid, targetValue);
+            WriteToFile("CLIENT=" + guid + ":targetValue=" + targetValue);
+        }
 
         public static void printGUID()
         {
-            
-
-            Console.WriteLine("TestinstGUID="+testinstanzguid);
-            WriteToFile("TestinstGUID=" + testinstanzguid);
+            Console.WriteLine("TestinstGUID="+Testinstanzguid);
+            WriteToFile("TestinstGUID=" + Testinstanzguid);
         }
 
         public static void printTarget()
         {
-            WriteToFile("TargetVal=" + clientAMediation);
         }
 
         public static void printAnzTuerme()
         {
-            Console.WriteLine("Anzahl Tuerme=" + anzTuerme);
-            WriteToFile("Anzahl Tuerme=" + anzTuerme);
+            Console.WriteLine("Anzahl Tuerme=" + AnzTuerme);
+            WriteToFile("Anzahl Tuerme=" + AnzTuerme);
         }
 
 
@@ -62,10 +73,10 @@ namespace Nepo.Common
 
 
             // This text is added only once to the file.
-            if (!File.Exists(outputFilepath))
+            if (!File.Exists(OutputFilepath))
             {
                 // Create a file to write to.
-                using (StreamWriter file = File.CreateText(outputFilepath))
+                using (StreamWriter file = File.CreateText(OutputFilepath))
                 {
                     file.WriteLine(value);
                 }
@@ -73,7 +84,7 @@ namespace Nepo.Common
 
             // This text is always added, making the file longer over time
             // if it is not deleted.
-            using (StreamWriter file = File.AppendText(outputFilepath))
+            using (StreamWriter file = File.AppendText(OutputFilepath))
             {
                 file.WriteLine(value);
             }
