@@ -53,24 +53,39 @@ namespace NepoGUI
                     Intervals.Add(new Interval { Min = interval.Min, Max = interval.Max, Value = interval.Value });
                 }
             }
+            //Activate the default button group
+            if (TB_MaxRange.Text != "" && TB_MinRange.Text != "") RB_CurveRule.IsChecked = true;
+            else RB_IntervallRule.IsChecked = true;
+
             //Load Map
             ConfigurationMapControl.Configure(Session.Get.Map, Session.Get.Config);
         }
 
         public ObservableCollection<Interval> Intervals { get; set; }
 
+        //Buttons
         public RelayCommand DeleteRowCommand { get; set; }
+        public RelayCommand AddRowCommand { get; set; }
+        public RelayCommand SaveCommand { get; set; }
 
         public static readonly DependencyProperty CurveMinRangeProperty =
            DependencyProperty.Register("CurveMinRange", typeof(int), typeof(ConfigurationControl), new PropertyMetadata(0));
 
         public ConfigurationControl()
         {
+            AddRowCommand = new RelayCommand(AddRow);
             DeleteRowCommand = new RelayCommand(DeleteRow);
+            SaveCommand      = new RelayCommand(SaveConfig);
 
             Intervals = new ObservableCollection<Interval>();
             InitializeComponent();
             
+        }
+
+        private void AddRow(object obj)
+        {
+            //Add a new empty Interval to the list
+            Intervals.Add(new Interval { Min = 0, Max = 0, Value = 0 });
         }
 
         private void DeleteRow(object obj)
@@ -83,15 +98,35 @@ namespace NepoGUI
 
         }
 
-        private void TB_MinRange_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        private void CheckNumericText(object sender, TextCompositionEventArgs e)
         {
             foreach (char charItem in e.Text)
             {
-                if (!Char.IsNumber(charItem))
+                if (Char.IsWhiteSpace(charItem) || (!Char.IsNumber(charItem) && !charItem.Equals('.') ) ) 
                 {
                     e.Handled = true;
                 }
             }
+        }
+
+        private void CheckNoSpace(object sender, TextCompositionEventArgs e)
+        {
+            foreach(char charItem in e.Text)
+            {
+                e.Handled = Char.IsWhiteSpace(charItem) ? true : false;
+            }
+        }
+
+        private void SaveConfig(object obj)
+        {
+            Config.Save();
+            //Reload Map
+            ConfigurationMapControl.Configure(Session.Get.Map, Session.Get.Config);
+        }
+
+        private void CheckNoSpace(object sender, KeyEventArgs e)
+        {
+                e.Handled = e.Key == Key.Space ? true : false;
         }
     }
 }
