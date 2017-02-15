@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -37,6 +38,12 @@ namespace Nepo.Common
         public static void SaveMapConfig(MapConfig config, string instance = null)
         {
             config.Save(instancename: instance);
+            foreach (var layer in config.Layers)
+            {
+                layer.Map.Save(Directory.GetCurrentDirectory() + "\\" 
+                    + (null == instance ? "" : (instance + "\\"))  
+                    + layer.FileName);
+            }
         }
 
         public static void SaveAgentConfig(AgentConfig config, string instance = null)

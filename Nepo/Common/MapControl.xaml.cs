@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +12,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -27,7 +30,7 @@ namespace Nepo.Common
         private AgentConfig _config = null;
         private MapConfig _currentMap = null;
         public ObservableCollection<Ellipse> AllImmovables { get; set; }
-        public ObservableCollection<Bitmap> MapLayerBitmaps { get; set; }
+        public ObservableCollection<BitmapSource> MapLayerBitmaps { get; set; }
         public ObservableCollection<Bitmap> AgentLayerBitmaps { get; set; }
         public ObservableCollection<Grid> Movables { get; set; }
 
@@ -36,7 +39,7 @@ namespace Nepo.Common
         public MapControl()
         {
             AllImmovables = new ObservableCollection<Ellipse>();
-            MapLayerBitmaps = new ObservableCollection<Bitmap>();
+            MapLayerBitmaps = new ObservableCollection<BitmapSource>();
             AgentLayerBitmaps = new ObservableCollection<Bitmap>();
             Movables = new ObservableCollection<Grid>();
             InitializeComponent();
@@ -49,8 +52,12 @@ namespace Nepo.Common
             this.Width = _currentMap.MapSize.Width;
             this.Height = _currentMap.MapSize.Height;
 
+
             foreach (var maplayer in mapconfig.Layers)
-                MapLayerBitmaps.Add(maplayer.Map);
+            {
+                //var ms = new MemoryStream(maplayer.MapSerialized);
+                //MapLayerBitmaps.Add(ToBitmapImage(ms));
+            }
             if(null != config)
                 foreach (var agentlayer in config.Layers)
                     AgentLayerBitmaps.Add(agentlayer.Map);
@@ -152,6 +159,21 @@ namespace Nepo.Common
             grid.AppendChild(rect2);
 
             return uiElement;
+        }
+
+        private BitmapImage ToBitmapImage(MemoryStream stream)
+        {
+            
+            stream.Position = 0;
+            BitmapImage result = new BitmapImage();
+            result.BeginInit();
+            // According to MSDN, "The default OnDemand cache option retains access to the stream until the image is needed."
+            // Force the bitmap to load right now so we can dispose the stream.
+            result.CacheOption = BitmapCacheOption.OnLoad;
+            result.StreamSource = stream;
+            result.EndInit();
+            result.Freeze();
+            return result;
         }
     }
 }

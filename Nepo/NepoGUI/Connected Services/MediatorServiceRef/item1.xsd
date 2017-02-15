@@ -40,6 +40,7 @@
   <xs:element name="Layer" nillable="true" type="tns:Layer" />
   <xs:complexType name="MapConfig">
     <xs:sequence>
+      <xs:element minOccurs="0" name="ForcedAcceptance" type="xs:int" />
       <xs:element minOccurs="0" name="ImmovableObjects" nillable="true" type="tns:ArrayOfImmovableObject" />
       <xs:element minOccurs="0" name="Layers" nillable="true" type="tns:ArrayOfLayer" />
       <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Drawing" minOccurs="0" name="MapSize" type="q3:Size" />
