@@ -207,7 +207,7 @@ namespace Mediator
                         rule);
 
             Logger.AnzTuerme = liste[0].Map.PlanningObjectCount;
-            Logger.printAnzTuerme();
+            Logger.PrintAnzTuerme();
 
             return liste[0];
         }

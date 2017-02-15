@@ -31,7 +31,7 @@ namespace Nepo.Common
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="targetValue"></param>
-        public static void addMyTargetValue(Guid guid, double targetValue)
+        public static void AddMyTargetValue(Guid guid, double targetValue)
         {
 
             if (!TargetValueByClient.ContainsKey(guid))
@@ -42,17 +42,17 @@ namespace Nepo.Common
 
         }
 
-        public static void printGUID()
+        public static void PrintGUID()
         {
             Console.WriteLine("TestinstGUID="+Testinstanzguid);
             WriteToFile("TestinstGUID=" + Testinstanzguid);
         }
 
-        public static void printTarget()
+        public static void PrintTarget()
         {
         }
 
-        public static void printAnzTuerme()
+        public static void PrintAnzTuerme()
         {
             Console.WriteLine("Anzahl Tuerme=" + AnzTuerme);
             WriteToFile("Anzahl Tuerme=" + AnzTuerme);
@@ -68,7 +68,7 @@ namespace Nepo.Common
         // MaxRounds	
         // AnzVorschlaegeProRunde	
         // AnzErzwungeneAkzeptanz
-        public static void dumpResult()
+        public static void DumpResult()
         {
 
         }

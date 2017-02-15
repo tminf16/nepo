@@ -65,6 +65,7 @@ namespace NepoGUI
                     Optimizer.FindBestSolutions(
                         Session.Get.AvailableChildSolutions,
                         Session.Get.Config, 
+                        Session.Get.Map,
                         Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
 
                 if(PrivateCurrendRound < PrivateMaxRounds)  //Limit for local runs
@@ -79,8 +80,8 @@ namespace NepoGUI
                 Session.Get.Vote(
                     Optimizer.FindBestSolutions(
                         Session.Get.AvailableChildSolutions,
+                        Session.Get.Config,
                         Session.Get.Map, 
-                        Session.Get.Config, 
                         Session.Get.Map.ForcedAcceptance));
             }
         }
@@ -109,7 +110,7 @@ namespace NepoGUI
             
             Instance currentInstance = Session.Get.CurrentInstance;
 
-            Logger.printGUID();
+            Logger.PrintGUID();
 
             if (null == currentInstance)
                 return;

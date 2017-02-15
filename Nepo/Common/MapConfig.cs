@@ -24,6 +24,7 @@ namespace Nepo.Common
         {
             ImmovableObjects = new List<ImmovableObject>();
             Layers = new List<Layer>();
+            ForcedAcceptance = 1;
         }
     }
 }

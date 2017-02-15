@@ -68,7 +68,7 @@ namespace NepoGUI
         {
             _currentSolution = _client.GetCurrentSolution();
             Console.WriteLine("Habemus Papam");
-            Logger.addMyTargetValue(_client.getGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config));
+            Logger.AddMyTargetValue(_client.getGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config, Map));
         }
 
 
