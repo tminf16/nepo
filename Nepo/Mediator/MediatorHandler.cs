@@ -30,6 +30,7 @@ namespace Mediator
             this.service = service;
             Optimizer.maxRounds = maxRound;
             _instance = this;
+            Logger.Maxrounds = maxRound;
         }
 
         public void Reset()
@@ -176,7 +177,7 @@ namespace Mediator
             return all_ready;
         }
 
-
+   
 
 
         /// <summary>
@@ -187,7 +188,12 @@ namespace Mediator
         /// </summary>
         private Instance InitInstance()
         {
-            List<Instance> liste = Generator.GenerateInstances().Result;
+
+            // Maximum 7 Towers for debugging
+            GenerationConfig conf = new GenerationConfig();
+            conf.Constraints.MaxPlanningObjectCount = 7;
+
+            List<Instance> liste = Generator.GenerateInstances(conf).Result;
             //liste[0].Map.ImmovableObjects = liste[0].Map.ImmovableObjects.Take(1).ToList();
             liste[0].AgentConfigs = new List<AgentConfig>();
             liste[0].AgentConfigs.Add(
@@ -199,6 +205,10 @@ namespace Mediator
             rule.AddInterval(15, 100, 1);
             liste[0].AgentConfigs.ElementAt(0).Rules.Add(
                         rule);
+
+            Logger.AnzTuerme = liste[0].Map.PlanningObjectCount;
+            Logger.printAnzTuerme();
+
             return liste[0];
         }
 

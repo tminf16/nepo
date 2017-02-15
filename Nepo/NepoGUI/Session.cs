@@ -61,13 +61,16 @@ namespace NepoGUI
             Instances = Instance.LoadInstances();
             _client.NewDataAvailable += NewDataFromMediator;
             _client.HabemusPapam += _client_HabemusPapam;
+            Logger.AnzErzwungeneAkzeptanz = Map.ForcedAcceptance;
         }
 
         private void _client_HabemusPapam(object sender, EventArgs e)
         {
-            
             _currentSolution = _client.GetCurrentSolution();
+            Console.WriteLine("Habemus Papam");
+            Logger.addMyTargetValue(_client.getGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config));
         }
+
 
         internal void Vote(List<int> list)
         {

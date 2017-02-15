@@ -29,7 +29,8 @@ namespace NepoGUI
         public static readonly DependencyProperty ProgressProperty =
            DependencyProperty.Register("Progress", typeof(int), typeof(OptimizeControl), new PropertyMetadata(0));
 
-
+        private int PrivateMaxRounds = 100;
+        private int PrivateCurrendRound = 0;
 
         public double TargetValue
         {
@@ -63,20 +64,24 @@ namespace NepoGUI
                 Optimizer.Instance.FindNewAcceptedSolution(
                     Optimizer.FindBestSolutions(
                         Session.Get.AvailableChildSolutions,
-                        Session.Get.Config,
-                        Session.Get.Map, 
-                        1));
-                if (Optimizer.Instance.SelectChild(0).Item1.Progress <= 100)
-                    Task.Run(() => Session.Get.NewLocalData());
+                        Session.Get.Config, 
+                        Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
+
+                if(PrivateCurrendRound < PrivateMaxRounds)  //Limit for local runs
+                {
+                    Task.Run(()=>Session.Get.NewLocalData());
+                    PrivateCurrendRound++;
+                }
+
             }
             else
             {
                 Session.Get.Vote(
                     Optimizer.FindBestSolutions(
                         Session.Get.AvailableChildSolutions,
-                        Session.Get.Config,
-                        Session.Get.Map,
-                        1));
+                        Session.Get.Map, 
+                        Session.Get.Config, 
+                        Session.Get.Map.ForcedAcceptance));
             }
         }
 
@@ -101,7 +106,11 @@ namespace NepoGUI
 
         public void LoadValues()
         {
+            
             Instance currentInstance = Session.Get.CurrentInstance;
+
+            Logger.printGUID();
+
             if (null == currentInstance)
                 return;
             OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);

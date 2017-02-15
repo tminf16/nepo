@@ -69,6 +69,10 @@ namespace NepoGUI
             this.mediatorClient.Unregister(this.privateGuid);
         }
 
+        public Guid getGUID()
+        {
+            return privateGuid;
+        }
 
 
         public void Dispose()

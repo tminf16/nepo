@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="NepoGUI.ConfigurationControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NepoGUI"
+             xmlns:common="clr-namespace:Nepo.Common;assembly=Nepo.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="600" Background="White" MinWidth="400" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" >
+            <TextBlock Text="Rule Configuration" ></TextBlock>
+            <RadioButton GroupName="RuleGroup" Content="Curve Rule" x:Name="RB_CurveRule" Margin="0 15 0 0" Command="{Binding RadioChanged, RelativeSource={RelativeSource AncestorType=UserControl}}" />
+            <Grid Margin="20 0 0 0" x:Name="Group_CurveRule" IsEnabled="{Binding ElementName=RB_CurveRule, Path=IsChecked}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Minimal Range:" Grid.Column="0" Grid.Row="0"></TextBlock>
+                <TextBox  x:Name="TB_MinRange"  Width="50" Grid.Column="1" Grid.Row="0" TextChanged="TB_MinRange_TextChanged" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"></TextBox>
+                <TextBlock Text="Maximal Range:" Grid.Column="0" Grid.Row="1"></TextBlock>
+                <TextBox x:Name="TB_MaxRange" Width="50" Grid.Column="1" Grid.Row="1" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"></TextBox>
+            </Grid>
+            <Grid> 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+            <RadioButton GroupName="RuleGroup" Content="Intervall Rule" x:Name="RB_IntervallRule" Grid.Column="0" Margin="0 15 0 0" Command="{Binding RadioChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <Button x:Name="Btn_AddRow" Width="60" Height="20" Grid.Column="1" VerticalAlignment="Bottom" IsEnabled="{Binding ElementName=RB_IntervallRule, Path=IsChecked}" Command="{Binding AddRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  >Add Row</Button>
+            </Grid>
+            <StackPanel x:Name="Group_IntervallRule" IsEnabled="{Binding ElementName=RB_IntervallRule, Path=IsChecked}">
+                <Grid Margin="20 5 0 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0">Min. Range</TextBlock>
+                    <TextBlock Grid.Column="1">Max. Range</TextBlock>
+                    <TextBlock Grid.Column="2">Value</TextBlock>
+                </Grid>
+                <ItemsControl ItemsSource="{Binding Intervals}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="20 0 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox Text="{Binding Min}" Grid.Column="0" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"/>
+                                <TextBox Text="{Binding Max}" Grid.Column="1" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"/>
+                                <TextBox Text="{Binding Value}" Grid.Column="2" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"/>
+                                <Button x:Name="Btn_Delete_Row" Grid.Column="3" CommandParameter="{Binding}" Command="{Binding DeleteRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Delete</Button>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            <StackPanel Height="100"/>
+        </StackPanel>
+        <Button x:Name="Btn_Save" Width="100" Height="30" Grid.Column="0" Grid.Row="1" Command="{Binding SaveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Save</Button>
+        <ScrollViewer Grid.Column="1">
+            <common:MapControl x:Name="ConfigurationMapControl"></common:MapControl>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

@@ -46,13 +46,15 @@ namespace Nepo.DataGenerator
         {
             var guid = Guid.NewGuid();
             var rng = new Random(guid.GetHashCode());
+            var accepted_solutions = 1; // Solutions, clients are forced to accept
             var result = new Instance
             {
                 InstanceId = guid,
                 Map =
                 {
                     MapSize = rng.NextSize(constraints.MinSize, constraints.MaxSize),
-                    PlanningObjectCount = rng.Next(constraints.MinPlanningObjectCount, constraints.MaxPlanningObjectCount)
+                    PlanningObjectCount = rng.Next(constraints.MinPlanningObjectCount, constraints.MaxPlanningObjectCount),
+                    ForcedAcceptance = accepted_solutions
                 }
             };
             var immovableObjectCount = rng.Next(constraints.MinImmovableObjectCount, constraints.MaxImmovableObjectCount);

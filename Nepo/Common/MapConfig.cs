@@ -17,6 +17,9 @@ namespace Nepo.Common
         public List<ImmovableObject> ImmovableObjects { get; set; }
         [DataMember]
         public List<Layer> Layers { get; set; }
+        [DataMember]
+        public int ForcedAcceptance { get; set; }
+
         public MapConfig()
         {
             ImmovableObjects = new List<ImmovableObject>();
