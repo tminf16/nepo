@@ -125,8 +125,8 @@ namespace Nepo.Common
                 var po = _currentSolution.PlanningObjects[i];
                 Dispatcher.Invoke(() =>
                 {
-                    Canvas.SetTop(tmpCtrl, po.Location.X - (tmpCtrl.Height / 2));
-                    Canvas.SetLeft(tmpCtrl, po.Location.Y - (tmpCtrl.Width / 2));
+                    Canvas.SetTop(tmpCtrl, po.Location.Y - (tmpCtrl.Height / 2));
+                    Canvas.SetLeft(tmpCtrl, po.Location.X - (tmpCtrl.Width / 2));
                 });
             }
         }

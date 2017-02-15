@@ -53,9 +53,9 @@ namespace Nepo.Common.Rules
 
         }
 
-        override public double CalculatePartialTargetValue(Solution solution)
+        override public double CalculatePartialTargetValue(Solution solution, MapConfig map)
         {
-            double[] alreadyCounted = new double[DataHandler.GetMapConfig().ImmovableObjects.Count];
+            double[] alreadyCounted = new double[map.ImmovableObjects.Count];
             for (int i = 0; i < alreadyCounted.Length; i++)
                 alreadyCounted[i] = 0;
             double partialTargetValue = 0;
@@ -64,7 +64,7 @@ namespace Nepo.Common.Rules
             foreach (var po in solution.PlanningObjects)
             {
                 int immoCount = 0;
-                foreach (var immo in DataHandler.GetMapConfig().ImmovableObjects)
+                foreach (var immo in map.ImmovableObjects)
                 {
                     immoCount++;
                     var distance = po.Location.GetDistance(immo.Location);

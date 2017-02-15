@@ -66,23 +66,23 @@ namespace Nepo.Common
             return GenerateSolutions();
         }
 
-        public static List<int> FindBestSolutions(List<Solution> availableChildSolutions, AgentConfig config, int count)
+        public static List<int> FindBestSolutions(List<Solution> availableChildSolutions, AgentConfig config, MapConfig map, int count)
         {
             List<Tuple<int, double>> targetValues = new List<Tuple<int, double>>();
             foreach (var sol in availableChildSolutions)
             {
-                targetValues.Add(new Tuple<int, double>(sol.SolutionID, CalculateTargetValue(sol, config)));
+                targetValues.Add(new Tuple<int, double>(sol.SolutionID, CalculateTargetValue(sol, config, map)));
             }
             var results = targetValues.OrderByDescending(x => x.Item2).ThenByDescending(x=>x.Item1).Take(count).Select(x=>x.Item1).ToList();
             return results;
         }
 
-        public static double CalculateTargetValue(Solution currentSolution, AgentConfig config)
+        public static double CalculateTargetValue(Solution currentSolution, AgentConfig config, MapConfig map)
         {
             double targetvalue = 0;
             foreach (var rule in config.Rules)
             {
-                targetvalue += rule.CalculatePartialTargetValue(currentSolution);
+                targetvalue += rule.CalculatePartialTargetValue(currentSolution, map);
             }
             foreach (var po in currentSolution.PlanningObjects)
             {

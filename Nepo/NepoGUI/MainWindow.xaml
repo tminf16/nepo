@@ -9,41 +9,6 @@
         Title="NEPO (negotiation-based evolutionary positioning optimization) Agent View" Height="550" Width="725"
         DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Grid>
-        <ContentControl Name="MyIncrediblePresenter">
-            
-        </ContentControl>
-        <!--<TabControl>
-            <TabItem Header="Local optimization">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Column="0" >
-                        <TextBlock>
-                            <Run Text="Max Value:"></Run>
-                            <Run Text="{Binding MaximumTargetValue}"></Run>
-                        </TextBlock>
-                        <TextBlock>
-                            <Run Text="Current Value:"></Run>
-                            <Run Text="{Binding TargetValue}"></Run>
-                        </TextBlock>
-                        <ProgressBar Height="25" Value="{Binding Progress}" Minimum="0" Maximum="100"></ProgressBar>
-                        <Button Command="{Binding ManualOptimizeCommand}">Next Step</Button>
-                        <Button Command="{Binding AutomateSolutionCommand}">Automate</Button>
-                        <Button Command="{Binding ResetSolutionCommand}">Reset</Button>
-                    </StackPanel>
-                    <ScrollViewer Grid.Column="1">
-                        <common:MapControl Name="OptimizeMapControl"></common:MapControl>
-                    </ScrollViewer>
-                </Grid>
-
-            </TabItem>
-            <TabItem Header="Configuration">
-                <StackPanel>
-                    <common:MapControl Name="ConfigMapControl"></common:MapControl>
-                </StackPanel>
-            </TabItem>
-        </TabControl>-->
+        <ContentControl Name="MyIncrediblePresenter"/>
     </Grid>
 </Window>

@@ -16,7 +16,7 @@ namespace Nepo.Common.Rules
     [KnownType(typeof(CurveRule))]
     public abstract class TargetFunctionComponentBase
     { 
-        public abstract double CalculatePartialTargetValue(Solution solution);
+        public abstract double CalculatePartialTargetValue(Solution solution, MapConfig map);
         public abstract ControlTemplate GetUiTemplate();
     }
 }

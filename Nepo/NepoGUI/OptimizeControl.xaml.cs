@@ -51,6 +51,8 @@ namespace NepoGUI
 
         private void StartVoting(object obj)
         {
+            if (Local)
+                Optimizer.Instance.Reset();
             Vote();   
         }
 
@@ -61,15 +63,20 @@ namespace NepoGUI
                 Optimizer.Instance.FindNewAcceptedSolution(
                     Optimizer.FindBestSolutions(
                         Session.Get.AvailableChildSolutions,
-                        Session.Get.Config, 1));
-                Task.Run(()=>Session.Get.NewLocalData());
+                        Session.Get.Config,
+                        Session.Get.Map, 
+                        1));
+                if (Optimizer.Instance.SelectChild(0).Item1.Progress <= 100)
+                    Task.Run(() => Session.Get.NewLocalData());
             }
             else
             {
                 Session.Get.Vote(
                     Optimizer.FindBestSolutions(
                         Session.Get.AvailableChildSolutions,
-                        Session.Get.Config, 1));
+                        Session.Get.Config,
+                        Session.Get.Map,
+                        1));
             }
         }
 
@@ -80,7 +87,7 @@ namespace NepoGUI
 
             Dispatcher.Invoke(() =>
             {
-                TargetValue = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.Config);
+                TargetValue = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.Config, Session.Get.Map);
                 Progress = Session.Get.CurrentSolution.Progress;
             });
             Draw();
