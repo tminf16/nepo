@@ -44,7 +44,11 @@ namespace Nepo.DataGenerator
 
         public static Instance GenerateInstance(MapGenerationConstraints constraints)
         {
-            var guid = Guid.NewGuid();
+            return GenerateInstance(constraints, Guid.NewGuid());
+        }
+
+        public static Instance GenerateInstance(MapGenerationConstraints constraints, Guid guid)
+        {                                    
             var rng = new Random(guid.GetHashCode());
             var accepted_solutions = 1; // Solutions, clients are forced to accept
             var result = new Instance
