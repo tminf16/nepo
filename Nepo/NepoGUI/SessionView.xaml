@@ -9,14 +9,14 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <TabControl>
-            <TabItem Header="Local optimization">
+            <TabItem Header="Online optimization">
                 <local:OptimizeControl x:Name="OptimizeView"/>
+            </TabItem>
+            <TabItem Header="Local optimization" IsSelected="True">
+                <local:OptimizeControl x:Name="LocalOpt"></local:OptimizeControl>
             </TabItem>
             <TabItem Header="Configuration">
                 <local:ConfigurationControl x:Name="ConfigurationView"></local:ConfigurationControl>
-            </TabItem>
-            <TabItem Header="Local" IsSelected="True">
-                <local:OptimizeControl x:Name="LocalOpt"></local:OptimizeControl>
             </TabItem>
         </TabControl>
     </Grid>

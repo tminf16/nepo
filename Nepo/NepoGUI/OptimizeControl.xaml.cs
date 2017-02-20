@@ -46,7 +46,14 @@ namespace NepoGUI
 
         public OptimizeControl()
         {
-            StartVotingCommand = new RelayCommand(StartVoting);
+            StartVotingCommand = new RelayCommand(StartVoting, ()=> 
+            {
+                if (Local)
+                    return true;
+                if (null == Session.Get.CurrentInstance)
+                    return false;
+                return Session.Get.CurrentInstance.Online;
+            });
             InitializeComponent();
         }
 
@@ -107,9 +114,8 @@ namespace NepoGUI
 
         public void LoadValues()
         {
-            
             Instance currentInstance = Session.Get.CurrentInstance;
-
+            //EventHandler hand = StartVotingCommand.CanExecuteChanged;
             Logger.PrintGUID();
 
             if (null == currentInstance)
