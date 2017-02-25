@@ -48,9 +48,9 @@ namespace Nepo.DataGenerator
 
         private static void FillEllipse(Bitmap bitmap, Point center, int width, int height)
         {
-            System.Drawing.Pen myPen = new System.Drawing.Pen(Color.FromArgb(255, Color.Black));
+            System.Drawing.Brush myPen = new System.Drawing.SolidBrush(Color.FromArgb(255, Color.Black));
             var formGraphics = Graphics.FromImage(bitmap); 
-            formGraphics.DrawEllipse(myPen, center.X, center.Y, width, height);
+            formGraphics.FillEllipse(myPen, center.X, center.Y, width, height);
             myPen.Dispose();
             formGraphics.Dispose();
         }

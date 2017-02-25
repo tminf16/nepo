@@ -14,8 +14,8 @@ namespace Nepo.Common
     [Serializable]
     public class Layer
     {        
-        private Bitmap _map;
-
+        private MemoryStream _ms = null;
+        public MemoryStream PngMemoryStream { get { return _ms; } }
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         [XmlElement("Map")]
         public byte[] MapSerialized
@@ -23,11 +23,13 @@ namespace Nepo.Common
             get
             { // serialize
                 if (this.Map == null) return null;
-                using (MemoryStream ms = new MemoryStream())
+
+                if (null == _ms)
                 {
-                    this.Map.Save(ms, ImageFormat.Bmp);
-                    return ms.ToArray();
+                    _ms = new MemoryStream();
+                    this.Map.Save(_ms, ImageFormat.Png);
                 }
+                return _ms.ToArray();
             }
             set
             { // deserialize
@@ -37,10 +39,10 @@ namespace Nepo.Common
                 }
                 else
                 {
-                    using (MemoryStream ms = new MemoryStream(value))
-                    {
-                        this.Map = new Bitmap(ms);
-                    }
+                    if(null == _ms)
+                        _ms = new MemoryStream(value);
+
+                    this.Map = new Bitmap(_ms);
                 }
             }
         }

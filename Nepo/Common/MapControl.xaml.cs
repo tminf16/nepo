@@ -31,7 +31,7 @@ namespace Nepo.Common
         private MapConfig _currentMap = null;
         public ObservableCollection<Ellipse> AllImmovables { get; set; }
         public ObservableCollection<BitmapSource> MapLayerBitmaps { get; set; }
-        public ObservableCollection<Bitmap> AgentLayerBitmaps { get; set; }
+        public ObservableCollection<BitmapSource> AgentLayerBitmaps { get; set; }
         public ObservableCollection<Grid> Movables { get; set; }
 
         private int ImmoSize = 5;
@@ -40,7 +40,7 @@ namespace Nepo.Common
         {
             AllImmovables = new ObservableCollection<Ellipse>();
             MapLayerBitmaps = new ObservableCollection<BitmapSource>();
-            AgentLayerBitmaps = new ObservableCollection<Bitmap>();
+            AgentLayerBitmaps = new ObservableCollection<BitmapSource>();
             Movables = new ObservableCollection<Grid>();
             InitializeComponent();
         }
@@ -55,12 +55,15 @@ namespace Nepo.Common
 
             foreach (var maplayer in mapconfig.Layers)
             {
-                //var ms = new MemoryStream(maplayer.MapSerialized);
-                //MapLayerBitmaps.Add(ToBitmapImage(ms));
+                var ms = maplayer.PngMemoryStream;
+                MapLayerBitmaps.Add(ToBitmapImage(ms));
             }
-            if(null != config)
+            if (null != config)
                 foreach (var agentlayer in config.Layers)
-                    AgentLayerBitmaps.Add(agentlayer.Map);
+                {
+                    var ms = agentlayer.PngMemoryStream;
+                    AgentLayerBitmaps.Add(ToBitmapImage(ms));
+                }
 
             AllImmovables.Clear();
 
