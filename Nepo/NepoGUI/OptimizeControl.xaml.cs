@@ -72,7 +72,7 @@ namespace NepoGUI
                         Session.Get.Map,
                         Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
 
-                if(Session.Get.CurrentSolution.Progress < Optimizer.maxRounds)  //Limit for local runs
+                if(Session.Get.CurrentSolution.Progress < 100)  //Limit for local runs
                 {
                     Task.Run(()=>Session.Get.NewLocalData());
                 }

@@ -91,9 +91,9 @@ namespace Nepo.Common
                 foreach (var layer in config.Layers)
                 {
                     var color = layer.Map.GetPixel(po.Location.X, po.Location.Y);
-                    var brightness = color.GetBrightness();
-                    var factor = (brightness * 2 - 1);
-                    targetvalue += factor * layer.Weight;
+                    var brightness = color.A / 255.0;
+                    //var factor = (brightness * 2 - 1);
+                    targetvalue += brightness * layer.Weight;
                 }
             }
 
