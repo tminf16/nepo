@@ -60,7 +60,7 @@ namespace NepoGUI
         private void StartVoting(object obj)
         {
             if (Local)
-                Optimizer.Instance.Reset();
+                Session.Get.Reset();
             Vote();   
         }
 
@@ -75,10 +75,9 @@ namespace NepoGUI
                         Session.Get.Map,
                         Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
 
-                if(PrivateCurrendRound < PrivateMaxRounds)  //Limit for local runs
+                if(Session.Get.CurrentSolution.Progress < PrivateMaxRounds)  //Limit for local runs
                 {
                     Task.Run(()=>Session.Get.NewLocalData());
-                    PrivateCurrendRound++;
                 }
 
             }

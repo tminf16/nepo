@@ -54,6 +54,13 @@ namespace NepoGUI
                 }
             } }
 
+        internal void Reset()
+        {
+            Optimizer.Instance.Reset();
+            _currentSolution = Optimizer.Instance.SelectChild(0).Item1;
+            _availableChildSolutions = Optimizer.Instance.SelectChild(0).Item2;
+        }
+
         public Session()
         {
             Config = DataHandler.GetAgentConfig();
