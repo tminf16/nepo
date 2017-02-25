@@ -69,7 +69,7 @@ namespace NepoGUI
             this.mediatorClient.Unregister(this.privateGuid);
         }
 
-        public Guid getGUID()
+        public Guid GetGUID()
         {
             return privateGuid;
         }

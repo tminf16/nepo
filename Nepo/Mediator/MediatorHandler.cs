@@ -89,28 +89,28 @@ namespace Mediator
         /// 
         /// </summary>
         /// <returns></returns>
-        private List<Solution> generateNewSolution()
-        {
-            List<Solution> Solution_Mock = new List<Solution>();
-            Solution tmp;
+        //private List<Solution> generateNewSolution()
+        //{
+        //    List<Solution> Solution_Mock = new List<Solution>();
+        //    Solution tmp;
 
-            // Mock the Mutation
-            for (int i = 0; i < 10; i++)
-            {
-                tmp = new Solution();
-                tmp.SolutionID = i;
+        //    // Mock the Mutation
+        //    for (int i = 0; i < 10; i++)
+        //    {
+        //        tmp = new Solution();
+        //        tmp.SolutionID = i;
 
-                PlanningObject[] po = { new PlanningObject(), new PlanningObject(), new PlanningObject() }; // creates populated array of length 2
-                tmp.PlanningObjects = po;
+        //        PlanningObject[] po = { new PlanningObject(), new PlanningObject(), new PlanningObject() }; // creates populated array of length 2
+        //        tmp.PlanningObjects = po;
 
-                for (int k = 0; k < 3; k++)
-                {
-                    tmp.PlanningObjects[k].Location = new System.Drawing.Point(10, 20);
-                }
-                Solution_Mock.Add(tmp);
-            }
-            return Solution_Mock;
-        }
+        //        for (int k = 0; k < 3; k++)
+        //        {
+        //            tmp.PlanningObjects[k].Location = new System.Drawing.Point(10, 20);
+        //        }
+        //        Solution_Mock.Add(tmp);
+        //    }
+        //    return Solution_Mock;
+        //}
 
 
 
@@ -136,7 +136,7 @@ namespace Mediator
                 //service.DataReadyCallback(CanIHasPope.BlackSmoke);
 
             // Prüfe, ob jeder Teilnehmer abgestimmt hat
-            if (allClientsVoted())
+            if (AllClientsVoted())
             {
                 Optimizer.Instance.FindNewAcceptedSolution(DecisonHandler.GetVotesForRound());
 
@@ -163,7 +163,7 @@ namespace Mediator
         /// Check if all Clients commited their votes
         /// </summary>
         /// <returns></returns>
-        private bool allClientsVoted()
+        private bool AllClientsVoted()
         {
             Boolean all_ready = true;
             foreach (var item in AgentList)

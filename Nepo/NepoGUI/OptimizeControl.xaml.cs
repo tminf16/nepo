@@ -29,9 +29,6 @@ namespace NepoGUI
         public static readonly DependencyProperty ProgressProperty =
            DependencyProperty.Register("Progress", typeof(int), typeof(OptimizeControl), new PropertyMetadata(0));
 
-        private int PrivateMaxRounds = 100;
-        private int PrivateCurrendRound = 0;
-
         public double TargetValue
         {
             get { return (double)GetValue(TargetValueProperty); }
@@ -75,7 +72,7 @@ namespace NepoGUI
                         Session.Get.Map,
                         Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
 
-                if(Session.Get.CurrentSolution.Progress < PrivateMaxRounds)  //Limit for local runs
+                if(Session.Get.CurrentSolution.Progress < Optimizer.maxRounds)  //Limit for local runs
                 {
                     Task.Run(()=>Session.Get.NewLocalData());
                 }

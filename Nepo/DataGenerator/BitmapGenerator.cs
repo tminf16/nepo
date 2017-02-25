@@ -87,9 +87,7 @@ namespace Nepo.DataGenerator
             builder.Build();
 
             var map = builder.NoiseMap;
-            float min;
-            float max;
-            map.MinMax(out min, out max);
+            map.MinMax(out float min, out float max);
             Console.WriteLine(map.Width);
             Console.WriteLine(map.GetValue(200, 300));
             Console.WriteLine($"Min: {min}, Max: {max}");

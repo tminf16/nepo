@@ -10,6 +10,19 @@ namespace Nepo.Common
     public class PlanningObject
     {
         public Point Location { get; set; }
+
+        public bool IsInMap(MapConfig map)
+        {
+            if (Location.X < 0)
+                return false;
+            if (Location.Y < 0)
+                return false;
+            if (Location.X >= map.MapSize.Width)
+                return false;
+            if (Location.Y >= map.MapSize.Height)
+                return false;
+            return true;
+        }
     }
 
     public static class PointExtensions

@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Runtime.Serialization;
 
 namespace Nepo.Common
@@ -32,20 +33,32 @@ namespace Nepo.Common
         [DataMember]
         public int Progress { get; set; }
 
-        internal void FillRandomValues(int width, int height, int planningObjectCount)
+        internal void FillRandomValues(MapConfig map)
         {
-            PlanningObjects = new PlanningObject[planningObjectCount];
-            for (int i = 0; i < planningObjectCount; i++)
+            PlanningObjects = new PlanningObject[map.PlanningObjectCount];
+            for (int i = 0; i < map.PlanningObjectCount; i++)
             {
                 var po = new PlanningObject()
                 {
-                    Location = new System.Drawing.Point(_rand.Next(width), _rand.Next(height))
+                    Location = new System.Drawing.Point(_rand.Next(map.MapSize.Width), _rand.Next(map.MapSize.Height))
                 };
+                foreach (var layer in map.Layers)
+                {
+                    var bmp = layer.Map;
+                    if (!po.IsInMap(map))
+                        continue;
+                    var pixel = bmp.GetPixel(po.Location.X, po.Location.Y);
+                    if (0 != pixel.A)
+                    {
+                        i--;
+                        continue;
+                    }
+                }
                 PlanningObjects[i] = po;
             }
         }
 
-        internal Solution CreateChildSolution()
+        internal Solution CreateChildSolution(MapConfig map)
         {
             Solution tmpChild = new Solution(PlanningObjects.Length)
             {
@@ -59,10 +72,25 @@ namespace Nepo.Common
 
                 if (i == mutation)
                 {
-                    tmpChild.PlanningObjects[i].Location =
-                        new System.Drawing.Point(
+                    var po = tmpChild.PlanningObjects[i];
+                    po.Location = new System.Drawing.Point(
                             (int)(tmpLocation.X + _rand.NextGaussian(sigma: 15)),
                             (int)(tmpLocation.Y + _rand.NextGaussian(sigma: 15)));
+
+                    foreach (var layer in map.Layers)
+                    {
+                        var bmp = layer.Map;
+                        if (!po.IsInMap(map))
+                            continue;
+                        Color pixel;
+                        lock (bmp)
+                            pixel = bmp.GetPixel(po.Location.X, po.Location.Y);
+                        if (0 != pixel.A)
+                        {
+                            i--;
+                            continue;
+                        }
+                    }
                 }
                 else
                 {

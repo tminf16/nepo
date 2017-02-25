@@ -30,14 +30,14 @@ namespace Nepo.Common
             if (null == currentlyAccepted)
             {
                 currentlyAccepted = new Solution();
-                currentlyAccepted.FillRandomValues(map.MapSize.Width, map.MapSize.Height, map.PlanningObjectCount);
+                currentlyAccepted.FillRandomValues(map);
             }
             List<Solution> children = new List<Solution>();
             children.Add(currentlyAccepted);
             currentRound++;
             currentlyAccepted.Progress = (int)((100.0 * currentRound) / maxRounds);
             for (int i = 0; i < childsCount; i++)
-                children.Add(currentlyAccepted.CreateChildSolution());
+                children.Add(currentlyAccepted.CreateChildSolution(map));
             availableChildren = children;
             return new Tuple<Solution, List<Solution>>(currentlyAccepted, children);
         }
