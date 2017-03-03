@@ -48,9 +48,9 @@ namespace Nepo.DataGenerator
 
         private static void FillEllipse(Bitmap bitmap, Point center, int width, int height)
         {
-            System.Drawing.Brush myPen = new System.Drawing.SolidBrush(Color.FromArgb(255, Color.Black));
+            System.Drawing.Pen myPen = new System.Drawing.Pen(Color.FromArgb(255, Color.Blue));
             var formGraphics = Graphics.FromImage(bitmap); 
-            formGraphics.FillEllipse(myPen, center.X, center.Y, width, height);
+            formGraphics.DrawEllipse(myPen, center.X, center.Y, width, height);
             myPen.Dispose();
             formGraphics.Dispose();
         }
@@ -63,12 +63,35 @@ namespace Nepo.DataGenerator
                 for (var j = 0; j < bitmap.Size.Width; ++j)
                 {
                     var pixel = bitmap.GetPixel(i, j);
-                    bitmap.SetPixel(i, j, Color.FromArgb((int)(127*noiseMap.GetValue(i,j)+127), pixel));
+                    var diff = (int)(127 * (noiseMap.GetValue(i, j)));
+
+                    int old = 127;
+                    if (i > 0)
+                    {
+                        if (j > 0)
+                        {
+                            old = (bitmap.GetPixel(i - 1, j).A + bitmap.GetPixel(i, j - 1).A) / 2;
+                        }
+                        else
+                        {
+                            old = bitmap.GetPixel(i - 1, j).A;
+                        }       
+                    }
+                    else
+                    {
+                        if (j > 0)
+                        {
+                            old = bitmap.GetPixel(i, j - 1).A;
+                        }                       
+                    }
+
+                    var newA = Math.Min(Math.Max(0, diff + old), 255);                                      
+
+                    bitmap.SetPixel(i, j, Color.FromArgb(newA, pixel));
                 }
             }
             
             return bitmap;
-
         }
 
         public static IMap2D<float> GenerateNoiseMap(Random rng, Size size)
@@ -76,7 +99,7 @@ namespace Nepo.DataGenerator
             var builder = new LibNoise.Builder.NoiseMapBuilderPlane(1, size.Width, 1, size.Height, false);
             
 
-            var source = new SimplexPerlin();
+            var source = new SimplexPerlin(rng.Next(), NoiseQuality.Standard);
             builder.SourceModule = source;
 
             builder.SetSize(size.Width, size.Height);
@@ -87,10 +110,6 @@ namespace Nepo.DataGenerator
             builder.Build();
 
             var map = builder.NoiseMap;
-            map.MinMax(out float min, out float max);
-            Console.WriteLine(map.Width);
-            Console.WriteLine(map.GetValue(200, 300));
-            Console.WriteLine($"Min: {min}, Max: {max}");
             return builder.NoiseMap;
         }
     }
