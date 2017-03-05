@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using Nepo.Common;
+using Nepo.Common.Rules;
 
 namespace Nepo.DataGenerator
 {
@@ -33,7 +34,7 @@ namespace Nepo.DataGenerator
 
             for (int i = 1; i <= constraints.InstanceCount; ++i)
             {
-                result.Add(GenerateInstance(constraints.Constraints));
+                result.Add(GenerateInstance(constraints));
             }
 
             var tcs = new TaskCompletionSource<List<Instance>>();
@@ -42,15 +43,16 @@ namespace Nepo.DataGenerator
         }
 
 
-        public static Instance GenerateInstance(MapGenerationConstraints constraints)
+        public static Instance GenerateInstance(GenerationConfig config)
         {
-            return GenerateInstance(constraints, Guid.NewGuid());
+            return GenerateInstance(config, Guid.NewGuid());
         }
 
-        public static Instance GenerateInstance(MapGenerationConstraints constraints, Guid guid)
+        public static Instance GenerateInstance(GenerationConfig config, Guid guid)
         {                                    
             var rng = new Random(guid.GetHashCode());
             var accepted_solutions = 1; // Solutions, clients are forced to accept
+            var constraints = config.Constraints;
             var result = new Instance
             {
                 InstanceId = guid,
@@ -64,8 +66,29 @@ namespace Nepo.DataGenerator
             var immovableObjectCount = rng.Next(constraints.MinImmovableObjectCount, constraints.MaxImmovableObjectCount);
             result.Map.ImmovableObjects = GenerateImmovableObjects(immovableObjectCount, constraints, rng);
             result.Map.Layers = GenerateLayers(constraints, rng, result);
-
-            
+            result.AgentConfigs = new List<AgentConfig>();
+            for (int i = 0; i < config.AgentsCount; i++)
+            {
+                var ac = new AgentConfig();
+                switch (i%2)
+                {
+                    case 0:
+                        var intRule = new DistanceIntervalsRule();
+                        intRule.AddInterval(0, 150, 1);
+                        ac.Rules.Add(intRule);
+                        break;
+                    case 1:
+                        var curveRule = new CurveRule(50, 150);
+                        ac.Rules.Add(curveRule);
+                        break;
+                }
+                ac.Layers.Add(new Layer()
+                {
+                    FileName = "HeightMap.png",
+                    Map = BitmapGenerator.AddHeightNoise(new Bitmap(result.Map.MapSize.Width, result.Map.MapSize.Height), rng)
+                });
+                result.AgentConfigs.Add(ac);
+            }
             return result;
         }
 
@@ -74,7 +97,7 @@ namespace Nepo.DataGenerator
             var result = new List<Layer>();
             var layerOne = new Layer()
             {
-                FileName = $"Deadzones.bmp",
+                FileName = $"Deadzones.png",
                 Map = BitmapGenerator.AddBlobs(new Bitmap(instance.Map.MapSize.Width, instance.Map.MapSize.Height), rng, constraints)
             };            
             result.Add(layerOne);

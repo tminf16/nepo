@@ -14,7 +14,7 @@ namespace DataGenerator
     {
         static void Main(string[] args)
         {
-            DataHandler.SaveMapConfig(Generator.GenerateInstance(new MapGenerationConstraints()).Map);            
+            DataHandler.SaveMapConfig(Generator.GenerateInstance(new GenerationConfig()).Map);            
 
             for (int i = 0; i < args.Length; ++i)
             {
@@ -61,7 +61,7 @@ namespace DataGenerator
         {
             for (int i = 1; i <= count; ++i)
             {
-                var instance = Generator.GenerateInstance(new MapGenerationConstraints());
+                var instance = Generator.GenerateInstance(new GenerationConfig());
                 Console.WriteLine($"Generated {instance.InstanceId}");
                 instance.Save();
             }
@@ -71,7 +71,7 @@ namespace DataGenerator
         {
             foreach (var guid in guids)
             {
-                var instance = Generator.GenerateInstance(new MapGenerationConstraints(), guid);
+                var instance = Generator.GenerateInstance(new GenerationConfig(), guid);
                 Console.WriteLine($"Generated {instance.InstanceId}");
                 instance.Save();
             }

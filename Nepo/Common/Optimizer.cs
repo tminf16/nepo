@@ -90,6 +90,8 @@ namespace Nepo.Common
             {
                 foreach (var layer in config.Layers)
                 {
+                    if (!po.IsInMap(map))
+                        continue;
                     var color = layer.Map.GetPixel(po.Location.X, po.Location.Y);
                     var brightness = color.A / 255.0;
                     //var factor = (brightness * 2 - 1);

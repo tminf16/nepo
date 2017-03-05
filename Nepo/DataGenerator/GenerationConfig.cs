@@ -23,6 +23,11 @@ namespace Nepo.DataGenerator
         public int InstanceCount { get; set; } = 1;
 
         /// <summary>
+        /// Number of AgentConfigs to generate
+        /// </summary>
+        public int AgentsCount { get; set; } = 0;
+
+        /// <summary>
         /// Constraints for Map Generation.
         /// </summary>
         public MapGenerationConstraints Constraints { get; set; } = new MapGenerationConstraints();

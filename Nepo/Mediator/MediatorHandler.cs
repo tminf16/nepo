@@ -31,6 +31,11 @@ namespace Mediator
             Optimizer.maxRounds = maxRound;
             _instance = this;
             Logger.Maxrounds = maxRound;
+            if (Instance == null)
+            {
+                Instance = InitInstance(MediatorConfig.Get.TestMode);
+                Optimizer.Instance.SetMap(Instance.Map);
+            }
         }
 
         public void Reset()
@@ -53,7 +58,7 @@ namespace Mediator
 
             if(Instance == null)
             {
-                Instance = InitInstance();
+                Instance = InitInstance(MediatorConfig.Get.TestMode);
                 Optimizer.Instance.SetMap(Instance.Map);
             }
 
@@ -83,34 +88,6 @@ namespace Mediator
         {
             return Optimizer.Instance.SelectChild(0).Item2;
         }
-
-        /// <summary>
-        /// Generate a new Solution
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        //private List<Solution> generateNewSolution()
-        //{
-        //    List<Solution> Solution_Mock = new List<Solution>();
-        //    Solution tmp;
-
-        //    // Mock the Mutation
-        //    for (int i = 0; i < 10; i++)
-        //    {
-        //        tmp = new Solution();
-        //        tmp.SolutionID = i;
-
-        //        PlanningObject[] po = { new PlanningObject(), new PlanningObject(), new PlanningObject() }; // creates populated array of length 2
-        //        tmp.PlanningObjects = po;
-
-        //        for (int k = 0; k < 3; k++)
-        //        {
-        //            tmp.PlanningObjects[k].Location = new System.Drawing.Point(10, 20);
-        //        }
-        //        Solution_Mock.Add(tmp);
-        //    }
-        //    return Solution_Mock;
-        //}
 
 
 
@@ -186,26 +163,21 @@ namespace Mediator
         ///     TODO REPLACE MOCK mit SampleData
         /// 
         /// </summary>
-        private Instance InitInstance()
+        private Instance InitInstance(bool testmode)
         {
 
             // Maximum 7 Towers for debugging
             GenerationConfig conf = new GenerationConfig();
             conf.Constraints.MaxPlanningObjectCount = 7;
 
+            if (testmode)
+            {
+                conf.InstanceCount = 1;
+                conf.AgentsCount = 2;
+            }
             List<Instance> liste = Generator.GenerateInstances(conf).Result;
-            //liste[0].Map.ImmovableObjects = liste[0].Map.ImmovableObjects.Take(1).ToList();
-            liste[0].AgentConfigs = new List<AgentConfig>();
-            liste[0].AgentConfigs.Add(
-                new AgentConfig()
-                {
-                    Rules = new List<TargetFunctionComponentBase>()
-                });
-            var rule = new DistanceIntervalsRule();
-            rule.AddInterval(15, 100, 1);
-            liste[0].AgentConfigs.ElementAt(0).Rules.Add(
-                        rule);
-
+            
+            
             Logger.AnzTuerme = liste[0].Map.PlanningObjectCount;
             Logger.PrintAnzTuerme();
 

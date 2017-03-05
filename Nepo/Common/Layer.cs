@@ -15,7 +15,11 @@ namespace Nepo.Common
     public class Layer
     {        
         private MemoryStream _ms = null;
-        public MemoryStream PngMemoryStream { get { return _ms; } }
+        public MemoryStream PngMemoryStream { get {
+                byte[] tmp;
+                if (null == _ms)
+                    tmp = MapSerialized;
+                return _ms; } }
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         [XmlElement("Map")]
         public byte[] MapSerialized

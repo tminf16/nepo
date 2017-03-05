@@ -55,6 +55,7 @@
     <Compile Include="MapControl.xaml.cs">
       <DependentUpon>MapControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MediatorConfig.cs" />
     <Compile Include="Optimizer.cs" />
     <Compile Include="PlanningObject.cs" />
     <Compile Include="RelayCommand.cs" />
