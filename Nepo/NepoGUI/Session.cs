@@ -13,6 +13,15 @@ namespace NepoGUI
         public static Session Get { get { return _get ?? (_get = new Session()); } }
 
         public AgentConfig Config { get; set; }
+        public AgentConfig ExtendedConfig { get {
+                if (null == CurrentInstance)
+                    return null;
+                if (null == CurrentInstance.AgentConfigs)
+                    return null;
+                if (2 > CurrentInstance.AgentConfigs.Count)
+                    return null;
+                return CurrentInstance.AgentConfigs[1];
+            } }
         public MapConfig Map { get; set; }
         public List<Instance> Instances { get; set; }
         private Instance _currentInstance;

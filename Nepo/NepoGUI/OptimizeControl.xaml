@@ -22,7 +22,10 @@
             <Button Command="{Binding StartVotingCommand}" >Start voting</Button>
         </StackPanel>
         <ScrollViewer Grid.Column="1">
-            <common:MapControl x:Name="OptimizeMapControl"></common:MapControl>
+            <StackPanel Orientation="Horizontal">
+                <common:MapControl Margin="20" x:Name="OptimizeMapControl"></common:MapControl>
+                <common:MapControl Margin="20" Visibility="Collapsed" x:Name="OptimizeMapControlExtension1"></common:MapControl>
+            </StackPanel>
         </ScrollViewer>
     </Grid>
 </UserControl>

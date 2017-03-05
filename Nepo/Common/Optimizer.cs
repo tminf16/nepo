@@ -14,7 +14,7 @@ namespace Nepo.Common
 
         private Solution currentlyAccepted = null;
         private List<Solution> availableChildren = null;
-        public static int maxRounds = 100;
+        public static int maxRounds = 1000;
         private int currentRound = 0;
         public static int childsCount = 100;
 
@@ -102,12 +102,29 @@ namespace Nepo.Common
             return targetvalue;
         }
 
+        private static Random _rand = new Random((int)DateTime.Now.Ticks);
+        private static int _agentCounter = 0;
         public void FindNewAcceptedSolution(List<Tuple<Guid, int>> list)
         {
             var agentsCount = list.GroupBy(x => x.Item1).Count();
             var results = list.GroupBy(x => x.Item2).OrderByDescending(x => x.Count()).Select(x=>new { id = x.Key, count = x.Count() });
             var selection = results.First();
             SelectChild(selection.id);
+        }
+        public void FindNewAcceptedSolution(List<List<int>> list)
+        {
+            var merged = list.SelectMany(x=>x);
+            var grouped = merged.GroupBy(x => x).OrderByDescending(x => x.Count());
+            var result = grouped.FirstOrDefault();
+            if (list.Count() == result.Count())
+            {
+                SelectChild(result.FirstOrDefault());
+                return;
+            }
+            _agentCounter %= list.Count();
+            var selection = list[_agentCounter][_rand.Next(list[_agentCounter].Count())];
+            _agentCounter++;
+            SelectChild(selection);
         }
         public void FindNewAcceptedSolution(List<int> list)
         {

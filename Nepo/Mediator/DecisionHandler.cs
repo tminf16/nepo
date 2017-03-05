@@ -41,9 +41,7 @@ namespace Mediator
         public List<Tuple<Guid, int>> GetVotesForRound()
         {
             var list = votesForCurrentRound.Select(x => x.Value.Select(y => new Tuple<Guid, int>(x.Key, y))).ToList();
-            List<Tuple<Guid, int>> result = new List<Tuple<Guid, int>>();
-            foreach (var item in list)
-                result.AddRange(item);
+            var result = list.SelectMany(x => x).ToList();
             return result;
         } 
 

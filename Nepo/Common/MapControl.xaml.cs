@@ -44,7 +44,7 @@ namespace Nepo.Common
             Movables = new ObservableCollection<Grid>();
             InitializeComponent();
         }
-
+        
         public void Configure(MapConfig mapconfig, AgentConfig config)
         {
             _currentMap = mapconfig;

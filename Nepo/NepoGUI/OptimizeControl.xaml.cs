@@ -65,12 +65,33 @@ namespace NepoGUI
         {
             if (Local)
             {
-                Optimizer.Instance.FindNewAcceptedSolution(
-                    Optimizer.FindBestSolutions(
-                        Session.Get.AvailableChildSolutions,
-                        Session.Get.Config, 
-                        Session.Get.Map,
-                        Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
+                if (null == Session.Get.ExtendedConfig)
+                {
+                    Optimizer.Instance.FindNewAcceptedSolution(
+                        Optimizer.FindBestSolutions(
+                            Session.Get.AvailableChildSolutions,
+                            Session.Get.Config,
+                            Session.Get.Map,
+                            Session.Get.Map.ForcedAcceptance)); // Minimum Acceptance triggered by Session
+                }
+                else
+                {
+                    List<List<int>> proposals = new List<List<int>>();
+
+                    proposals.Add(Optimizer.FindBestSolutions(
+                            Session.Get.AvailableChildSolutions,
+                            Session.Get.Config,
+                            Session.Get.Map,
+                            Session.Get.Map.ForcedAcceptance));
+                    proposals.Add(Optimizer.FindBestSolutions(
+                            Session.Get.AvailableChildSolutions,
+                            Session.Get.ExtendedConfig,
+                            Session.Get.Map,
+                            Session.Get.Map.ForcedAcceptance));
+
+                    Optimizer.Instance.FindNewAcceptedSolution(proposals);
+
+                }
 
                 if(Session.Get.CurrentSolution.Progress < 100)  //Limit for local runs
                 {
@@ -106,6 +127,8 @@ namespace NepoGUI
         public void Draw()
         {
             OptimizeMapControl.SetSolution(Session.Get.CurrentSolution);
+            if(Local && null != Session.Get.ExtendedConfig)
+                OptimizeMapControlExtension1.SetSolution(Session.Get.CurrentSolution);
         }
 
         public void LoadValues()
@@ -117,6 +140,16 @@ namespace NepoGUI
             if (null == currentInstance)
                 return;
             OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
+            if (Local)
+            {
+                if (null != Session.Get.ExtendedConfig)
+                {
+                    OptimizeMapControlExtension1.Configure(Session.Get.Map, Session.Get.ExtendedConfig);
+                    OptimizeMapControlExtension1.Visibility = Visibility.Visible;
+                }
+                else
+                    OptimizeMapControlExtension1.Visibility = Visibility.Collapsed;
+            }
             Session.Get.NewDataAvailable += Get_NewDataAvailable;
         }
     }

@@ -11,7 +11,7 @@
             <ItemsControl ItemsSource="{Binding MapLayerBitmaps}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding}" Opacity="0.5"/>
+                        <Image Source="{Binding}" Opacity="0.2"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
@@ -20,7 +20,7 @@
             <ItemsControl ItemsSource="{Binding AgentLayerBitmaps}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Image Source="{Binding}" Opacity="0.5"/>
+                        <Image Source="{Binding}" Opacity="0.2"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
