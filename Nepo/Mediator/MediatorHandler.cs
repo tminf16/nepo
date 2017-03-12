@@ -7,13 +7,15 @@ using System.Web;
 using Nepo.DataGenerator;
 using Nepo.Common;
 using Nepo.Common.Rules;
+using System.Threading;
 
 namespace Mediator
 {
     public class MediatorHandler
     {
 
-        public Instance Instance;
+        private Instance _inst;
+        public Instance Instance { get { return _inst; } set { _inst = value;Optimizer.Instance.SetMap(_inst.Map); } }
         private List<Guid> AgentList = new List<Guid>();
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
@@ -22,6 +24,7 @@ namespace Mediator
 
         private static MediatorHandler _instance;
         public static MediatorHandler HandlerInstance { get { return _instance; } }
+        public bool Ready { get; set; }
         public event EventHandler NewDataAvailable;
 
 
@@ -31,11 +34,12 @@ namespace Mediator
             Optimizer.maxRounds = maxRound;
             _instance = this;
             Logger.Maxrounds = maxRound;
-            if (Instance == null)
-            {
-                Instance = InitInstance(MediatorConfig.Get.TestMode);
-                Optimizer.Instance.SetMap(Instance.Map);
-            }
+            Ready = true;
+            //if (Instance == null)
+            //{
+            //    Instance = Session.Get.CurrentInstance;//InitInstance(MediatorConfig.Get.TestMode);
+            //    Optimizer.Instance.SetMap(Instance.Map);
+            //}
         }
 
         public void Reset()
@@ -56,12 +60,14 @@ namespace Mediator
         {
             this.AgentList.Add(agentGuid);
 
-            if(Instance == null)
-            {
-                Instance = InitInstance(MediatorConfig.Get.TestMode);
-                Optimizer.Instance.SetMap(Instance.Map);
-            }
+            //if(Instance == null)
+            //{
+            //    Instance = InitInstance(MediatorConfig.Get.TestMode);
+            //    Optimizer.Instance.SetMap(Instance.Map);
+            //}
 
+            while (null == Instance)
+                Thread.Sleep(100);
             return Instance;
         }
 

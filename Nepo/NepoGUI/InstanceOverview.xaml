@@ -4,14 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NepoGUI"
+             xmlns:common="clr-namespace:Nepo.Common;assembly=Nepo.Common"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" DataContext="{Binding RelativeSource={RelativeSource Self}}" MinWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <common:NullToTestimageConverter x:Key="N2IConv"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <StackPanel Background="White" Orientation="Vertical">
             <TextBlock>Welcome to NEPO</TextBlock>
             <TextBlock>The following instances are available:</TextBlock>
             <!--<Button Command="{Binding CheckInstanceCommand}">Check</Button>-->
-            <ItemsControl ItemsSource="{Binding AvailableInstances}" Margin="0,10,0,0">
+            <ItemsControl ItemsSource="{Binding AvailableInstances, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="0,10,0,0">
@@ -22,24 +28,33 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Row="0">
+                            <Image Grid.Column="0" Grid.RowSpan="4" Width="60" Height="60" Margin="10" Source="{Binding Converter={StaticResource ResourceKey=N2IConv}}"></Image>
+                            <TextBlock Grid.Row="0" Grid.Column="1">
                                 <Run>Instance ID:</Run>
                                 <Run Text="{Binding InstanceId}"/>
                             </TextBlock>
-                            <TextBlock Grid.Row="1">
+                            <TextBlock Grid.Row="1" Grid.Column="1">
                                 <Run>Immovables count:</Run>
                             </TextBlock>
-                            <TextBlock Grid.Row="2">
-                                <Run>Movables count:</Run></TextBlock>
-                            <TextBlock Grid.Row="3">
+                            <TextBlock Grid.Row="2" Grid.Column="1">
+                                <Run>Movables count:</Run>
+                                <Run Text="{Binding Map.PlanningObjectCount}"/></TextBlock>
+                            <TextBlock Grid.Row="3" Grid.Column="1">
                                 <Run>Online:</Run>
                                 <Run Text="{Binding Online}"/>
                             </TextBlock>
-
-                            <Button Grid.Column="1" Grid.RowSpan="4" VerticalAlignment="Center" CommandParameter="{Binding InstanceId}" Command="{Binding SelectInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Select</Button>
+                            <Grid Grid.Column="2" Grid.RowSpan="4">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="0" VerticalAlignment="Center" CommandParameter="{Binding InstanceId}" Command="{Binding SelectInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Select</Button>
+                                <Button Grid.Row="1" VerticalAlignment="Center" CommandParameter="{Binding}" Command="{Binding DeleteInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Delete</Button>
+                            </Grid>
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>

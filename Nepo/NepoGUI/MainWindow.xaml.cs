@@ -17,7 +17,7 @@ namespace NepoGUI
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    {      
+    {
         GuiNavigation navi;
         public MainWindow()
         {

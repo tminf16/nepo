@@ -55,6 +55,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="InstanceOverview.xaml.cs">
+      <DependentUpon>InstanceOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SessionView.xaml.cs">
+      <DependentUpon>SessionView.xaml</DependentUpon>
+    </Compile>
+    <Page Include="InstanceOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -67,6 +77,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SessionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -98,6 +112,10 @@
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{069bf646-68dc-4d95-b037-73962a6cc68b}</Project>
       <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataGenerator\DataGenerator.csproj">
+      <Project>{f0e1f10a-08d6-4556-8b50-61ad4b77dffa}</Project>
+      <Name>DataGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mediator\Mediator.csproj">
       <Project>{7963C753-909B-4388-81E3-482702837783}</Project>

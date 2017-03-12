@@ -26,7 +26,8 @@ namespace Nepo.Common
         {
             get
             { // serialize
-                if (this.Map == null) return null;
+                if (this.Map == null)
+                        Map = (Bitmap)Bitmap.FromFile(FileName);
 
                 if (null == _ms)
                 {
@@ -37,7 +38,7 @@ namespace Nepo.Common
             }
             set
             { // deserialize
-                if (value == null)
+                if (value == null || value.Length == 0)
                 {
                     this.Map = null;
                 }

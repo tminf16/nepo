@@ -23,40 +23,12 @@ namespace NepoMediator
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly MediatorHost host;
-        public RelayCommand ResetCommand { get; set; }
+        
         public MainWindow()
         {
-            ResetCommand = new RelayCommand(Reset);
             InitializeComponent();
-            this.host = new MediatorHost();
-            Task.Run(() =>
-            {
-                this.host.Start();
-            });
-            Task.Run(()=>
-            {
-                while (null == MediatorHandler.HandlerInstance?.Instance)
-                    Thread.Sleep(100);
-                Dispatcher.Invoke(()=>
-                {
-                    this.MyIncredibleMapControl.Configure(MediatorHandler.HandlerInstance.Instance.Map, null);
-                    MediatorHandler.HandlerInstance.NewDataAvailable += HandlerInstance_NewDataAvailable;
-                    this.SizeToContent = SizeToContent.WidthAndHeight;
-                    this.SizeToContent = SizeToContent.Manual;
-                });
-            });
-        }
-
-        private void HandlerInstance_NewDataAvailable(object sender, EventArgs e)
-        {
-            this.MyIncredibleMapControl.SetSolution(MediatorHandler.HandlerInstance.GetCurrentSolution(new Guid()));
-        }
-
-        private void Reset(object obj)
-        {
-            var handler = MediatorHandler.HandlerInstance;
-            handler.Reset();
-        }
+            MainContent.Content = new InstanceOverview(this);
+            this.SizeToContent = SizeToContent.WidthAndHeight;
+        }        
     }
 }

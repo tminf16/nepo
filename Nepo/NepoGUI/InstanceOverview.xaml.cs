@@ -1,6 +1,7 @@
 ﻿using Nepo.Common;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,21 @@ namespace NepoGUI
     /// </summary>
     public partial class InstanceOverview : UserControl, INotifyPropertyChanged
     {
-        public List<Instance> AvailableInstances { get { return Session.Get.Instances; } set { } }
+        ObservableCollection<Instance> _instances;
+        public ObservableCollection<Instance> AvailableInstances { get
+            {
+                if (null != _instances)
+                    return _instances;
+                _instances = new ObservableCollection<Instance>();
+                foreach (var item in Session.Get.Instances)
+                    _instances.Add(item);
+                return _instances;
+                }
+            set
+            {
+            } }
         public RelayCommand SelectInstanceCommand { get; set; }
-        public RelayCommand CheckInstanceCommand { get; set; }
+        public RelayCommand DeleteInstanceCommand { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string name)
@@ -35,9 +48,16 @@ namespace NepoGUI
         public InstanceOverview()
         {
             SelectInstanceCommand = new RelayCommand(SelectInstance);
-            CheckInstanceCommand = new RelayCommand(CheckInstance);
+            DeleteInstanceCommand = new RelayCommand(DeleteInstance);
             InitializeComponent();
             Task.Run(()=>CheckInstance(null));
+        }
+
+        private void DeleteInstance(object obj)
+        {
+            var inst = obj as Instance;
+            AvailableInstances.Remove(inst);
+            inst.Delete();
         }
 
         private void SelectInstance(object obj)
@@ -48,7 +68,13 @@ namespace NepoGUI
         private void CheckInstance(object obj)
         {
             Session.Get.CheckMediator();
-            AvailableInstances = Instance.LoadInstances();
+            Dispatcher.Invoke(()=>
+            {
+                AvailableInstances.Clear();
+                foreach (var item in Instance.LoadInstances())
+                    AvailableInstances.Add(item);
+
+            });
             var onlineinstance = AvailableInstances.SingleOrDefault(x => x.InstanceId == Session.Get.ServerInstance);
             if (null != onlineinstance)
             {
@@ -56,7 +82,7 @@ namespace NepoGUI
                 Logger.Testinstanzguid = onlineinstance.InstanceId;
                 //Logger.print();
             }
-            Dispatcher.Invoke(() =>OnPropertyChanged("AvailableInstances"));
+            Dispatcher.Invoke(() => OnPropertyChanged("AvailableInstances"));
         }
     }
 }

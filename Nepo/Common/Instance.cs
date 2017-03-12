@@ -44,5 +44,12 @@ namespace Nepo.Common
             DataHandler.SaveAgentConfigs(AgentConfigs, InstanceId.ToString());
             DataHandler.SaveMapConfig(Map, InstanceId.ToString());
         }
+
+        public void Delete()
+        {
+            DirectoryInfo instanceDir = new DirectoryInfo(Directory.GetCurrentDirectory() + "\\" + InstanceId.ToString());
+            if (instanceDir.Exists)
+                instanceDir.Delete(true);
+        }
     }
 }

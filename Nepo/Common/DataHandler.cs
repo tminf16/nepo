@@ -94,7 +94,7 @@ namespace Nepo.Common
         public static void Save<T>(this T instance, string filename = null, string instancename = null)
         {
 
-            if (string.IsNullOrEmpty(filename) && (typeof(MediatorConfig) == typeof(T) || typeof(MapConfig) == typeof(T) || typeof(AgentConfig) == typeof(T) || typeof(List<AgentConfig>) == typeof(T)))
+            if (string.IsNullOrEmpty(filename) && (typeof(MapConfig) == typeof(T) || typeof(AgentConfig) == typeof(T) || typeof(List<AgentConfig>) == typeof(T)))
             {
                 filename = typeof(T).Name + ".xml";
             }

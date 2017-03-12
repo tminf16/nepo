@@ -75,6 +75,7 @@
     <Compile Include="MediatorHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MediatorHost.cs" />
+    <Compile Include="Session.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="NepoMediator.SessionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NepoMediator"
+             xmlns:common="clr-namespace:Nepo.Common;assembly=Nepo.Common"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <Button Command="{Binding ResetCommand}">Reset</Button>
+        </StackPanel>
+        <common:MapControl Grid.Column="1" Name="MyIncredibleMapControl"></common:MapControl>
+    </Grid>
+</UserControl>
