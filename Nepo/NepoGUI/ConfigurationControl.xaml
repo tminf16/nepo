@@ -33,12 +33,12 @@
                 <TextBlock Text="Maximal Range:" Grid.Column="0" Grid.Row="1"></TextBlock>
                 <TextBox x:Name="TB_MaxRange" Width="50" Grid.Column="1" Grid.Row="1" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"></TextBox>
             </Grid>
-            <Grid> 
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.7*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-            <RadioButton GroupName="RuleGroup" Content="Intervall Rule" x:Name="RB_IntervallRule" Grid.Column="0" Margin="0 15 0 0" Command="{Binding RadioChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                <RadioButton GroupName="RuleGroup" Content="Intervall Rule"  x:Name="RB_IntervallRule"  Grid.Column="0" Margin="0 15 0 0" Command="{Binding RadioChanged, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
                 <Button x:Name="Btn_AddRow" Width="60" Height="20" Grid.Column="1" VerticalAlignment="Bottom" IsEnabled="{Binding ElementName=RB_IntervallRule, Path=IsChecked}" Command="{Binding AddRowCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"  >Add Row</Button>
             </Grid>
             <StackPanel x:Name="Group_IntervallRule" IsEnabled="{Binding ElementName=RB_IntervallRule, Path=IsChecked}">
@@ -72,6 +72,39 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
+            <Grid Margin="20 30 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.7*"/>
+                    <ColumnDefinition Width="0.3*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="Text_Layers" Grid.Column="0" TextDecorations="Underline" >Layers</TextBlock>
+                <Button x:Name="Btn_AddLayer" Width="60" Height="20" Grid.Column="1" VerticalAlignment="Bottom" Command="{Binding AddLayerCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Add Layer</Button>
+            </Grid>
+            <Grid Margin="20 5 0 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="141*"/>
+                    <ColumnDefinition Width="55*"/>
+                    <ColumnDefinition Width="84*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0">Name</TextBlock>
+                <TextBlock Grid.Column="1">Weight</TextBlock>
+            </Grid>
+            <ItemsControl ItemsSource="{Binding Layers}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="20 0 0 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="141*"/>
+                                <ColumnDefinition Width="55*"/>
+                                <ColumnDefinition Width="84*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding FileName}" Grid.Column="0" />
+                            <TextBox Text="{Binding Weight}" Grid.Column="1" PreviewTextInput="CheckNumericText" PreviewKeyDown="CheckNoSpace"/>
+                            <Button x:Name="Btn_Delete_Layer" Grid.Column="2" CommandParameter="{Binding}" Command="{Binding DeleteLayerCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Delete</Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
             <StackPanel Height="100"/>
         </StackPanel>
         <Button x:Name="Btn_Save" Width="100" Height="30" Grid.Column="0" Grid.Row="1" Command="{Binding SaveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Save</Button>
