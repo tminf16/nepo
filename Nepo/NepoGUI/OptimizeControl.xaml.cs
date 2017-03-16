@@ -93,9 +93,13 @@ namespace NepoGUI
 
                 }
 
-                if(Session.Get.CurrentSolution.Progress < 100)  //Limit for local runs
+                if(Session.Get.CurrentSolution.Progress < 10)  //Limit for local runs
                 {
                     Task.Run(()=>Session.Get.NewLocalData());
+                }
+                else
+                {
+                    Session.Get.finishLocal();
                 }
 
             }
@@ -135,10 +139,11 @@ namespace NepoGUI
         {
             Instance currentInstance = Session.Get.CurrentInstance;
             //EventHandler hand = StartVotingCommand.CanExecuteChanged;
-            Logger.PrintGUID();
 
             if (null == currentInstance)
                 return;
+
+            Logger.PrintGUID();
             OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
             if (Local)
             {

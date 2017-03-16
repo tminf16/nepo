@@ -68,6 +68,10 @@ namespace Mediator
 
             while (null == Instance)
                 Thread.Sleep(100);
+
+            Logger.AnzTuerme = Instance.Map.PlanningObjectCount;
+            Logger.PrintAnzTuerme();
+
             return Instance;
         }
 
@@ -184,8 +188,8 @@ namespace Mediator
             List<Instance> liste = Generator.GenerateInstances(conf).Result;
             
             
-            Logger.AnzTuerme = liste[0].Map.PlanningObjectCount;
-            Logger.PrintAnzTuerme();
+            //Logger.AnzTuerme = liste[0].Map.PlanningObjectCount;
+            //Logger.PrintAnzTuerme();
 
             return liste[0];
         }

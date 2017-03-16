@@ -37,6 +37,20 @@ namespace NepoGUI
 
         public event EventHandler NewDataAvailable;
 
+        public Guid getNepoClientGUID()
+        {
+            NepoClient _c = _client;
+            return _c.GetGUID();
+        }
+
+        /// <summary>
+        /// Finish the local optimization for logging purpose
+        /// </summary>
+        public void finishLocal()
+        {
+            Client_HabemusPapam(null,null);
+        }
+
         public Instance CurrentInstance { get { return _currentInstance; } set
             {
                 _currentInstance = value;
@@ -107,6 +121,7 @@ namespace NepoGUI
             _availableChildSolutions = Optimizer.Instance.SelectChild(0).Item2;
             _currentSolution = Optimizer.Instance.SelectChild(0).Item1;
             NewDataAvailable?.Invoke(true, null);
+
         }
 
         public void Save()

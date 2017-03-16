@@ -23,7 +23,9 @@ namespace Nepo.Common
         public static int AnzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
         public static int AnzErzwungeneAkzeptanz { get; set; }
 
-        private static String OutputFilepath = Directory.GetCurrentDirectory() + "\\" + "NepoLog.txt";
+        //private static String OutputFilepath = Directory.GetCurrentDirectory() + "\\" + "NepoLog.txt";
+        // Ein gemeinsames Logfile im TMP Verzeichnis
+        private static String OutputFilepath =Environment.GetEnvironmentVariable("TMP") + "\\" + "NepoLog.txt";
 
 
         /// <summary>
@@ -73,6 +75,11 @@ namespace Nepo.Common
 
         }
 
+        /// <summary>
+        /// 
+        /// TODO make Threadsafe
+        /// </summary>
+        /// <param name="value"></param>
         public static void WriteToFile(String value)
         {
 
