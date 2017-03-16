@@ -26,9 +26,9 @@ namespace NepoGUI
             _presenter.Content = _overview;
         }
 
-        public void SelectInstance(Guid instanceId)
+        public void SelectInstance(Instance inst)
         {
-            Instance currentInstance = Session.Get.Instances.SingleOrDefault(x => x.InstanceId.Equals(instanceId));
+            Instance currentInstance = inst;
             if (null == currentInstance)
                 return;
             Session.Get.CurrentInstance = currentInstance;

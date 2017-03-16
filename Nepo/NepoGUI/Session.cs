@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NepoGUI
 {
@@ -61,6 +62,7 @@ namespace NepoGUI
                     _currentSolution = Optimizer.Instance.SelectChild(0).Item1;
                     _availableChildSolutions = Optimizer.Instance.SelectChild(0).Item2;
                 }
+                CommandManager.InvalidateRequerySuggested();
             } }
 
         internal void Reset()

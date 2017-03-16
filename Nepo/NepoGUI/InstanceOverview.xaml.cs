@@ -62,7 +62,7 @@ namespace NepoGUI
 
         private void SelectInstance(object obj)
         {
-            GuiNavigation.Get.SelectInstance((Guid)obj);
+            GuiNavigation.Get.SelectInstance((Instance)obj);
         }
 
         private void CheckInstance(object obj)

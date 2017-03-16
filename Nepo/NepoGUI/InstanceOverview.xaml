@@ -52,7 +52,7 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Button Grid.Row="0" VerticalAlignment="Center" CommandParameter="{Binding InstanceId}" Command="{Binding SelectInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Select</Button>
+                                <Button Grid.Row="0" VerticalAlignment="Center" CommandParameter="{Binding}" Command="{Binding SelectInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Select</Button>
                                 <Button Grid.Row="1" VerticalAlignment="Center" CommandParameter="{Binding}" Command="{Binding DeleteInstanceCommand, RelativeSource={RelativeSource AncestorType=UserControl}}">Delete</Button>
                             </Grid>
                         </Grid>
