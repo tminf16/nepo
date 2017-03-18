@@ -97,12 +97,15 @@ namespace NepoGUI
 
         private void Client_HabemusPapam(object sender, EventArgs e)
         {
-            _currentSolution = _client.GetCurrentSolution();
+            //_currentSolution = _client.GetCurrentSolution();
             Console.WriteLine("Habemus Papam");
             Logger.Get.AnzTuerme = Map.PlanningObjectCount;
             Logger.Get.Maxrounds = Optimizer.Instance.maxRounds;
+
             Logger.Get.AddMyTargetValue(_client.GetGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config, Map));
-            //Config.Rules
+            //Console.WriteLine(Config);
+            Logger.Get.agentConfigID = Config.Guid;
+            // Hier Config für LogDump            
             Logger.Get.finish();
             
         }

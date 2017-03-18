@@ -192,6 +192,9 @@ namespace NepoGUI
                 }
             }
 
+            //Add Random Config Guid
+            Config.Guid = Guid.NewGuid();
+
             //Save
             Config.Save();
             //Reload Map

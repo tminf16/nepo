@@ -24,8 +24,7 @@ namespace Nepo.Common
         public Guid Testinstanzguid { get; set; }
         public int AnzTuerme { get; set; }
 
-
-        public Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
+        public static Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
 
         public double MediationResult { get; set; }
 
@@ -37,6 +36,8 @@ namespace Nepo.Common
         // Ein gemeinsames Logfile im TMP Verzeichnis
         private static String OutputFilepath = Environment.GetEnvironmentVariable("TMP") + "\\" + "NepoLog.txt";
 
+        private static Mutex mut = new Mutex(false, "print");
+        public Guid agentConfigID { get; set; }
 
         /// <summary>
         /// Target Value of Client after Habemus Papam
@@ -115,6 +116,8 @@ namespace Nepo.Common
 
         public void finish()
         {
+            // Wait until it is safe to enter.
+            mut.WaitOne();
             lock (thisLock)
             {
                 if (localOptimization)
@@ -126,6 +129,7 @@ namespace Nepo.Common
                 {
                     WriteToFile("################# NEW REMTOE ENTRY ####################");
                 }
+                    WriteToFile("AgentConfigID=" + agentConfigID);
                     WriteToFile("TestinstGUID=" + Testinstanzguid);
                     WriteToFile("MaxRounds=" + Maxrounds);
                     WriteToFile("AnzVorschlaegeProRunde=" + AnzVorschlaegeProRunde);
@@ -140,6 +144,8 @@ namespace Nepo.Common
                     WriteToFile("################# END ENTRY ####################");
                 
             }
+            // Release the Mutex.
+            mut.ReleaseMutex();
         }
 
     }
