@@ -14,7 +14,7 @@ namespace Nepo.Common
 
         private Solution currentlyAccepted = null;
         private List<Solution> availableChildren = null;
-        public static int maxRounds = 1000;
+        public int maxRounds { get; set;  } = 0; //initialisiert durch MapConfig
         private int currentRound = 0;
         public static int childsCount = 100;
 

@@ -19,12 +19,15 @@ namespace Nepo.Common
         public List<Layer> Layers { get; set; }
         [DataMember]
         public int ForcedAcceptance { get; set; }
+        [DataMember]
+        public int MaxRounds { get; set; }
 
         public MapConfig()
         {
             ImmovableObjects = new List<ImmovableObject>();
             Layers = new List<Layer>();
-            ForcedAcceptance = 1;
+            //ForcedAcceptance = 1;
+            //MaxRounds = 10;
         }
     }
 }

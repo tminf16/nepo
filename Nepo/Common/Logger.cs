@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Nepo.Common
@@ -11,21 +12,30 @@ namespace Nepo.Common
     public class Logger
     {
 
-        public static Guid Testinstanzguid { get; set; }
-        public static int AnzTuerme { get; set; }
+        private static Logger _instance = null;
+        public static Logger Get { get { return _instance ?? (_instance = new Logger()); } }
+
+        private readonly Object thisLock = new Object();
+
+        public Boolean localOptimization { get; set; } = false;
+
+        private ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
+
+        public Guid Testinstanzguid { get; set; }
+        public int AnzTuerme { get; set; }
 
 
-        public static Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
+        public Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
 
-        public static double MediationResult { get; set; }
-        
-        public static int Maxrounds { get; set; }
-        public static int AnzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
-        public static int AnzErzwungeneAkzeptanz { get; set; }
+        public double MediationResult { get; set; }
+
+        public int Maxrounds { get; set; }
+        public int AnzVorschlaegeProRunde { get; set; } = Optimizer.childsCount;
+        public int AnzErzwungeneAkzeptanz { get; set; }
 
         //private static String OutputFilepath = Directory.GetCurrentDirectory() + "\\" + "NepoLog.txt";
         // Ein gemeinsames Logfile im TMP Verzeichnis
-        private static String OutputFilepath =Environment.GetEnvironmentVariable("TMP") + "\\" + "NepoLog.txt";
+        private static String OutputFilepath = Environment.GetEnvironmentVariable("TMP") + "\\" + "NepoLog.txt";
 
 
         /// <summary>
@@ -33,28 +43,28 @@ namespace Nepo.Common
         /// </summary>
         /// <param name="guid"></param>
         /// <param name="targetValue"></param>
-        public static void AddMyTargetValue(Guid guid, double targetValue)
+        public void AddMyTargetValue(Guid guid, double targetValue)
         {
 
             if (!TargetValueByClient.ContainsKey(guid))
             {
                 TargetValueByClient.Add(guid, targetValue);
-                WriteToFile("CLIENT=" + guid + ":targetValue=" + targetValue);
+                //WriteToFile("CLIENT=" + guid + ":targetValue=" + targetValue);
             }
 
         }
 
-        public static void PrintGUID()
+        public void PrintGUID()
         {
-            Console.WriteLine("TestinstGUID="+Testinstanzguid);
+            Console.WriteLine("TestinstGUID=" + Testinstanzguid);
             WriteToFile("TestinstGUID=" + Testinstanzguid);
         }
 
-        public static void PrintTarget()
+        public void PrintTarget()
         {
         }
 
-        public static void PrintAnzTuerme()
+        public void PrintAnzTuerme()
         {
             Console.WriteLine("Anzahl Tuerme=" + AnzTuerme);
             WriteToFile("Anzahl Tuerme=" + AnzTuerme);
@@ -70,7 +80,7 @@ namespace Nepo.Common
         // MaxRounds	
         // AnzVorschlaegeProRunde	
         // AnzErzwungeneAkzeptanz
-        public static void DumpResult()
+        public void DumpResult()
         {
 
         }
@@ -80,35 +90,58 @@ namespace Nepo.Common
         /// TODO make Threadsafe
         /// </summary>
         /// <param name="value"></param>
-        public static void WriteToFile(String value)
+        public void WriteToFile(String value)
         {
 
-
-            // This text is added only once to the file.
-            if (!File.Exists(OutputFilepath))
+            // Set Status to Locked
+            _readWriteLock.EnterWriteLock();
+            try
             {
-                // Create a file to write to.
-                using (StreamWriter file = File.CreateText(OutputFilepath))
+                    // This text is always added, making the file longer over time
+                    // if it is not deleted.
+                    using (StreamWriter file = File.AppendText(OutputFilepath))
                 {
                     file.WriteLine(value);
+                    file.Close();
                 }
             }
-
-            // This text is always added, making the file longer over time
-            // if it is not deleted.
-            using (StreamWriter file = File.AppendText(OutputFilepath))
+            finally
             {
-                file.WriteLine(value);
+                //Release Lock
+                _readWriteLock.ExitWriteLock();
             }
-
 
         }
 
+        public void finish()
+        {
+            lock (thisLock)
+            {
+                if (localOptimization)
+                {
+                    WriteToFile("################# NEW LOCAL ENTRY ####################");
+
+                }
+                else
+                {
+                    WriteToFile("################# NEW REMTOE ENTRY ####################");
+                }
+                    WriteToFile("TestinstGUID=" + Testinstanzguid);
+                    WriteToFile("MaxRounds=" + Maxrounds);
+                    WriteToFile("AnzVorschlaegeProRunde=" + AnzVorschlaegeProRunde);
+                    WriteToFile("AnzErzwungeneAkzeptanz=" + AnzErzwungeneAkzeptanz);
+                    WriteToFile("Anzahl Tuerme=" + AnzTuerme);
+
+                    foreach (var item in TargetValueByClient)
+                    {
+                        WriteToFile("CLIENT=" + item.Key + ":targetValue=" + item.Value);
+                    }
+                
+                    WriteToFile("################# END ENTRY ####################");
+                
+            }
+        }
 
     }
-
-
-
-
 
 }

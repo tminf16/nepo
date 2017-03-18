@@ -57,7 +57,12 @@ namespace NepoGUI
         private void StartVoting(object obj)
         {
             if (Local)
+            {
                 Session.Get.Reset();
+                Logger.Get.localOptimization = true;       // Set Header Entry for Local
+            }
+
+            Optimizer.Instance.maxRounds = Session.Get.Map.MaxRounds;
             Vote();   
         }
 
@@ -143,7 +148,8 @@ namespace NepoGUI
             if (null == currentInstance)
                 return;
 
-            Logger.PrintGUID();
+            Logger.Get.AnzErzwungeneAkzeptanz = Session.Get.Map.ForcedAcceptance;
+            //Logger.PrintGUID();
             OptimizeMapControl.Configure(Session.Get.Map, Session.Get.Config);
             if (Local)
             {

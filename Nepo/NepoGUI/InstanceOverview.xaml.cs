@@ -79,7 +79,8 @@ namespace NepoGUI
             if (null != onlineinstance)
             {
                 onlineinstance.Online = true;
-                Logger.Testinstanzguid = onlineinstance.InstanceId;
+                Logger.Get.Testinstanzguid = onlineinstance.InstanceId;
+                Optimizer.Instance.maxRounds = Session.Get.Map.MaxRounds;
                 //Logger.print();
             }
             Dispatcher.Invoke(() => OnPropertyChanged("AvailableInstances"));

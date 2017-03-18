@@ -93,14 +93,18 @@ namespace NepoGUI
             Instances = Instance.LoadInstances();
             _client.NewDataAvailable += NewDataFromMediator;
             _client.HabemusPapam += Client_HabemusPapam;
-            Logger.AnzErzwungeneAkzeptanz = Map.ForcedAcceptance;
         }
 
         private void Client_HabemusPapam(object sender, EventArgs e)
         {
             _currentSolution = _client.GetCurrentSolution();
             Console.WriteLine("Habemus Papam");
-            Logger.AddMyTargetValue(_client.GetGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config, Map));
+            Logger.Get.AnzTuerme = Map.PlanningObjectCount;
+            Logger.Get.Maxrounds = Optimizer.Instance.maxRounds;
+            Logger.Get.AddMyTargetValue(_client.GetGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config, Map));
+            //Config.Rules
+            Logger.Get.finish();
+            
         }
 
 

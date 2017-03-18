@@ -20,7 +20,7 @@ namespace Mediator
         private MediatorService service;
         private DecisionHandler DecisonHandler = new DecisionHandler();
         private List<Solution> currentSolution = new List<Solution>();
-        private int maxRound = 1000;
+        private int maxRound = 0; //Wird von MapConfig initialisiert
 
         private static MediatorHandler _instance;
         public static MediatorHandler HandlerInstance { get { return _instance; } }
@@ -31,9 +31,11 @@ namespace Mediator
         public MediatorHandler(MediatorService service)
         {
             this.service = service;
-            Optimizer.maxRounds = maxRound;
             _instance = this;
-            Logger.Maxrounds = maxRound;
+            Logger.Get.Maxrounds = maxRound;
+          
+
+      
             Ready = true;
             //if (Instance == null)
             //{
@@ -68,9 +70,9 @@ namespace Mediator
 
             while (null == Instance)
                 Thread.Sleep(100);
-
-            Logger.AnzTuerme = Instance.Map.PlanningObjectCount;
-            Logger.PrintAnzTuerme();
+          
+            Logger.Get.AnzTuerme = Instance.Map.PlanningObjectCount;
+            Optimizer.Instance.maxRounds = Instance.Map.MaxRounds;
 
             return Instance;
         }
@@ -126,6 +128,7 @@ namespace Mediator
             if (AllClientsVoted())
             {
                 Optimizer.Instance.FindNewAcceptedSolution(DecisonHandler.GetVotesForRound());
+                maxRound = Optimizer.Instance.maxRounds;
 
                 // Nächste Runde
                 DecisonHandler.newRound();
@@ -133,6 +136,7 @@ namespace Mediator
                 if(DecisonHandler.CurrentRound > maxRound)
                 {
                     // Abstimmung beendet
+                    Optimizer.Instance.maxRounds = Instance.Map.MaxRounds;
                     service.DataReadyCallback(CanIHasPope.WhiteSmoke);
                     NewDataAvailable?.Invoke(null, null);
                 }

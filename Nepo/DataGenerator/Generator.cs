@@ -53,6 +53,7 @@ namespace Nepo.DataGenerator
             var rng = new Random(guid.GetHashCode());
             var accepted_solutions = 1; // Solutions, clients are forced to accept
             var constraints = config.Constraints;
+            var maxRounds = 10;         //this can be adjusted
             var result = new Instance
             {
                 InstanceId = guid,
@@ -60,7 +61,8 @@ namespace Nepo.DataGenerator
                 {
                     MapSize = rng.NextSize(constraints.MinSize, constraints.MaxSize),
                     PlanningObjectCount = rng.Next(constraints.MinPlanningObjectCount, constraints.MaxPlanningObjectCount),
-                    ForcedAcceptance = accepted_solutions
+                    ForcedAcceptance = accepted_solutions,
+                    MaxRounds = maxRounds
                 }
             };
             var immovableObjectCount = rng.Next(constraints.MinImmovableObjectCount, constraints.MaxImmovableObjectCount);
