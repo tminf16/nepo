@@ -25,6 +25,7 @@ namespace Nepo.Common
         public int AnzTuerme { get; set; }
 
         public static Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
+     
 
         public double MediationResult { get; set; }
 
@@ -46,13 +47,15 @@ namespace Nepo.Common
         /// <param name="targetValue"></param>
         public void AddMyTargetValue(Guid guid, double targetValue)
         {
-
             if (!TargetValueByClient.ContainsKey(guid))
             {
                 TargetValueByClient.Add(guid, targetValue);
-                //WriteToFile("CLIENT=" + guid + ":targetValue=" + targetValue);
             }
-
+            else
+            {
+                TargetValueByClient.Remove(guid);
+                TargetValueByClient.Add(guid,targetValue);
+            }
         }
 
         public void PrintGUID()
@@ -102,7 +105,8 @@ namespace Nepo.Common
                     // if it is not deleted.
                     using (StreamWriter file = File.AppendText(OutputFilepath))
                 {
-                    file.WriteLine(value);
+                    //file.WriteLine(value);
+                    file.Write(value);
                     file.Close();
                 }
             }
@@ -114,7 +118,45 @@ namespace Nepo.Common
 
         }
 
+        /// <summary>
+        /// 
+        /// Typ	AgentConfig	TestinstanzID	MaxRounds	VorschlaegeProRunde	ErzwungeneAkzeptanz	AnzahlTuerme	ClientID	TargetValue
+        /// 
+        /// </summary>
         public void finish()
+        {
+            // Wait until it is safe to enter.
+            mut.WaitOne();
+            lock (thisLock)
+            {
+                if (localOptimization)
+                {
+                    WriteToFile("local\t");
+                }
+                else
+                {
+                    WriteToFile("remote\t");
+                }
+                WriteToFile(agentConfigID+"\t");
+                WriteToFile(Testinstanzguid+"\t");
+                WriteToFile(Maxrounds+"\t");
+                WriteToFile(AnzVorschlaegeProRunde+"\t");
+                WriteToFile(AnzErzwungeneAkzeptanz+"\t");
+                WriteToFile(AnzTuerme+"\t");
+
+                foreach (var item in TargetValueByClient)
+                {
+                    WriteToFile(item.Key + "\t" + item.Value);
+                }
+
+                WriteToFile("\n");
+
+            }
+            // Release the Mutex.
+            mut.ReleaseMutex();
+        }
+
+        public void DebugDump()
         {
             // Wait until it is safe to enter.
             mut.WaitOne();
