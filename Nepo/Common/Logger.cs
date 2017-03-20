@@ -40,6 +40,16 @@ namespace Nepo.Common
         private static Mutex mut = new Mutex(false, "print");
         public Guid agentConfigID { get; set; }
 
+
+        public Logger()
+        {
+            // Print Header if File does not exist
+            if (!File.Exists(OutputFilepath))
+            {
+                WriteLnToFile("Typ\tAgentConfig\tTestinstanzID\tMaxRounds\tVorschlaegeProRunde\tErzwungeneAkzeptanz\tAnzahlTuerme\tClientID\tTargetValue");
+            }
+        }
+
         /// <summary>
         /// Target Value of Client after Habemus Papam
         /// </summary>
@@ -58,40 +68,10 @@ namespace Nepo.Common
             }
         }
 
-        public void PrintGUID()
-        {
-            Console.WriteLine("TestinstGUID=" + Testinstanzguid);
-            WriteToFile("TestinstGUID=" + Testinstanzguid);
-        }
-
-        public void PrintTarget()
-        {
-        }
-
-        public void PrintAnzTuerme()
-        {
-            Console.WriteLine("Anzahl Tuerme=" + AnzTuerme);
-            WriteToFile("Anzahl Tuerme=" + AnzTuerme);
-        }
-
-
-        // InstanceGUID
-        // AnzTuerme
-        // ClientABest	
-        // ClientAMediation	
-        // ClientBBest	
-        // ClientBMediation
-        // MaxRounds	
-        // AnzVorschlaegeProRunde	
-        // AnzErzwungeneAkzeptanz
-        public void DumpResult()
-        {
-
-        }
-
         /// <summary>
         /// 
-        /// TODO make Threadsafe
+        /// Write a line Threadsafe to File
+        /// 
         /// </summary>
         /// <param name="value"></param>
         public void WriteToFile(String value)
@@ -104,9 +84,38 @@ namespace Nepo.Common
                     // This text is always added, making the file longer over time
                     // if it is not deleted.
                     using (StreamWriter file = File.AppendText(OutputFilepath))
+                    {
+                        //file.WriteLine(value);
+                        file.Write(value);
+                        file.Close();
+                    }
+            }
+            finally
+            {
+                //Release Lock
+                _readWriteLock.ExitWriteLock();
+            }
+
+        }
+
+        /// <summary>
+        /// 
+        /// Write a line Threadsafe to File
+        /// 
+        /// </summary>
+        /// <param name="value"></param>
+        public void WriteLnToFile(String value)
+        {
+
+            // Set Status to Locked
+            _readWriteLock.EnterWriteLock();
+            try
+            {
+                // This text is always added, making the file longer over time
+                // if it is not deleted.
+                using (StreamWriter file = File.AppendText(OutputFilepath))
                 {
-                    //file.WriteLine(value);
-                    file.Write(value);
+                    file.WriteLine(value);
                     file.Close();
                 }
             }
@@ -117,6 +126,8 @@ namespace Nepo.Common
             }
 
         }
+
+
 
         /// <summary>
         /// 
@@ -148,9 +159,8 @@ namespace Nepo.Common
                 {
                     WriteToFile(item.Key + "\t" + item.Value);
                 }
-
-                WriteToFile("\n");
-
+                WriteLnToFile("");
+                
             }
             // Release the Mutex.
             mut.ReleaseMutex();
