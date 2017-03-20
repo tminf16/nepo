@@ -99,7 +99,7 @@ namespace NepoGUI
         {
             //_currentSolution = _client.GetCurrentSolution();
             Console.WriteLine("Habemus Papam");
-            Logger.Get.AnzTuerme = Map.PlanningObjectCount;
+            Logger.Get.AnzPlanningObjects = Map.PlanningObjectCount;
             Logger.Get.Maxrounds = Optimizer.Instance.maxRounds;
 
             Logger.Get.AddMyTargetValue(_client.GetGUID(), Optimizer.CalculateTargetValue(_currentSolution, Config, Map));

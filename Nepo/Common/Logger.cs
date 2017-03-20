@@ -22,7 +22,7 @@ namespace Nepo.Common
         private ReaderWriterLockSlim _readWriteLock = new ReaderWriterLockSlim();
 
         public Guid Testinstanzguid { get; set; }
-        public int AnzTuerme { get; set; }
+        public int AnzPlanningObjects { get; set; }
 
         public static Dictionary<Guid, double> TargetValueByClient = new Dictionary<Guid, double>();
      
@@ -46,7 +46,7 @@ namespace Nepo.Common
             // Print Header if File does not exist
             if (!File.Exists(OutputFilepath))
             {
-                WriteLnToFile("Typ\tAgentConfig\tTestinstanzID\tMaxRounds\tVorschlaegeProRunde\tErzwungeneAkzeptanz\tAnzahlTuerme\tClientID\tTargetValue");
+                WriteLnToFile("Type\tAgentConfig\tTestInstanzID\tMaxRounds\tVorschlaegeProRunde\tErzwungeneAkzeptanz\tAnzahlPlanningObjects\tClientID\tTargetValue");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Nepo.Common
                 WriteToFile(Maxrounds+"\t");
                 WriteToFile(AnzVorschlaegeProRunde+"\t");
                 WriteToFile(AnzErzwungeneAkzeptanz+"\t");
-                WriteToFile(AnzTuerme+"\t");
+                WriteToFile(AnzPlanningObjects+"\t");
 
                 foreach (var item in TargetValueByClient)
                 {
@@ -186,7 +186,7 @@ namespace Nepo.Common
                     WriteToFile("MaxRounds=" + Maxrounds);
                     WriteToFile("AnzVorschlaegeProRunde=" + AnzVorschlaegeProRunde);
                     WriteToFile("AnzErzwungeneAkzeptanz=" + AnzErzwungeneAkzeptanz);
-                    WriteToFile("Anzahl Tuerme=" + AnzTuerme);
+                    WriteToFile("Anzahl Tuerme=" + AnzPlanningObjects);
 
                     foreach (var item in TargetValueByClient)
                     {

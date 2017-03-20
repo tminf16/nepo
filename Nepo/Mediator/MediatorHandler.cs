@@ -71,7 +71,7 @@ namespace Mediator
             while (null == Instance)
                 Thread.Sleep(100);
           
-            Logger.Get.AnzTuerme = Instance.Map.PlanningObjectCount;
+            Logger.Get.AnzPlanningObjects = Instance.Map.PlanningObjectCount;
             Optimizer.Instance.maxRounds = Instance.Map.MaxRounds;
 
             return Instance;
