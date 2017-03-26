@@ -35,6 +35,13 @@ namespace NepoGUI
             set { SetValue(TargetValueProperty, value); }
         } public static readonly DependencyProperty TargetValueProperty =
             DependencyProperty.Register("TargetValue", typeof(double), typeof(OptimizeControl), new PropertyMetadata(0.0));
+        public double TargetValue1
+        {
+            get { return (double)GetValue(TargetValue1Property); }
+            set { SetValue(TargetValue1Property, value); }
+        }
+        public static readonly DependencyProperty TargetValue1Property =
+          DependencyProperty.Register("TargetValue1", typeof(double), typeof(OptimizeControl), new PropertyMetadata(0.0));
 
 
         public bool Local { get; set; }
@@ -130,6 +137,8 @@ namespace NepoGUI
             Dispatcher.Invoke(() =>
             {
                 TargetValue = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.Config, Session.Get.Map);
+                if(null != Session.Get.ExtendedConfig)
+                    TargetValue1 = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.ExtendedConfig, Session.Get.Map);
                 Progress = Session.Get.CurrentSolution.Progress;
             });
             Draw();
@@ -159,10 +168,10 @@ namespace NepoGUI
                 if (null != Session.Get.ExtendedConfig)
                 {
                     OptimizeMapControlExtension1.Configure(Session.Get.Map, Session.Get.ExtendedConfig);
-                    OptimizeMapControlExtension1.Visibility = Visibility.Visible;
+                    OptimizeBundle1.Visibility = Visibility.Visible;
                 }
                 else
-                    OptimizeMapControlExtension1.Visibility = Visibility.Collapsed;
+                    OptimizeBundle1.Visibility = Visibility.Collapsed;
             }
             Session.Get.NewDataAvailable += Get_NewDataAvailable;
         }

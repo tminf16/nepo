@@ -6,8 +6,8 @@
              xmlns:local="clr-namespace:Nepo.Common"
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="200" DataContext="{Binding RelativeSource={RelativeSource Self}}">
-    <Grid Background="AliceBlue">
-        <Grid>
+    <Grid>
+        <Grid Background="AliceBlue" Grid.Row="1">
             <ItemsControl ItemsSource="{Binding MapLayerBitmaps}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

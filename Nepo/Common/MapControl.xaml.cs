@@ -33,7 +33,7 @@ namespace Nepo.Common
         public ObservableCollection<BitmapSource> MapLayerBitmaps { get; set; }
         public ObservableCollection<BitmapSource> AgentLayerBitmaps { get; set; }
         public ObservableCollection<Grid> Movables { get; set; }
-
+        
         private int ImmoSize = 5;
 
         public MapControl()
