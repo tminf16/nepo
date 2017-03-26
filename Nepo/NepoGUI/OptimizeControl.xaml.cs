@@ -137,8 +137,13 @@ namespace NepoGUI
             Dispatcher.Invoke(() =>
             {
                 TargetValue = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.Config, Session.Get.Map);
-                if(null != Session.Get.ExtendedConfig)
+                Console.Write(TargetValue + "\t");
+                if (null != Session.Get.ExtendedConfig)
+                {
                     TargetValue1 = Optimizer.CalculateTargetValue(Session.Get.CurrentSolution, Session.Get.ExtendedConfig, Session.Get.Map);
+                    Console.Write(TargetValue1 + "\t");
+                }
+                Console.WriteLine();
                 Progress = Session.Get.CurrentSolution.Progress;
             });
             Draw();
