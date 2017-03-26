@@ -14,12 +14,12 @@ namespace Nepo.Common
 
         private Solution currentlyAccepted = null;
         private List<Solution> availableChildren = null;
-        public int maxRounds { get; set;  } = 0; //initialisiert durch MapConfig
+        //public int maxRounds { get; set;  } = 0; //initialisiert durch MapConfig
         private int currentRound = 0;
         public static int childsCount = 100;
 
 
-        private MapConfig map;
+        public MapConfig map;
 
         public void SetMap(MapConfig map)
         {
@@ -35,7 +35,7 @@ namespace Nepo.Common
             List<Solution> children = new List<Solution>();
             children.Add(currentlyAccepted);
             currentRound++;
-            currentlyAccepted.Progress = (int)((100.0 * currentRound) / maxRounds);
+            currentlyAccepted.Progress = (int)((100.0 * currentRound) / map.MaxRounds);
             for (int i = 0; i < childsCount; i++)
                 children.Add(currentlyAccepted.CreateChildSolution(map));
             availableChildren = children;

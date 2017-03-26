@@ -118,7 +118,7 @@
       <Name>DataGenerator</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mediator\Mediator.csproj">
-      <Project>{7963C753-909B-4388-81E3-482702837783}</Project>
+      <Project>{7963c753-909b-4388-81e3-482702837783}</Project>
       <Name>Mediator</Name>
     </ProjectReference>
   </ItemGroup>

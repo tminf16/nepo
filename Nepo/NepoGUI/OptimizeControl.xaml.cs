@@ -65,8 +65,7 @@ namespace NepoGUI
             {
                 Logger.Get.localOptimization = false;       // Set Header Entry for remote
             }
-
-            Optimizer.Instance.maxRounds = Session.Get.Map.MaxRounds;
+            
             Vote();   
         }
 
@@ -102,7 +101,7 @@ namespace NepoGUI
 
                 }
 
-                if(Session.Get.CurrentSolution.Progress < Session.Get.Map.MaxRounds)  //Limit for local runs with maxround
+                if(Session.Get.CurrentSolution.Progress < 100)  //Progress is calculated as % from maxrounds
                 {
                     Task.Run(()=>Session.Get.NewLocalData());
                 }

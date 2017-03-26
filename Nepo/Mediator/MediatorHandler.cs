@@ -72,7 +72,6 @@ namespace Mediator
                 Thread.Sleep(100);
           
             Logger.Get.AnzPlanningObjects = Instance.Map.PlanningObjectCount;
-            Optimizer.Instance.maxRounds = Instance.Map.MaxRounds;
 
             return Instance;
         }
@@ -128,7 +127,7 @@ namespace Mediator
             if (AllClientsVoted())
             {
                 Optimizer.Instance.FindNewAcceptedSolution(DecisonHandler.GetVotesForRound());
-                maxRound = Optimizer.Instance.maxRounds;
+                maxRound = Optimizer.Instance.map.MaxRounds;
 
                 // Nächste Runde
                 DecisonHandler.newRound();
@@ -136,7 +135,6 @@ namespace Mediator
                 if(DecisonHandler.CurrentRound > maxRound)
                 {
                     // Abstimmung beendet
-                    Optimizer.Instance.maxRounds = Instance.Map.MaxRounds;
                     service.DataReadyCallback(CanIHasPope.WhiteSmoke);
                     NewDataAvailable?.Invoke(null, null);
                 }
