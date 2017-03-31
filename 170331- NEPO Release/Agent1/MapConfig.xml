@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-16"?>
+<MapConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MapSize>
+    <Width>0</Width>
+    <Height>0</Height>
+  </MapSize>
+  <PlanningObjectCount>0</PlanningObjectCount>
+  <ImmovableObjects />
+  <Layers />
+  <ForcedAcceptance>0</ForcedAcceptance>
+  <MaxRounds>0</MaxRounds>
+</MapConfig>
